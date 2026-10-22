@@ -1,0 +1,32 @@
+# Weekly dependency updates. Every update PR runs CI; releases stay manual (push a vX.Y.Z tag).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    # Let new releases settle for a week before proposing them (supply-chain precaution).
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      dev-dependencies:
+        dependency-type: development
+        update-types: [minor, patch]
+    ignore:
+      # typescript-eslint supports TypeScript < 6.1; bump this by hand with typescript-eslint.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-minor', 'version-update:semver-major']
+      # The server supports Node.js 20+; newer @types/node majors would type APIs it lacks.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      github-actions:
+        patterns: ['*']

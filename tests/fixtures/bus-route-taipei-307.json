@@ -1,0 +1,56 @@
+[
+  {
+    "RouteUID": "TPE16111",
+    "RouteID": "16111",
+    "HasSubRoutes": true,
+    "Operators": [
+      {
+        "OperatorID": "100",
+        "OperatorName": { "Zh_tw": "臺北客運", "En": "Taipei Bus Co." },
+        "OperatorCode": "TaipeiBus",
+        "OperatorNo": "0604"
+      }
+    ],
+    "AuthorityID": "004",
+    "ProviderID": "035",
+    "SubRoutes": [
+      {
+        "SubRouteUID": "TPE157462",
+        "SubRouteID": "157462",
+        "OperatorIDs": ["100"],
+        "SubRouteName": { "Zh_tw": "307莒光往撫遠街", "En": "307 Juguang to Fuyuan St." },
+        "Headsign": "撫遠街",
+        "HeadsignEn": "Fuyuan St.",
+        "Direction": 0,
+        "FirstBusTime": "0500",
+        "LastBusTime": "2250"
+      },
+      {
+        "SubRouteUID": "TPE157463",
+        "SubRouteID": "157463",
+        "OperatorIDs": ["100"],
+        "SubRouteName": { "Zh_tw": "307莒光往板橋", "En": "307 Juguang to Banqiao" },
+        "Headsign": "板橋前站",
+        "HeadsignEn": "Banqiao Front Sta.",
+        "Direction": 1,
+        "FirstBusTime": "0500",
+        "LastBusTime": "2250"
+      }
+    ],
+    "BusRouteType": 11,
+    "RouteName": { "Zh_tw": "307", "En": "307" },
+    "DepartureStopNameZh": "板橋前站",
+    "DepartureStopNameEn": "Banqiao Front Sta.",
+    "DestinationStopNameZh": "撫遠街",
+    "DestinationStopNameEn": "Fuyuan St.",
+    "TicketPriceDescriptionZh": "二段票",
+    "TicketPriceDescriptionEn": "2 segments",
+    "FareBufferZoneDescriptionZh": "臺北大橋－臺北橋",
+    "FareBufferZoneDescriptionEn": "Taipei Bridge",
+    "RouteMapImageUrl": "https://ebus.gov.taipei/MapOverview?nid=0100030700",
+    "City": "Taipei",
+    "CityCode": "TPE",
+    "UpdateTime": "2026-10-20T03:00:00+08:00",
+    "VersionID": 1832
+  }
+]

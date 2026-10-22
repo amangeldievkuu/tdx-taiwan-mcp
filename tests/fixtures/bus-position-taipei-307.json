@@ -1,0 +1,62 @@
+[
+  {
+    "PlateNumb": "208-U5",
+    "OperatorID": "100",
+    "OperatorNo": "1407",
+    "RouteUID": "TPE16111",
+    "RouteID": "16111",
+    "RouteName": {
+      "Zh_tw": "307",
+      "En": "307"
+    },
+    "SubRouteUID": "TPE157463",
+    "SubRouteID": "157463",
+    "SubRouteName": {
+      "Zh_tw": "307莒光往撫遠街",
+      "En": "307"
+    },
+    "Direction": 0,
+    "BusPosition": {
+      "PositionLon": 121.479707,
+      "PositionLat": 25.006045,
+      "GeoHash": "wsqqk24yf"
+    },
+    "Speed": 0,
+    "Azimuth": 106,
+    "DutyStatus": 1,
+    "BusStatus": 0,
+    "GPSTime": "2026-10-20T17:52:51+08:00",
+    "SrcUpdateTime": "2026-10-20T17:53:00+08:00",
+    "UpdateTime": "2026-10-20T17:53:05+08:00"
+  },
+  {
+    "PlateNumb": "266-U5",
+    "OperatorID": "100",
+    "OperatorNo": "1407",
+    "RouteUID": "TPE16111",
+    "RouteID": "16111",
+    "RouteName": {
+      "Zh_tw": "307",
+      "En": "307"
+    },
+    "SubRouteUID": "TPE157463",
+    "SubRouteID": "157463",
+    "SubRouteName": {
+      "Zh_tw": "307莒光往撫遠街",
+      "En": "307"
+    },
+    "Direction": 0,
+    "BusPosition": {
+      "PositionLon": 121.461627,
+      "PositionLat": 25.011048,
+      "GeoHash": "wsqq7cjev"
+    },
+    "Speed": 10,
+    "Azimuth": 38,
+    "DutyStatus": 1,
+    "BusStatus": 0,
+    "GPSTime": "2026-10-20T17:52:51+08:00",
+    "SrcUpdateTime": "2026-10-20T17:53:00+08:00",
+    "UpdateTime": "2026-10-20T17:53:05+08:00"
+  }
+]

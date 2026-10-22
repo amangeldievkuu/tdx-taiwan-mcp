@@ -1,0 +1,65 @@
+[
+  {
+    "StationUID": "TPE500101001",
+    "StationID": "500101001",
+    "AuthorityID": "TPE",
+    "StationName": {
+      "Zh_tw": "YouBike2.0_捷運科技大樓站",
+      "En": "YouBike2.0_MRT Technology Bldg. Sta."
+    },
+    "StationPosition": {
+      "PositionLon": 121.54357,
+      "PositionLat": 25.02605,
+      "GeoHash": "wsqqmpvfn"
+    },
+    "StationAddress": {
+      "Zh_tw": "復興南路二段235號前",
+      "En": "No.235, Sec. 2, Fuxing S. Rd."
+    },
+    "BikesCapacity": 28,
+    "ServiceType": 2,
+    "SrcUpdateTime": "2026-10-20T10:14:52+08:00",
+    "UpdateTime": "2026-10-20T10:15:16+08:00"
+  },
+  {
+    "StationUID": "TPE500101002",
+    "StationID": "500101002",
+    "AuthorityID": "TPE",
+    "StationName": {
+      "Zh_tw": "YouBike2.0_復興南路二段273號前",
+      "En": "YouBike2.0_No.273, Sec. 2, Fuxing S. Rd."
+    },
+    "StationPosition": {
+      "PositionLon": 121.54361,
+      "PositionLat": 25.02565,
+      "GeoHash": "wsqqmpvcz"
+    },
+    "StationAddress": {
+      "Zh_tw": "復興南路二段273號西側",
+      "En": "No.273, Sec. 2, Fuxing S. Rd. (West)"
+    },
+    "BikesCapacity": 21,
+    "ServiceType": 2,
+    "SrcUpdateTime": "2026-10-20T10:14:52+08:00",
+    "UpdateTime": "2026-10-20T10:15:16+08:00"
+  },
+  {
+    "StationUID": "TPE500119001",
+    "StationID": "500119001",
+    "AuthorityID": "TPE",
+    "StationName": {
+      "Zh_tw": "YouBike2.0_臺北車站(忠孝西路)"
+    },
+    "StationPosition": {
+      "PositionLon": 121.51758,
+      "PositionLat": 25.04629
+    },
+    "StationAddress": {
+      "Zh_tw": "忠孝西路一段49號前"
+    },
+    "StopDescription": null,
+    "BikesCapacity": null,
+    "ServiceType": 2,
+    "UpdateTime": "2026-10-20T10:15:16+08:00"
+  }
+]

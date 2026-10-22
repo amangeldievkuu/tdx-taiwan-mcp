@@ -1,0 +1,68 @@
+[
+  {
+    "RouteUID": "TPE16111",
+    "RouteID": "16111",
+    "RouteName": { "Zh_tw": "307", "En": "307" },
+    "Operators": [
+      {
+        "OperatorID": "100",
+        "OperatorName": { "Zh_tw": "臺北客運", "En": "Taipei Bus Co." },
+        "OperatorCode": "TaipeiBus",
+        "OperatorNo": "0604"
+      }
+    ],
+    "SubRouteUID": "TPE157462",
+    "SubRouteID": "157462",
+    "SubRouteName": { "Zh_tw": "307莒光往撫遠街", "En": "307 Juguang to Fuyuan St." },
+    "Direction": 0,
+    "City": "Taipei",
+    "CityCode": "TPE",
+    "Stops": [
+      {
+        "StopUID": "TPE38261",
+        "StopID": "38261",
+        "StopName": { "Zh_tw": "板橋前站", "En": "Banqiao Front Sta." },
+        "StopBoarding": 1,
+        "StopSequence": 1,
+        "StopPosition": {
+          "PositionLon": 121.46406,
+          "PositionLat": 25.01458,
+          "GeoHash": "wsqq8n9bq"
+        },
+        "StationID": "2442",
+        "StationGroupID": "211-084",
+        "LocationCityCode": "NWT"
+      },
+      {
+        "StopUID": "TPE38262",
+        "StopID": "38262",
+        "StopName": { "Zh_tw": "捷運西門站", "En": "MRT Ximen Sta." },
+        "StopBoarding": 0,
+        "StopSequence": 2,
+        "StopPosition": {
+          "PositionLon": 121.50806,
+          "PositionLat": 25.04238,
+          "GeoHash": "wsqqmb3zg"
+        },
+        "StationID": "1066",
+        "StationGroupID": "100-035",
+        "LocationCityCode": "TPE"
+      },
+      {
+        "StopUID": "TPE38263",
+        "StopID": "38263",
+        "StopName": { "Zh_tw": "撫遠街", "En": "Fuyuan St." },
+        "StopBoarding": -1,
+        "StopSequence": 3,
+        "StopPosition": {
+          "PositionLon": 121.57802,
+          "PositionLat": 25.05706,
+          "GeoHash": "wsqqqv1fz"
+        },
+        "StationGroupID": "100-421"
+      }
+    ],
+    "UpdateTime": "2026-10-20T03:00:00+08:00",
+    "VersionID": 1832
+  }
+]

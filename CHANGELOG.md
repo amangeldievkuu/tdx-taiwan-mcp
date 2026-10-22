@@ -1,0 +1,21 @@
+# Changelog
+
+All notable changes to this project are documented here. The format is based on
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to
+[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+
+- stdio MCP server (`npx tdx-taiwan-mcp`) and `createServer()` for embedding, on `tdx-taiwan`
+  0.15 with its response cache on.
+- YouBike tools: `youbike_nearby` and `youbike_station`.
+- Bus tools for city buses and InterCity coaches: `bus_route_search`, `bus_route_stops`,
+  `bus_eta` and `bus_positions`.
+- `tdx_get` for any TDX path with OData options.
+- Chinese city names (`臺北市`, `台北`), 台/臺-insensitive name search, output capped at
+  `TDX_MAX_ITEMS` items and 40,000 characters, and TDX errors (unsupported city, 404, 429,
+  bad keys) reported as readable tool errors.
+
+[Unreleased]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/commits/main

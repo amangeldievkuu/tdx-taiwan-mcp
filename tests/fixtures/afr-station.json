@@ -1,0 +1,43 @@
+{
+  "UpdateTime": "2026-10-22T07:22:48+08:00",
+  "UpdateInterval": 14400,
+  "SrcUpdateTime": "2026-10-22T07:22:48+08:00",
+  "SrcUpdateInterval": 86400,
+  "AuthorityCode": "AFR",
+  "Stations": [
+    {
+      "StationClass": "X",
+      "StationUID": "AFR-360",
+      "StationID": "360",
+      "ReservationCode": "360",
+      "StationName": {
+        "Zh_tw": "嘉義",
+        "En": "Chiayi"
+      },
+      "StationPosition": {
+        "PositionLon": 120.4412,
+        "PositionLat": 23.479
+      },
+      "StationAddress": "600嘉義市西區中山路528號",
+      "StationPhone": "05-2256918",
+      "StationURL": "https://afrch.forest.gov.tw/0000081"
+    },
+    {
+      "StationClass": "1",
+      "StationUID": "AFR-361",
+      "StationID": "361",
+      "ReservationCode": "361",
+      "StationName": {
+        "Zh_tw": "北門",
+        "En": "Beimen"
+      },
+      "StationPosition": {
+        "PositionLon": 120.4542,
+        "PositionLat": 23.488
+      },
+      "StationAddress": "600嘉義市東區忠孝路306號",
+      "StationPhone": "05-2768094",
+      "StationURL": "https://afrch.forest.gov.tw/0000082"
+    }
+  ]
+}

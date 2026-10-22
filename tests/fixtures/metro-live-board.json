@@ -1,0 +1,89 @@
+[
+  {
+    "LineNO": "BL",
+    "LineID": "BL",
+    "LineName": {
+      "Zh_tw": "板南線",
+      "En": "Bannan Line",
+      "Ja": "板南線",
+      "Ko": "반난선"
+    },
+    "StationID": "BL22",
+    "StationName": {
+      "Zh_tw": "南港",
+      "En": "Nangang",
+      "Ja": "南港",
+      "Ko": "난강"
+    },
+    "TripHeadSign": "往亞東醫院",
+    "DestinationStaionID": "BL05",
+    "DestinationStationID": "BL05",
+    "DestinationStationName": {
+      "Zh_tw": "亞東醫院",
+      "En": "Far Eastern Hospital",
+      "Ja": "亜東病院",
+      "Ko": "야둥 병원"
+    },
+    "ServiceStatus": 0,
+    "EstimateTime": 0,
+    "SrcUpdateTime": "2026-10-20T15:19:07+08:00",
+    "UpdateTime": "2026-10-20T15:19:34+08:00"
+  },
+  {
+    "LineNO": "BR",
+    "LineID": "BR",
+    "LineName": {
+      "Zh_tw": "文湖線",
+      "En": "Wenhu Line",
+      "Ja": "文湖線",
+      "Ko": "원후선"
+    },
+    "StationID": "BR02",
+    "StationName": {
+      "Zh_tw": "木柵",
+      "En": "Muzha",
+      "Ja": "木柵",
+      "Ko": "무자"
+    },
+    "TripHeadSign": "往動物園",
+    "DestinationStaionID": "BR01",
+    "DestinationStationID": "BR01",
+    "DestinationStationName": {
+      "Zh_tw": "動物園",
+      "En": "Taipei Zoo",
+      "Ja": "動物園",
+      "Ko": "동물원"
+    },
+    "ServiceStatus": 0,
+    "EstimateTime": 0,
+    "SrcUpdateTime": "2026-10-20T15:19:11+08:00",
+    "UpdateTime": "2026-10-20T15:19:34+08:00"
+  },
+  {
+    "LineNO": "O",
+    "LineID": "O",
+    "LineName": {
+      "Zh_tw": "橘線"
+    },
+    "StationID": "O1",
+    "StationName": {
+      "Zh_tw": "哈瑪星",
+      "En": "Hamasen",
+      "Ja": null,
+      "Ko": null
+    },
+    "TripHeadSign": "往大寮",
+    "DestinationStaionID": "OT1",
+    "DestinationStationID": "OT1",
+    "DestinationStationName": {
+      "Zh_tw": "大寮",
+      "En": "Daliao",
+      "Ja": null,
+      "Ko": null
+    },
+    "ServiceStatus": 3,
+    "EstimateTime": null,
+    "SrcUpdateTime": "2026-10-20T15:19:04+08:00",
+    "UpdateTime": "2026-10-20T15:19:04+08:00"
+  }
+]

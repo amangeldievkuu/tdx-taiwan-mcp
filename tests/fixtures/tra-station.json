@@ -1,0 +1,45 @@
+{
+  "UpdateTime": "2026-10-21T06:22:49+08:00",
+  "UpdateInterval": 14400,
+  "SrcUpdateTime": "2026-10-21T04:00:00+08:00",
+  "SrcUpdateInterval": -1,
+  "AuthorityCode": "TRA",
+  "Stations": [
+    {
+      "StationUID": "TRA-1000",
+      "StationID": "1000",
+      "StationName": {
+        "Zh_tw": "臺北",
+        "En": "Taipei",
+        "Ja": "台北",
+        "Kr": "타이베이"
+      },
+      "StationPosition": {
+        "PositionLon": 121.51711,
+        "PositionLat": 25.04775
+      },
+      "StationAddress": "100230臺北市中正區黎明里北平西路 3 號",
+      "StationPhone": "02-23713558",
+      "StationClass": "0",
+      "StationURL": "https://www.trc.com.tw/tra-tip-web/tip/tip00H/tipH41/viewStaInfo/1000"
+    },
+    {
+      "StationUID": "TRA-4400",
+      "StationID": "4400",
+      "StationName": {
+        "Zh_tw": "高雄",
+        "En": "Kaohsiung",
+        "Ja": "高雄",
+        "Kr": "까오숑"
+      },
+      "StationPosition": {
+        "PositionLon": 120.30292,
+        "PositionLat": 22.63946
+      },
+      "StationAddress": "807001高雄市三民區港西里建國二路 318 號",
+      "StationPhone": "07-2352376",
+      "StationClass": "0",
+      "StationURL": "https://www.trc.com.tw/tra-tip-web/tip/tip00H/tipH41/viewStaInfo/4400"
+    }
+  ]
+}

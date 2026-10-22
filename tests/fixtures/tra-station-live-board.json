@@ -1,0 +1,63 @@
+{
+  "UpdateTime": "2026-10-21T09:40:04+08:00",
+  "UpdateInterval": 30,
+  "SrcUpdateTime": "2026-10-21T09:40:00+08:00",
+  "SrcUpdateInterval": 60,
+  "AuthorityCode": "TRA",
+  "StationLiveBoards": [
+    {
+      "StationID": "1020",
+      "StationName": {
+        "Zh_tw": "板橋",
+        "En": "Banqiao"
+      },
+      "TrainNo": "270",
+      "Direction": 0,
+      "TrainTypeID": "110A",
+      "TrainTypeCode": "3",
+      "TrainTypeName": {
+        "Zh_tw": "自強",
+        "En": "Tze-Chiang Express"
+      },
+      "EndingStationID": "7000",
+      "EndingStationName": {
+        "Zh_tw": "花蓮",
+        "En": "Hualien"
+      },
+      "TripLine": 1,
+      "Platform": "",
+      "ScheduleArrivalTime": "09:45:00",
+      "ScheduleDepartureTime": "09:47:00",
+      "DelayTime": 4,
+      "RunningStatus": 1,
+      "UpdateTime": "2026-10-21T09:39:46+08:00"
+    },
+    {
+      "StationID": "1020",
+      "StationName": {
+        "Zh_tw": "板橋",
+        "En": "Banqiao"
+      },
+      "TrainNo": "193",
+      "Direction": 1,
+      "TrainTypeID": "110G",
+      "TrainTypeCode": "11",
+      "TrainTypeName": {
+        "Zh_tw": "自強(3000)",
+        "En": "Tze-Chiang 3000 Express "
+      },
+      "EndingStationID": "3360",
+      "EndingStationName": {
+        "Zh_tw": "彰化",
+        "En": "Changhua"
+      },
+      "TripLine": 1,
+      "Platform": "",
+      "ScheduleArrivalTime": "09:46:30",
+      "ScheduleDepartureTime": "09:47:30",
+      "DelayTime": 0,
+      "RunningStatus": 0,
+      "UpdateTime": "2026-10-21T09:39:46+08:00"
+    }
+  ]
+}

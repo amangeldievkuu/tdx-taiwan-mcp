@@ -1,0 +1,72 @@
+[
+  {
+    "OriginStationID": "1000",
+    "OriginStationName": {
+      "Zh_tw": "台北",
+      "En": "Taipei",
+      "Ja": "台北",
+      "Ko": "타이페이"
+    },
+    "DestinationStationID": "1070",
+    "DestinationStationName": {
+      "Zh_tw": "左營",
+      "En": "Zuoying",
+      "Ja": "左營",
+      "Ko": "쭤잉"
+    },
+    "Direction": 0,
+    "Fares": [
+      {
+        "TicketType": 1,
+        "FareClass": 1,
+        "CabinClass": 1,
+        "Price": 1490
+      },
+      {
+        "TicketType": 1,
+        "FareClass": 1,
+        "CabinClass": 2,
+        "Price": 2440
+      },
+      {
+        "TicketType": 1,
+        "FareClass": 1,
+        "CabinClass": 3,
+        "Price": 1445
+      },
+      {
+        "TicketType": 1,
+        "FareClass": 9,
+        "CabinClass": 1,
+        "Price": 745
+      },
+      {
+        "TicketType": 1,
+        "FareClass": 9,
+        "CabinClass": 2,
+        "Price": 1220
+      },
+      {
+        "TicketType": 1,
+        "FareClass": 9,
+        "CabinClass": 3,
+        "Price": 720
+      },
+      {
+        "TicketType": 8,
+        "FareClass": 1,
+        "CabinClass": 1,
+        "Price": 1415
+      },
+      {
+        "TicketType": 8,
+        "FareClass": 1,
+        "CabinClass": 2,
+        "Price": 2315
+      }
+    ],
+    "SrcUpdateTime": "2024-06-07T20:05:43+08:00",
+    "UpdateTime": "2026-10-20T12:52:54+08:00",
+    "VersionID": 1129
+  }
+]

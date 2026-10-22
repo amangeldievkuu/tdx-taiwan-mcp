@@ -1,0 +1,14 @@
+{
+  "UpdateTime": "2026-10-16T22:07:04+08:00",
+  "UpdateInterval": 120,
+  "SrcUpdateTime": "2026-10-16T22:07:00+08:00",
+  "SrcUpdateInterval": -1,
+  "AuthorityCode": "TRA",
+  "Alerts": [
+    {
+      "Title": "全線營運正常",
+      "Status": 1,
+      "UpdateTime": "2026-10-16T22:07:00+08:00"
+    }
+  ]
+}

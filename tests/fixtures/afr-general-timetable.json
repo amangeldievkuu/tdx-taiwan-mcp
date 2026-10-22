@@ -1,0 +1,85 @@
+{
+  "UpdateTime": "2026-10-22T07:22:48+08:00",
+  "UpdateInterval": 14400,
+  "SrcUpdateTime": "2026-10-22T07:22:48+08:00",
+  "SrcUpdateInterval": 86400,
+  "EffectiveDate": "2024-02-15T00:00:00+08:00",
+  "SrcVersion": "10",
+  "TimetableName": "常態性時刻表",
+  "TrainTimetables": [
+    {
+      "TrainInfo": {
+        "TrainNo": "1",
+        "RouteID": "1",
+        "Direction": 0,
+        "TripHeadSign": "往十字路",
+        "StartingStationID": "360",
+        "StartingStationName": {
+          "Zh_tw": "嘉義",
+          "En": "Chiayi"
+        },
+        "EndingStationID": "372",
+        "EndingStationName": {
+          "Zh_tw": "十字路",
+          "En": "Shizilu"
+        },
+        "OverNightStationID": " ",
+        "TripLine": 1,
+        "WheelChairFlag": 1,
+        "PackageServiceFlag": 1,
+        "DiningFlag": 0,
+        "BreastFeedFlag": 1,
+        "BikeFlag": 1,
+        "CarFlag": 0,
+        "DailyFlag": 1,
+        "ExtraTrainFlag": 0,
+        "Note": " "
+      },
+      "StopTimes": [
+        {
+          "StopSequence": 1,
+          "StationID": "360",
+          "StationName": {
+            "Zh_tw": "嘉義",
+            "En": "Chiayi"
+          },
+          "ArrivalTime": "08:57",
+          "DepartureTime": "09:00"
+        },
+        {
+          "StopSequence": 2,
+          "StationID": "361",
+          "StationName": {
+            "Zh_tw": "北門",
+            "En": "Beimen"
+          },
+          "ArrivalTime": "09:06",
+          "DepartureTime": "09:10"
+        },
+        {
+          "StopSequence": 3,
+          "StationID": "362",
+          "StationName": {
+            "Zh_tw": "鹿麻產",
+            "En": "Lumachan"
+          },
+          "ArrivalTime": "09:32",
+          "DepartureTime": "09:33"
+        }
+      ],
+      "ServiceDay": {
+        "ServiceTag": "請參閱官網",
+        "Monday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1,
+        "Thursday": 1,
+        "Friday": 1,
+        "Saturday": 1,
+        "Sunday": 1,
+        "NationalHolidays": 1,
+        "DayBeforeHoliday": 0,
+        "DayAfterHoliday": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+[
+  {
+    "StationUID": "TRTC-BL12",
+    "StationID": "BL12",
+    "StationName": {
+      "Zh_tw": "台北車站",
+      "En": "Taipei Main Station",
+      "Ja": "台北駅",
+      "Ko": "타이베이 역"
+    },
+    "StationAddress": "100009臺北市中正區忠孝西路1段49號",
+    "BikeAllowOnHoliday": false,
+    "SrcUpdateTime": "2026-09-30T00:00:00+08:00",
+    "StationPosition": {
+      "PositionLon": 121.517415,
+      "PositionLat": 25.04631,
+      "GeoHash": "wsqqmpw32"
+    },
+    "LocationCity": "臺北市",
+    "LocationCityCode": "TPE",
+    "LocationTown": "中正區",
+    "LocationTownCode": "63000050",
+    "UpdateTime": "2026-10-02T17:00:00+08:00",
+    "VersionID": 8
+  },
+  {
+    "StationUID": "NTDLRT-V02",
+    "StationID": "V02",
+    "StationName": {
+      "Zh_tw": "竿蓁林",
+      "En": "Ganzhenlin",
+      "Ja": "竿蓁林",
+      "Ko": "간전린"
+    },
+    "BikeAllowOnHoliday": false,
+    "SrcUpdateTime": "2023-10-12T00:00:00+08:00",
+    "StationPosition": {
+      "PositionLon": 121.456232,
+      "PositionLat": 25.162415,
+      "GeoHash": "wsqr5u9tx"
+    },
+    "LocationCity": "新北市",
+    "LocationCityCode": "NWT",
+    "LocationTown": "淡水區",
+    "LocationTownCode": "65000100",
+    "UpdateTime": "2023-10-17T00:00:00+08:00",
+    "VersionID": 4
+  }
+]

@@ -18,16 +18,30 @@ describe('server', () => {
     expect(t.client.getInstructions()).toMatch(/bus_route_search/);
   });
 
-  it('lists the phase 1 tools, all read-only with a description', async () => {
+  it('lists the tools, all read-only with a description', async () => {
     const t = await connect([]);
     close = t.close;
     const { tools } = await t.client.listTools();
     expect(tools.map((tool) => tool.name).sort()).toEqual([
+      'afr_timetable',
       'bus_eta',
       'bus_positions',
       'bus_route_search',
       'bus_route_stops',
+      'metro_fare',
+      'metro_first_last_train',
+      'metro_live_board',
+      'rail_alerts',
+      'rail_station_search',
       'tdx_get',
+      'thsr_fare',
+      'thsr_seats',
+      'thsr_timetable',
+      'thsr_train',
+      'tra_fare',
+      'tra_live_board',
+      'tra_timetable',
+      'tra_train',
       'youbike_nearby',
       'youbike_station',
     ]);

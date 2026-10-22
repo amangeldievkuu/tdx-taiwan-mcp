@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { normalize, search } from '../../src/core/names.js';
+import { ToolInputError } from '../../src/core/errors.js';
+import { normalize, resolve, search } from '../../src/core/names.js';
 
 describe('normalize', () => {
   it('folds 台 to 臺, case, width, spaces and punctuation', () => {
@@ -32,5 +33,60 @@ describe('search', () => {
 
   it('returns nothing when nothing matches', () => {
     expect(search(routes, (r) => [r], '999')).toEqual([]);
+  });
+});
+
+describe('search with station suffixes', () => {
+  it('matches 臺北 for "台北車站" and Taipei for "Taipei Main Station"', () => {
+    const items = [
+      { zh: '臺北', en: 'Taipei' },
+      { zh: '新北投', en: 'Xinbeitou' },
+    ];
+    expect(search(items, (i) => [i.zh, i.en], '台北車站')).toEqual([items[0]]);
+    expect(search(items, (i) => [i.zh, i.en], 'Taipei Main Station')).toEqual([items[0]]);
+  });
+});
+
+describe('resolve', () => {
+  const stations = [
+    { id: '1000', zh: '臺北', en: 'Taipei' },
+    { id: '1210', zh: '新竹', en: 'Hsinchu' },
+    { id: '1190', zh: '北新竹', en: 'North Hsinchu' },
+    { id: 'BL12', zh: '台北車站', en: 'Taipei Main Station' },
+    { id: 'R10', zh: '台北車站', en: 'Taipei Main Station' },
+    { id: '3300', zh: '臺中', en: 'Taichung' },
+    { id: '3360', zh: '彰化', en: 'Changhua' },
+  ];
+  const options = {
+    names: (s: (typeof stations)[number]) => [s.zh, s.en],
+    ids: (s: (typeof stations)[number]) => [s.id],
+    label: 'station',
+  };
+
+  it('prefers an ID, then an exact name over partial ones', () => {
+    expect(resolve(stations, 'r10', options).map((s) => s.id)).toEqual(['R10']);
+    expect(resolve(stations, '新竹', options).map((s) => s.id)).toEqual(['1210']);
+    expect(resolve(stations, 'hsinchu', options).map((s) => s.id)).toEqual(['1210']);
+  });
+
+  it('returns every station sharing the matched name', () => {
+    expect(resolve(stations, '台北車站', options).map((s) => s.id)).toEqual(['BL12', 'R10']);
+  });
+
+  it('accepts a unique partial match', () => {
+    expect(resolve(stations, '彰', options).map((s) => s.id)).toEqual(['3360']);
+  });
+
+  it('rejects ambiguous partial matches, listing them', () => {
+    expect(() => resolve(stations, '竹', options)).toThrow(ToolInputError);
+    expect(() => resolve(stations, '竹', options)).toThrow(
+      '"竹" matches several stations: 新竹、北新竹',
+    );
+  });
+
+  it('lists known names when nothing matches', () => {
+    expect(() => resolve(stations, '花蓮', options)).toThrow(
+      /^No station matches "花蓮"\. Known: 臺北、新竹/,
+    );
   });
 });

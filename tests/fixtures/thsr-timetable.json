@@ -1,0 +1,100 @@
+[
+  {
+    "TrainDate": "2026-10-21",
+    "DailyTrainInfo": {
+      "TrainNo": "0803",
+      "Direction": 0,
+      "StartingStationID": "0990",
+      "StartingStationName": {
+        "Zh_tw": "南港",
+        "En": "Nangang",
+        "Ja": null,
+        "Ko": null
+      },
+      "EndingStationID": "1070",
+      "EndingStationName": {
+        "Zh_tw": "左營",
+        "En": "Zuoying",
+        "Ja": null,
+        "Ko": null
+      },
+      "Note": {},
+      "Overnight": false
+    },
+    "OriginStopTime": {
+      "StopSequence": 2,
+      "StationID": "1000",
+      "StationName": {
+        "Zh_tw": "台北",
+        "En": "Taipei",
+        "Ja": "台北",
+        "Ko": "타이페이"
+      },
+      "ArrivalTime": "06:23",
+      "DepartureTime": "06:26"
+    },
+    "DestinationStopTime": {
+      "StopSequence": 12,
+      "StationID": "1070",
+      "StationName": {
+        "Zh_tw": "左營",
+        "En": "Zuoying",
+        "Ja": "左營",
+        "Ko": "쭤잉"
+      },
+      "ArrivalTime": "08:40",
+      "DepartureTime": "08:40"
+    },
+    "UpdateTime": "2026-09-23T00:37:10+08:00",
+    "VersionID": 1
+  },
+  {
+    "TrainDate": "2026-10-21",
+    "DailyTrainInfo": {
+      "TrainNo": "0203",
+      "Direction": 0,
+      "StartingStationID": "1000",
+      "StartingStationName": {
+        "Zh_tw": "台北",
+        "En": "Taipei",
+        "Ja": null,
+        "Ko": null
+      },
+      "EndingStationID": "1070",
+      "EndingStationName": {
+        "Zh_tw": "左營",
+        "En": "Zuoying",
+        "Ja": null,
+        "Ko": null
+      },
+      "Note": {},
+      "Overnight": false
+    },
+    "OriginStopTime": {
+      "StopSequence": 1,
+      "StationID": "1000",
+      "StationName": {
+        "Zh_tw": "台北",
+        "En": "Taipei",
+        "Ja": "台北",
+        "Ko": "타이페이"
+      },
+      "ArrivalTime": "06:30",
+      "DepartureTime": "06:30"
+    },
+    "DestinationStopTime": {
+      "StopSequence": 6,
+      "StationID": "1070",
+      "StationName": {
+        "Zh_tw": "左營",
+        "En": "Zuoying",
+        "Ja": "左營",
+        "Ko": "쭤잉"
+      },
+      "ArrivalTime": "08:15",
+      "DepartureTime": "08:15"
+    },
+    "UpdateTime": "2026-09-23T00:37:10+08:00",
+    "VersionID": 1
+  }
+]

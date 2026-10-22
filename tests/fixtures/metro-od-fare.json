@@ -1,0 +1,47 @@
+[
+  {
+    "OriginStationID": "BL12",
+    "OriginStationName": {
+      "Zh_tw": "台北車站",
+      "En": "Taipei Main Station",
+      "Ja": "台北駅",
+      "Ko": "타이베이 역"
+    },
+    "DestinationStationID": "BL01",
+    "DestinationStationName": {
+      "Zh_tw": "頂埔",
+      "En": "Dingpu",
+      "Ja": "頂埔",
+      "Ko": "딩푸"
+    },
+    "TrainType": 0,
+    "Fares": [
+      {
+        "TicketType": 1,
+        "FareClass": 1,
+        "Price": 40
+      },
+      {
+        "TicketType": 1,
+        "FareClass": 3,
+        "CitizenCode": "NWT",
+        "Price": 16
+      },
+      {
+        "TicketType": 1,
+        "FareClass": 3,
+        "CitizenCode": "TPE",
+        "Price": 16
+      },
+      {
+        "TicketType": 1,
+        "FareClass": 4,
+        "Price": 16
+      }
+    ],
+    "TravelDistance": 15.99,
+    "SrcUpdateTime": "2026-08-06T00:00:00+08:00",
+    "UpdateTime": "2026-09-16T18:13:06+08:00",
+    "VersionID": 7
+  }
+]

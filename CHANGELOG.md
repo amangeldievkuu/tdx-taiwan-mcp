@@ -13,6 +13,11 @@ All notable changes to this project are documented here. The format is based on
 - YouBike tools: `youbike_nearby` and `youbike_station`.
 - Bus tools for city buses and InterCity coaches: `bus_route_search`, `bus_route_stops`,
   `bus_eta` and `bus_positions`.
+- Rail tools: `thsr_timetable`, `thsr_seats`, `thsr_fare`, `thsr_train`, `tra_timetable`,
+  `tra_live_board`, `tra_train`, `tra_fare`, `metro_live_board`, `metro_fare`,
+  `metro_first_last_train`, `afr_timetable`, `rail_station_search` and `rail_alerts`. Stations
+  are given by Chinese or English name (`台北車站` finds TRA 臺北 and both Taipei Metro IDs) or
+  by ID, and today's departures start from the current time in Taiwan.
 - `tdx_get` for any TDX path with OData options.
 - Chinese city names (`臺北市`, `台北`), 台/臺-insensitive name search, output capped at
   `TDX_MAX_ITEMS` items and 40,000 characters, and TDX errors (unsupported city, 404, 429,

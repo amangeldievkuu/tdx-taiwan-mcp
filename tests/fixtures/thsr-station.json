@@ -1,0 +1,50 @@
+[
+  {
+    "StationUID": "THSR-1000",
+    "StationID": "1000",
+    "StationCode": "TPE",
+    "StationName": {
+      "Zh_tw": "台北",
+      "En": "Taipei",
+      "Ja": "台北",
+      "Ko": "타이페이"
+    },
+    "StationAddress": "台北市北平西路3號",
+    "OperatorID": "THSR",
+    "StationPosition": {
+      "PositionLon": 121.516983,
+      "PositionLat": 25.04767,
+      "GeoHash": "wsqqmpvcq"
+    },
+    "LocationCity": "臺北市",
+    "LocationCityCode": "TPE",
+    "LocationTown": "中正區",
+    "LocationTownCode": "63000050",
+    "UpdateTime": "2023-10-17T00:00:00+08:00",
+    "VersionID": 2
+  },
+  {
+    "StationUID": "THSR-1070",
+    "StationID": "1070",
+    "StationCode": "ZUY",
+    "StationName": {
+      "Zh_tw": "左營",
+      "En": "Zuoying",
+      "Ja": "左營",
+      "Ko": "쭤잉"
+    },
+    "StationAddress": "高雄市左營區高鐵路105號",
+    "OperatorID": "THSR",
+    "StationPosition": {
+      "PositionLon": 120.307487,
+      "PositionLat": 22.687391,
+      "GeoHash": "wsj91dj5x"
+    },
+    "LocationCity": "高雄市",
+    "LocationCityCode": "KHH",
+    "LocationTown": "左營區",
+    "LocationTownCode": "64000030",
+    "UpdateTime": "2023-10-17T00:00:00+08:00",
+    "VersionID": 2
+  }
+]

@@ -1,0 +1,151 @@
+{
+  "UpdateTime": "2026-10-20T09:35:13+08:00",
+  "UpdateInterval": 14400,
+  "SrcUpdateTime": "2026-10-19T20:36:26+08:00",
+  "SrcUpdateInterval": -1,
+  "TrainDate": "2026-10-22",
+  "TrainTimetables": [
+    {
+      "TrainInfo": {
+        "TrainNo": "103",
+        "RouteID": "",
+        "Direction": 1,
+        "TrainTypeID": "1108",
+        "TrainTypeCode": "3",
+        "TrainTypeName": {
+          "Zh_tw": "自強(推拉式自強號且無自行車車廂)",
+          "En": "Tze-Chiang Express",
+          "Ja": "自強",
+          "Kr": "즈창"
+        },
+        "TripHeadSign": "往潮州",
+        "StartingStationID": "0960",
+        "StartingStationName": {
+          "Zh_tw": "汐止",
+          "En": "Xizhi",
+          "Ja": "汐止",
+          "Kr": "시즈"
+        },
+        "EndingStationID": "5050",
+        "EndingStationName": {
+          "Zh_tw": "潮州",
+          "En": "Chaozhou",
+          "Ja": "潮州",
+          "Kr": "차오조우"
+        },
+        "OverNightStationID": "",
+        "TripLine": 2,
+        "WheelChairFlag": 1,
+        "PackageServiceFlag": 0,
+        "DiningFlag": 0,
+        "BreastFeedFlag": 1,
+        "BikeFlag": 0,
+        "CarFlag": 0,
+        "DailyFlag": 1,
+        "ExtraTrainFlag": 0,
+        "SuspendedFlag": 0,
+        "ServiceType": 1,
+        "Note": "每日行駛。"
+      },
+      "StopTimes": [
+        {
+          "StopSequence": 3,
+          "StationID": "1000",
+          "StationName": {
+            "Zh_tw": "臺北",
+            "En": "Taipei",
+            "Ja": "台北",
+            "Kr": "타이베이"
+          },
+          "ArrivalTime": "06:22",
+          "DepartureTime": "06:27",
+          "SuspendedFlag": 0
+        },
+        {
+          "StopSequence": 22,
+          "StationID": "4400",
+          "StationName": {
+            "Zh_tw": "高雄",
+            "En": "Kaohsiung",
+            "Ja": "高雄",
+            "Kr": "까오숑"
+          },
+          "ArrivalTime": "11:34",
+          "DepartureTime": "11:37",
+          "SuspendedFlag": 0
+        }
+      ]
+    },
+    {
+      "TrainInfo": {
+        "TrainNo": "105",
+        "RouteID": "",
+        "Direction": 1,
+        "TrainTypeID": "1108",
+        "TrainTypeCode": "3",
+        "TrainTypeName": {
+          "Zh_tw": "自強(推拉式自強號且無自行車車廂)",
+          "En": "Tze-Chiang Express",
+          "Ja": "自強",
+          "Kr": "즈창"
+        },
+        "TripHeadSign": "往潮州",
+        "StartingStationID": "0900",
+        "StartingStationName": {
+          "Zh_tw": "基隆",
+          "En": "Keelung",
+          "Ja": "基隆",
+          "Kr": "지롱"
+        },
+        "EndingStationID": "5050",
+        "EndingStationName": {
+          "Zh_tw": "潮州",
+          "En": "Chaozhou",
+          "Ja": "潮州",
+          "Kr": "차오조우"
+        },
+        "OverNightStationID": "",
+        "TripLine": 1,
+        "WheelChairFlag": 1,
+        "PackageServiceFlag": 0,
+        "DiningFlag": 0,
+        "BreastFeedFlag": 1,
+        "BikeFlag": 0,
+        "CarFlag": 0,
+        "DailyFlag": 1,
+        "ExtraTrainFlag": 0,
+        "SuspendedFlag": 0,
+        "ServiceType": 1,
+        "Note": "每日行駛。"
+      },
+      "StopTimes": [
+        {
+          "StopSequence": 7,
+          "StationID": "1000",
+          "StationName": {
+            "Zh_tw": "臺北",
+            "En": "Taipei",
+            "Ja": "台北",
+            "Kr": "타이베이"
+          },
+          "ArrivalTime": "06:57",
+          "DepartureTime": "06:59",
+          "SuspendedFlag": 0
+        },
+        {
+          "StopSequence": 27,
+          "StationID": "4400",
+          "StationName": {
+            "Zh_tw": "高雄",
+            "En": "Kaohsiung",
+            "Ja": "高雄",
+            "Kr": "까오숑"
+          },
+          "ArrivalTime": "12:13",
+          "DepartureTime": "12:15",
+          "SuspendedFlag": 0
+        }
+      ]
+    }
+  ]
+}

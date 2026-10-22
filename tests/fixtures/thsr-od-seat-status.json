@@ -1,0 +1,31 @@
+{
+  "UpdateTime": "2026-10-22T10:02:04+08:00",
+  "UpdateInterval": 600,
+  "SrcUpdateTime": "2026-10-22T10:00:02+08:00",
+  "SrcUpdateInterval": 600,
+  "TrainDate": "2026-10-22",
+  "AvailableSeats": [
+    {
+      "TrainNo": "0112",
+      "Direction": 1,
+      "OriginStationID": "1000",
+      "OriginStationCode": "TPE",
+      "OriginStationName": {
+        "Zh_tw": "台北",
+        "En": "Taipei",
+        "Ja": "台北",
+        "Ko": "타이페이"
+      },
+      "DestinationStationID": "0990",
+      "DestinationStationCode": "NAK",
+      "DestinationStationName": {
+        "Zh_tw": "南港",
+        "En": "Nangang",
+        "Ja": "南港",
+        "Ko": "난강"
+      },
+      "StandardSeatStatus": "O",
+      "BusinessSeatStatus": "O"
+    }
+  ]
+}

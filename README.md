@@ -7,8 +7,8 @@
 An unofficial [MCP](https://modelcontextprotocol.io) server for Taiwan's
 [TDX (Transport Data eXchange)](https://tdx.transportdata.tw) API, built on the
 [`tdx-taiwan`](https://www.npmjs.com/package/tdx-taiwan) SDK. It lets Claude and other MCP
-clients answer questions such as "where is the nearest YouBike with bikes?" or "when does the
-307 reach Ximen?".
+clients answer questions such as "where is the nearest YouBike with bikes?", "when does the
+307 reach Ximen?" or "which high speed trains to Zuoying still have seats tonight?".
 
 - Task-shaped tools: search by name (Chinese or English, 台/臺 folded) or by location, with
   readable output ("4 min", "last bus has passed") instead of raw status codes
@@ -65,6 +65,8 @@ A `.env` file in the working directory is read too; variables already set take p
 
 ## Tools
 
+### YouBike and buses
+
 | Tool               | What it answers                                                                        |
 | ------------------ | -------------------------------------------------------------------------------------- |
 | `youbike_nearby`   | Nearest YouBike / Moovo stations to a coordinate with bikes (or empty docks) right now |
@@ -73,11 +75,39 @@ A `.env` file in the working directory is read too; variables already set take p
 | `bus_route_stops`  | The stops of a route in order, per direction and sub-route                             |
 | `bus_eta`          | Live arrival estimates at the stops of a route, optionally at one stop                 |
 | `bus_positions`    | Where the buses on a route are now, with speed and status                              |
-| `tdx_get`          | Any TDX API path with OData `filter`, `select`, `orderBy`, `top`, `skip`               |
 
 Bus tools take a city (`Taipei`, `NewTaipei`, ...) or `InterCity` for 公路客運 / 國道客運
-coaches. Rail, road, air and ferry tools are on the way; until then `tdx_get` reaches those
-endpoints.
+coaches.
+
+### Rail
+
+| Tool                     | What it answers                                                             |
+| ------------------------ | --------------------------------------------------------------------------- |
+| `thsr_timetable`         | High speed rail (高鐵) trains between two stations on a day                 |
+| `thsr_seats`             | Standard and business seat availability for those trains                    |
+| `thsr_fare`              | THSR fares per car and passenger type                                       |
+| `thsr_train`             | Every stop of one THSR train                                                |
+| `tra_timetable`          | Taiwan Railway (臺鐵) trains between two stations, with train type          |
+| `tra_live_board`         | Trains about to arrive at or leave a TRA station, with delays               |
+| `tra_train`              | One TRA train today: stops, current position and delay                      |
+| `tra_fare`               | TRA fares per train type and passenger type                                 |
+| `metro_live_board`       | Minutes to the next metro trains (Kaohsiung, Taoyuan; Taipei arrivals only) |
+| `metro_fare`             | Metro fares between two stations                                            |
+| `metro_first_last_train` | First and last trains at a metro station                                    |
+| `afr_timetable`          | Alishan Forest Railway (阿里山林業鐵路) regular timetable                   |
+| `rail_station_search`    | Stations of any rail system by name, or nearest to a coordinate             |
+| `rail_alerts`            | Service status and disruptions of THSR, TRA or a metro                      |
+
+Rail tools take station names in Chinese or English (`台北`, `Taipei`, `台北車站`) or station
+IDs. For today, timetables start from the current time in Taiwan.
+
+### Other
+
+| Tool      | What it answers                                                          |
+| --------- | ------------------------------------------------------------------------ |
+| `tdx_get` | Any TDX API path with OData `filter`, `select`, `orderBy`, `top`, `skip` |
+
+Road, air and ferry tools are on the way; until then `tdx_get` reaches those endpoints.
 
 ## Use as a library
 
@@ -94,7 +124,9 @@ await createServer({ tdx }).connect(new StdioServerTransport());
 
 TDX limits requests per second by plan and bills by call count and response size. The server
 caches static lists (stations, routes) for an hour and live data for 15 seconds, and spaces
-requests at `TDX_REQUESTS_PER_SECOND`.
+requests at `TDX_REQUESTS_PER_SECOND`. When TDX still answers 429 (the basic plan also limits
+calls per minute), the server waits as TDX asks and retries, so a tool call can take up to a
+minute during a burst of questions.
 
 ## Data source
 

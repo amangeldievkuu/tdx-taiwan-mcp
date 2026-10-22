@@ -1,0 +1,26 @@
+{
+  "UpdateTime": "2026-10-21T09:40:04+08:00",
+  "UpdateInterval": 30,
+  "SrcUpdateTime": "2026-10-21T09:40:00+08:00",
+  "SrcUpdateInterval": 60,
+  "AuthorityCode": "TRA",
+  "TrainLiveBoards": [
+    {
+      "TrainNo": "103",
+      "TrainTypeID": "1108",
+      "TrainTypeCode": "3",
+      "TrainTypeName": {
+        "Zh_tw": "自強",
+        "En": "Tze-Chiang Express"
+      },
+      "StationID": "3410",
+      "StationName": {
+        "Zh_tw": "社頭",
+        "En": "Shetou"
+      },
+      "TrainStationStatus": 2,
+      "DelayTime": 1,
+      "UpdateTime": "2026-10-21T09:39:48+08:00"
+    }
+  ]
+}

@@ -28,3 +28,17 @@ export function limit(defaultValue: number, what: string) {
 export function take(ctx: ToolContext, value: number | undefined, defaultValue: number): number {
   return Math.min(value ?? defaultValue, ctx.maxItems);
 }
+
+export const date = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, 'Use YYYY-MM-DD')
+  .optional()
+  .describe('Travel date in Taiwan, YYYY-MM-DD (default: today).');
+
+export const after = z
+  .string()
+  .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Use HH:mm')
+  .optional()
+  .describe(
+    'Only trains departing at or after this time, HH:mm (default: now for today, else 00:00).',
+  );

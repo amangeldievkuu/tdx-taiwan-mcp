@@ -1,0 +1,44 @@
+[
+  {
+    "AlertID": "20762",
+    "Title": "2026第二十四屆臺灣同志遊行(4/4)",
+    "Description": "2026第二十四屆臺灣同志遊行(4/4)",
+    "Department": "臺北市公共運輸處",
+    "Status": 2,
+    "Cause": 11,
+    "Effect": 1,
+    "Scope": {
+      "Stops": [
+        {
+          "StopID": "13646",
+          "StopName": {
+            "Zh_tw": "市議會",
+            "En": "CityCouncil"
+          },
+          "StationID": "2072"
+        },
+        {
+          "StopID": "13787",
+          "StopName": {
+            "Zh_tw": "市政府(松壽)",
+            "En": "City Hall"
+          },
+          "StationID": "2069"
+        },
+        {
+          "StopID": "148753",
+          "StopName": {
+            "Zh_tw": "市政府(市府)",
+            "En": "Taipei City Hall(City Hall Rd.)"
+          },
+          "StationID": "4171"
+        }
+      ]
+    },
+    "PublishTime": "2026-10-22T16:09:55+08:00",
+    "StartTime": "2026-10-31T20:00:00+08:00",
+    "EndTime": "2026-10-31T23:59:00+08:00",
+    "SrcUpdateTime": "2026-10-22T16:09:55+08:00",
+    "UpdateTime": "2026-10-27T01:26:50+08:00"
+  }
+]

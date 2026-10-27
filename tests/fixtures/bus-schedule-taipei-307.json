@@ -1,0 +1,130 @@
+[
+  {
+    "RouteUID": "TPE16111",
+    "RouteID": "16111",
+    "RouteName": {
+      "Zh_tw": "307",
+      "En": "307"
+    },
+    "SubRouteUID": "TPE157462",
+    "SubRouteID": "157462",
+    "SubRouteName": {
+      "Zh_tw": "307莒光往板橋前站",
+      "En": "307"
+    },
+    "Direction": 1,
+    "Frequencys": [
+      {
+        "StartTime": "05:00",
+        "EndTime": "21:00",
+        "MinHeadwayMins": 7,
+        "MaxHeadwayMins": 10,
+        "ServiceDay": {
+          "Sunday": 1,
+          "Monday": 0,
+          "Tuesday": 0,
+          "Wednesday": 0,
+          "Thursday": 0,
+          "Friday": 0,
+          "Saturday": 0
+        }
+      },
+      {
+        "StartTime": "21:00",
+        "EndTime": "22:10",
+        "MinHeadwayMins": 10,
+        "MaxHeadwayMins": 15,
+        "ServiceDay": {
+          "Sunday": 1,
+          "Monday": 0,
+          "Tuesday": 0,
+          "Wednesday": 0,
+          "Thursday": 0,
+          "Friday": 0,
+          "Saturday": 0
+        }
+      },
+      {
+        "StartTime": "05:00",
+        "EndTime": "06:00",
+        "MinHeadwayMins": 5,
+        "MaxHeadwayMins": 10,
+        "ServiceDay": {
+          "Sunday": 0,
+          "Monday": 1,
+          "Tuesday": 0,
+          "Wednesday": 0,
+          "Thursday": 0,
+          "Friday": 0,
+          "Saturday": 0
+        }
+      }
+    ],
+    "UpdateTime": "2026-10-27T14:16:13+08:00",
+    "VersionID": 8283
+  },
+  {
+    "RouteUID": "TPE16111",
+    "RouteID": "16111",
+    "RouteName": {
+      "Zh_tw": "307",
+      "En": "307"
+    },
+    "SubRouteUID": "TPE157463",
+    "SubRouteID": "157463",
+    "SubRouteName": {
+      "Zh_tw": "307莒光往撫遠街",
+      "En": "307"
+    },
+    "Direction": 0,
+    "Frequencys": [
+      {
+        "StartTime": "05:00",
+        "EndTime": "21:00",
+        "MinHeadwayMins": 7,
+        "MaxHeadwayMins": 10,
+        "ServiceDay": {
+          "Sunday": 1,
+          "Monday": 0,
+          "Tuesday": 0,
+          "Wednesday": 0,
+          "Thursday": 0,
+          "Friday": 0,
+          "Saturday": 0
+        }
+      },
+      {
+        "StartTime": "21:00",
+        "EndTime": "22:10",
+        "MinHeadwayMins": 10,
+        "MaxHeadwayMins": 15,
+        "ServiceDay": {
+          "Sunday": 1,
+          "Monday": 0,
+          "Tuesday": 0,
+          "Wednesday": 0,
+          "Thursday": 0,
+          "Friday": 0,
+          "Saturday": 0
+        }
+      },
+      {
+        "StartTime": "05:00",
+        "EndTime": "06:00",
+        "MinHeadwayMins": 5,
+        "MaxHeadwayMins": 10,
+        "ServiceDay": {
+          "Sunday": 0,
+          "Monday": 1,
+          "Tuesday": 0,
+          "Wednesday": 0,
+          "Thursday": 0,
+          "Friday": 0,
+          "Saturday": 0
+        }
+      }
+    ],
+    "UpdateTime": "2026-10-27T14:16:13+08:00",
+    "VersionID": 8283
+  }
+]

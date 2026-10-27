@@ -1,0 +1,38 @@
+# Calls one tool of every kind against live TDX each day, so a change in TDX's data fails here
+# before users meet it. Needs the TDX_CLIENT_ID and TDX_CLIENT_SECRET repository secrets; without
+# them the job only warns.
+
+name: Live check
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # 10:00 in Taiwan
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    name: Tools against live TDX
+    runs-on: ubuntu-latest
+    # TDX's per-minute limit can hold single calls for up to a minute.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Call each tool
+        env:
+          TDX_CLIENT_ID: ${{ secrets.TDX_CLIENT_ID }}
+          TDX_CLIENT_SECRET: ${{ secrets.TDX_CLIENT_SECRET }}
+        run: |
+          if [ -z "$TDX_CLIENT_ID" ] || [ -z "$TDX_CLIENT_SECRET" ]; then
+            echo "::warning::Add the TDX_CLIENT_ID and TDX_CLIENT_SECRET secrets to run the live check."
+            exit 0
+          fi
+          node scripts/live-check.mjs

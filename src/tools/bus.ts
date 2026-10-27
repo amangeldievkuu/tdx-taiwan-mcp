@@ -19,7 +19,7 @@ import { list } from '../core/respond.js';
 import { city, lat, limit, lon, radius, take } from '../core/schemas.js';
 import { defineTool } from '../core/tool.js';
 
-const INTERCITY = 'InterCity';
+export const INTERCITY = 'InterCity';
 
 const BUS_CITIES = [
   'Taipei',
@@ -46,7 +46,7 @@ const BUS_CITIES = [
   'LienchiangCounty',
 ] as const satisfies readonly BusCity[];
 
-const DIRECTION: Record<number, string> = {
+export const DIRECTION: Record<number, string> = {
   0: 'outbound',
   1: 'inbound',
   2: 'loop',
@@ -78,7 +78,7 @@ const VEHICLE_STATUS: Record<number, string> = {
 };
 
 /** Fields the route search needs; one `$select` keeps the cached route list small. */
-const ROUTE_FIELDS: Field<BusRoute>[] = [
+export const ROUTE_FIELDS: Field<BusRoute>[] = [
   'RouteUID',
   'RouteName',
   'BusRouteType',
@@ -90,18 +90,18 @@ const ROUTE_FIELDS: Field<BusRoute>[] = [
   'TicketPriceDescriptionZh',
 ];
 
-const busCity = city([...BUS_CITIES, INTERCITY]).describe(
+export const busCity = city([...BUS_CITIES, INTERCITY]).describe(
   `City: a TDX code (${BUS_CITIES.join(', ')}) or its Chinese name (臺北市, 新北市, ...), or ` +
     '"InterCity" for 公路客運 / 國道客運 coaches between cities.',
 );
-const routeName = z
+export const routeName = z
   .string()
   .trim()
   .min(1)
   .describe(
     'Exact route name as TDX lists it, e.g. "307", "紅5", "1610". Find it with bus_route_search.',
   );
-const direction = z
+export const direction = z
   .enum(['outbound', 'inbound'])
   .optional()
   .describe('Only one direction: "outbound" (去程) or "inbound" (返程). Default: both.');
@@ -328,16 +328,16 @@ function describeStation(station: BusStation, where: string, from: { lat: number
 }
 
 /** `InterCity` (also 公路客運 / 國道客運) or a TDX city code. */
-function busScope(input: string): string {
+export function busScope(input: string): string {
   return /^(inter-?city|公路客運|國道客運)$/i.test(input.trim()) ? INTERCITY : normalizeCity(input);
 }
 
-function inDirection(dir: 'outbound' | 'inbound' | undefined) {
+export function inDirection(dir: 'outbound' | 'inbound' | undefined) {
   return (item: { Direction?: number | null }): boolean =>
     dir === undefined || item.Direction === (dir === 'outbound' ? 0 : 1);
 }
 
-function noRoute(route: string, where: string): ToolInputError {
+export function noRoute(route: string, where: string): ToolInputError {
   return new ToolInputError(
     `No data for route "${route}" in ${where}. Route names must match exactly; find the right ` +
       'one with bus_route_search.',
@@ -348,12 +348,12 @@ function zhEn(zh: string | null | undefined, en: string | null | undefined): str
   return name({ Zh_tw: zh, En: en });
 }
 
-function minutes(seconds: number | null | undefined): number | undefined {
+export function minutes(seconds: number | null | undefined): number | undefined {
   return seconds == null ? undefined : Math.floor(seconds / 60);
 }
 
 /** Readable arrival for one stop, from its stop status and estimate. */
-function arrival(e: BusEstimatedTimeOfArrival): string {
+export function arrival(e: BusEstimatedTimeOfArrival): string {
   const status = e.StopStatus ?? 0;
   const special = STOP_STATUS[status];
   if (special) return special;
@@ -368,7 +368,7 @@ function arrival(e: BusEstimatedTimeOfArrival): string {
 }
 
 /** Minutes to the buses after the first, when the source sends several estimates. */
-function laterBuses(e: BusEstimatedTimeOfArrival): number[] | undefined {
+export function laterBuses(e: BusEstimatedTimeOfArrival): number[] | undefined {
   const later = (e.Estimates ?? [])
     .map((x) => minutes(x.EstimateTime))
     .filter((m): m is number => m !== undefined)

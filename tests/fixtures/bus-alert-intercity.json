@@ -1,0 +1,71 @@
+[
+  {
+    "AlertID": "36748",
+    "Title": "【東台灣客運】11/01(日)因知本溫泉舉辦馬拉松活動，路線【8129】部分路線班次受影響繞駛公告",
+    "Description": "【東台灣客運】11/01(日)因知本溫泉舉辦公益馬拉松活動，當日06:30~07:15期間龍泉路實施雙向全線管制，車輛無法通行，故管制期間路線【8129】往返程班次將繞道行駛溫泉路，暫不經「知本溫泉」、「白玉瀑布」站點，請欲乘車民眾改至鄰近站點候車，造成不便，敬請諒宥。",
+    "Department": "THB",
+    "Status": 2,
+    "Cause": 11,
+    "Effect": 254,
+    "Scope": {
+      "Operators": [
+        {
+          "OperatorID": "113",
+          "OperatorName": {
+            "Zh_tw": "東台灣客運",
+            "En": "Easterntop Bus"
+          }
+        }
+      ],
+      "Stops": [
+        {
+          "StopID": "247197",
+          "StopName": {
+            "Zh_tw": "白玉瀑布",
+            "En": "Baiyu Waterfall"
+          },
+          "StationID": "35452"
+        },
+        {
+          "StopID": "247198",
+          "StopName": {
+            "Zh_tw": "知本溫泉",
+            "En": "Zhiben Hot Spring"
+          },
+          "StationID": "102587"
+        },
+        {
+          "StopID": "97065",
+          "StopName": {
+            "Zh_tw": "白玉瀑布",
+            "En": "Baiyu Waterfall"
+          },
+          "StationID": "102585"
+        }
+      ],
+      "Routes": [
+        {
+          "RouteID": "8129",
+          "RouteName": {
+            "Zh_tw": "森林遊樂區→台東(經豐源)",
+            "En": "Forest Recreation Area→Taitung(Via Fengyuan)"
+          },
+          "Direction": 0
+        },
+        {
+          "RouteID": "8129",
+          "RouteName": {
+            "Zh_tw": "台東→森林遊樂區(經豐源)",
+            "En": "Taitung→Forest Recreation Area(Via Fengyuan)"
+          },
+          "Direction": 0
+        }
+      ]
+    },
+    "PublishTime": "2026-10-27T15:52:07+08:00",
+    "StartTime": "2026-10-27T15:30:00+08:00",
+    "EndTime": "2026-11-01T23:59:00+08:00",
+    "SrcUpdateTime": "2026-10-27T15:52:07+08:00",
+    "UpdateTime": "2026-10-27T16:56:50+08:00"
+  }
+]

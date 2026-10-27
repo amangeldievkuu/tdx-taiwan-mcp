@@ -68,11 +68,12 @@
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "check:exports": "publint && attw --pack . --profile esm-only",
+    "check:live": "npm run build && node scripts/live-check.mjs",
     "version": "node scripts/sync-version.mjs && git add src/version.ts server.json"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",
-    "tdx-taiwan": "^0.16.0",
+    "tdx-taiwan": "^0.17.0",
     "zod": "^4.6.7"
   },
   "devDependencies": {

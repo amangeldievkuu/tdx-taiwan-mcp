@@ -6,6 +6,21 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+
+- `bus_stop_arrivals`: every bus due at one stop, all routes in one call, soonest first, with
+  the terminal each is heading to. Takes a `stationUID` from `bus_stops_nearby` or a stop name.
+- `bus_timetable`: a route's scheduled departures on a day from its first stop or a given stop,
+  or its headways for routes run by frequency (cities and InterCity; Kaohsiung publishes none).
+- `bus_alerts`: current and upcoming bus detours, suspensions and moved stops, by city or route,
+  with the latest operator news.
+- A daily live check (`.github/workflows/live.yml`, `npm run check:live`) that calls one tool of
+  every kind against TDX.
+
+### Changed
+
+- Requires `tdx-taiwan` 0.17.
+
 ## [0.2.0] - 2026-10-27
 
 ### Added

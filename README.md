@@ -68,15 +68,18 @@ A `.env` file in the working directory is read too; variables already set take p
 
 ### YouBike and buses
 
-| Tool               | What it answers                                                                        |
-| ------------------ | -------------------------------------------------------------------------------------- |
-| `youbike_nearby`   | Nearest YouBike / Moovo stations to a coordinate with bikes (or empty docks) right now |
-| `youbike_station`  | YouBike stations by name or address, with live bikes, e-bikes and empty docks          |
-| `bus_stops_nearby` | Bus stops near a coordinate, with their heading and the city and coach routes there    |
-| `bus_route_search` | Bus routes by name or terminal stop, with endpoints, operators and fare                |
-| `bus_route_stops`  | The stops of a route in order, per direction and sub-route                             |
-| `bus_eta`          | Live arrival estimates at the stops of a route, optionally at one stop                 |
-| `bus_positions`    | Where the buses on a route are now, with speed and status                              |
+| Tool                | What it answers                                                                        |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `youbike_nearby`    | Nearest YouBike / Moovo stations to a coordinate with bikes (or empty docks) right now |
+| `youbike_station`   | YouBike stations by name or address, with live bikes, e-bikes and empty docks          |
+| `bus_stops_nearby`  | Bus stops near a coordinate, with their heading and the city and coach routes there    |
+| `bus_stop_arrivals` | Every bus due at one stop, all routes at once, soonest first                           |
+| `bus_route_search`  | Bus routes by name or terminal stop, with endpoints, operators and fare                |
+| `bus_route_stops`   | The stops of a route in order, per direction and sub-route                             |
+| `bus_eta`           | Live arrival estimates at the stops of a route, optionally at one stop                 |
+| `bus_timetable`     | Scheduled departures of a route on a day, or how often it runs                         |
+| `bus_alerts`        | Current and upcoming detours, suspensions and moved stops, with the latest news        |
+| `bus_positions`     | Where the buses on a route are now, with speed and status                              |
 
 Bus tools take a city (`Taipei`, `NewTaipei`, ...) or `InterCity` for 公路客運 / 國道客運
 coaches.

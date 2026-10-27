@@ -20,6 +20,7 @@ cp .env.example .env   # only needed to run the server against TDX
 | `npm run build`         | `tsup` → ESM and declarations in `dist/`; `dist/cli.js` is the `bin`. |
 | `npm run inspect`       | Builds, then opens the server in the MCP Inspector (reads `.env`).    |
 | `npm run check:exports` | `publint` and `are-the-types-wrong` on the packed tarball.            |
+| `npm run check:live`    | Builds, then calls one tool of every kind against live TDX (`.env`).  |
 
 ## Adding a tool
 

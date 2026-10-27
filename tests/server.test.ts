@@ -44,11 +44,14 @@ describe('server', () => {
     const { tools } = await t.client.listTools();
     expect(tools.map((tool) => tool.name).sort()).toEqual([
       'afr_timetable',
+      'bus_alerts',
       'bus_eta',
       'bus_positions',
       'bus_route_search',
       'bus_route_stops',
+      'bus_stop_arrivals',
       'bus_stops_nearby',
+      'bus_timetable',
       'ev_charger_nearby',
       'ferry_alerts',
       'ferry_fare',

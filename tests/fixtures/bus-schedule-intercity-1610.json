@@ -1,0 +1,72 @@
+[
+  {
+    "RouteUID": "THB1610",
+    "RouteID": "1610",
+    "RouteName": {
+      "Zh_tw": "1610",
+      "En": "1610"
+    },
+    "SubRouteUID": "THB161002",
+    "SubRouteID": "161002",
+    "SubRouteName": {
+      "Zh_tw": "1610",
+      "En": "1610"
+    },
+    "Direction": 1,
+    "OperatorID": "34",
+    "OperatorCode": "UnitedHighwayBus",
+    "OperatorNo": "1201",
+    "Timetables": [
+      {
+        "TripID": "1",
+        "IsLowFloor": false,
+        "ServiceDay": {
+          "Sunday": 1,
+          "Monday": 1,
+          "Tuesday": 1,
+          "Wednesday": 1,
+          "Thursday": 1,
+          "Friday": 1,
+          "Saturday": 1
+        },
+        "StopTimes": [
+          {
+            "StopSequence": 1,
+            "StopUID": "THB266029",
+            "StopID": "266029",
+            "StopName": {
+              "Zh_tw": "建國客運站",
+              "En": "Jianguo Station"
+            },
+            "ArrivalTime": "11:00",
+            "DepartureTime": "11:00"
+          },
+          {
+            "StopSequence": 2,
+            "StopUID": "THB290823",
+            "StopID": "290823",
+            "StopName": {
+              "Zh_tw": "中正站",
+              "En": "JhongJheng Station"
+            },
+            "ArrivalTime": "11:11",
+            "DepartureTime": "11:11"
+          },
+          {
+            "StopSequence": 3,
+            "StopUID": "THB268481",
+            "StopID": "268481",
+            "StopName": {
+              "Zh_tw": "楠梓站",
+              "En": "Nanzi Station"
+            },
+            "ArrivalTime": "11:27",
+            "DepartureTime": "11:27"
+          }
+        ]
+      }
+    ],
+    "UpdateTime": "2026-10-27T13:57:36+08:00",
+    "VersionID": 7908
+  }
+]

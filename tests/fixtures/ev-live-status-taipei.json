@@ -1,0 +1,25 @@
+{
+  "UpdateTime": "2026-10-21T11:42:32+08:00",
+  "UpdateInterval": 60,
+  "SrcUpdateTime": "2026-10-21T11:42:00+08:00",
+  "SrcUpdateInterval": 60,
+  "AuthorityCode": "TPE",
+  "LiveStatuses": [
+    {
+      "StationID": "TPE0201U01",
+      "ChargingPointID": "42861108-P318611A",
+      "ConnectorID": "42861108-C318611A-1",
+      "ConnectorType": 4,
+      "ConnectorStatus": 1,
+      "LastUpdateTime": "2026-10-21T11:39:00+08:00"
+    },
+    {
+      "StationID": "TPE1578",
+      "ChargingPointID": "33029464-PTP6360001",
+      "ConnectorID": "33029464-CTP6360001",
+      "ConnectorType": 5,
+      "ConnectorStatus": 2,
+      "LastUpdateTime": "2026-10-21T11:41:34+08:00"
+    }
+  ]
+}

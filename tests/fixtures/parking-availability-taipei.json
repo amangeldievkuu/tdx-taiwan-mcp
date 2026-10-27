@@ -1,0 +1,77 @@
+{
+  "UpdateTime": "2026-10-21T10:10:04+08:00",
+  "UpdateInterval": -1,
+  "SrcUpdateTime": "2026-10-21T10:09:00+08:00",
+  "SrcUpdateInterval": 60,
+  "AuthorityCode": "TPE",
+  "ParkingAvailabilities": [
+    {
+      "CarParkID": "TPE0096",
+      "CarParkName": {
+        "Zh_tw": "府前廣場地下停車場"
+      },
+      "TotalSpaces": 1998,
+      "AvailableSpaces": 351,
+      "Availabilities": [
+        {
+          "SpaceType": 1,
+          "NumberOfSpaces": 1998,
+          "AvailableSpaces": 351
+        },
+        {
+          "SpaceType": 2,
+          "NumberOfSpaces": 1405,
+          "AvailableSpaces": 185
+        },
+        {
+          "SpaceType": 7,
+          "NumberOfSpaces": 40,
+          "AvailableSpaces": 2
+        },
+        {
+          "SpaceType": 9,
+          "NumberOfSpaces": 45,
+          "AvailableSpaces": 0
+        }
+      ],
+      "ServiceStatus": 1,
+      "FullStatus": 0,
+      "ChargeStatus": 1,
+      "DataCollectTime": "2026-10-21T10:08:24+08:00"
+    },
+    {
+      "CarParkID": "TPE0567",
+      "CarParkName": {
+        "Zh_tw": "臺北市災害應變中心地下停車場"
+      },
+      "TotalSpaces": 169,
+      "AvailableSpaces": 9,
+      "Availabilities": [
+        {
+          "SpaceType": 1,
+          "NumberOfSpaces": 169,
+          "AvailableSpaces": 9
+        },
+        {
+          "SpaceType": 2,
+          "NumberOfSpaces": 197,
+          "AvailableSpaces": 43
+        },
+        {
+          "SpaceType": 7,
+          "NumberOfSpaces": 3,
+          "AvailableSpaces": 0
+        },
+        {
+          "SpaceType": 9,
+          "NumberOfSpaces": 5,
+          "AvailableSpaces": 1
+        }
+      ],
+      "ServiceStatus": 1,
+      "FullStatus": 0,
+      "ChargeStatus": 1,
+      "DataCollectTime": "2026-10-21T10:08:50+08:00"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "UpdateTime": "2026-10-21T08:39:27+08:00",
+  "UpdateInterval": 14400,
+  "SrcUpdateTime": "2026-08-20T00:00:00+08:00",
+  "SrcUpdateInterval": 86400,
+  "AuthorityCode": "TPE",
+  "VersionID": 3958,
+  "ParkingSegments": [
+    {
+      "ParkingSegmentID": "2047514",
+      "ParkingSegmentName": {
+        "Zh_tw": "復興北路514巷"
+      },
+      "RoadSection": {
+        "Start": "復興北路",
+        "End": "龍江路"
+      },
+      "ParkingSegmentPosition": {
+        "PositionLat": 25.06603,
+        "PositionLon": 121.54418
+      },
+      "Geometry": "POLYGON ((121.54418 25.06603,121.54417 25.06589,121.54339 25.06590,121.54298 25.06590,121.54192 25.06591,121.54108 25.06591,121.54109 25.06606,121.54173 25.06605,121.54208 25.06605,121.54284 25.06604,121.54345 25.06604,121.54418 25.06603))",
+      "Description": "復興北路514巷(復興北路到龍江路)",
+      "FareDescription": "40元(09:00-17:00)",
+      "HasChargingPoint": 0,
+      "City": "Taipei",
+      "CityCode": "TPE"
+    },
+    {
+      "ParkingSegmentID": "6018000",
+      "ParkingSegmentName": {
+        "Zh_tw": "長順、雙園堤外平面大型車"
+      },
+      "RoadSection": {
+        "Start": "大型車"
+      },
+      "ParkingSegmentPosition": {
+        "PositionLat": 25.03273,
+        "PositionLon": 121.48806
+      },
+      "Geometry": "POLYGON ((121.48806 25.03273,121.48847 25.03260,121.48824 25.03171,121.48813 25.03101,121.48764 25.03117,121.48806 25.03273))",
+      "Description": "長順、雙園堤外平面大型車(大型車到)",
+      "FareDescription": "40元(09:00-17:00)",
+      "HasChargingPoint": 0,
+      "City": "Taipei",
+      "CityCode": "TPE"
+    }
+  ]
+}

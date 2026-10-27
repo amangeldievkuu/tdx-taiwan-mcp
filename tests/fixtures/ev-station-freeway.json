@@ -1,0 +1,60 @@
+{
+  "UpdateTime": "2026-10-21T10:30:36+08:00",
+  "UpdateInterval": 14400,
+  "SrcUpdateTime": "2026-10-21T09:30:32+08:00",
+  "SrcUpdateInterval": -1,
+  "AuthorityCode": "NFB",
+  "Stations": [
+    {
+      "StationID": "33029464-S0303",
+      "StationName": {
+        "Zh_tw": "湖口服務區南站"
+      },
+      "Description": "小型車停車區，近駕駛人休息室",
+      "OperatorID": "33029464",
+      "OperationType": 1,
+      "PositionLat": 24.85738,
+      "PositionLon": 121.00878,
+      "Spaces": 7,
+      "ChargingPoints": 7,
+      "Connectors": [
+        {
+          "Type": 1,
+          "Power": 2,
+          "Quantity": 2
+        },
+        {
+          "Type": 2,
+          "Power": 2,
+          "Quantity": 3
+        },
+        {
+          "Type": 4,
+          "Power": 2,
+          "Quantity": 2
+        }
+      ],
+      "ServiceTime": "7x24小時",
+      "ParkingRate": "免費",
+      "ChargingRate": "iCharging公告費率12元/度電 高速公路服務區9.8元/度電 優惠費率依各平台實際公告為主;TESLA超級充電座11元/度電；iParking 會員 9.8元/度電",
+      "Floors": "1",
+      "UsageRestriction": "本充電站限會員使用",
+      "PhotoURLs": [],
+      "Location": {
+        "Freeway": {
+          "Road": "國道1號",
+          "ServiceArea": "湖口服務區南站"
+        },
+        "Address": {
+          "City": "新竹縣",
+          "Town": "湖口鄉",
+          "Road": "鳳山村國強街",
+          "Lane": "1巷",
+          "Alley": "",
+          "No": "8號"
+        }
+      },
+      "Telephone": "0800-600-098"
+    }
+  ]
+}

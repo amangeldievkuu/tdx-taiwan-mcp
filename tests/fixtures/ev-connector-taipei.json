@@ -1,0 +1,29 @@
+{
+  "UpdateTime": "2026-10-21T10:30:33+08:00",
+  "UpdateInterval": 14400,
+  "SrcUpdateTime": "2026-10-21T03:50:25+08:00",
+  "SrcUpdateInterval": 86400,
+  "AuthorityCode": "TPE",
+  "Connectors": [
+    {
+      "StationID": "TPE0201U01",
+      "ChargingPointID": "42861108-P318611A",
+      "ConnectorID": "42861108-C318611A-1",
+      "Type": 4,
+      "Power": 2,
+      "PowerRating": "250kW",
+      "Floor": "B2"
+    },
+    {
+      "StationID": "33029464-STP6360001",
+      "ChargingPointID": "33029464-PTP6360001",
+      "ConnectorID": "33029464-CTP6360001",
+      "Type": 5,
+      "Power": 1,
+      "Voltage": "220V",
+      "CurrentRating": "32A",
+      "PowerRating": "7KW",
+      "Floor": "B1"
+    }
+  ]
+}

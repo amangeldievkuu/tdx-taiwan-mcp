@@ -1,0 +1,81 @@
+{
+  "UpdateTime": "2026-10-21T10:30:33+08:00",
+  "UpdateInterval": 14400,
+  "SrcUpdateTime": "2026-10-21T03:50:24+08:00",
+  "SrcUpdateInterval": 86400,
+  "AuthorityCode": "TPE",
+  "Stations": [
+    {
+      "StationID": "33029464-STP6360001",
+      "StationName": {
+        "Zh_tw": "中山國中站"
+      },
+      "Description": "充電車位6格，充電樁6座",
+      "OperatorID": "33029464",
+      "OperationType": 1,
+      "PositionLat": 25.06043,
+      "PositionLon": 121.54553,
+      "Spaces": 6,
+      "ChargingPoints": 6,
+      "Connectors": [
+        {
+          "Type": 5,
+          "Power": 1,
+          "Quantity": 6
+        }
+      ],
+      "ServiceTime": "每日/00:00-24:00",
+      "ParkingRate": "每1小時20元",
+      "ChargingRate": "計時/每日/10元每1時",
+      "Floors": "B1",
+      "PhotoURLs": [],
+      "Location": {
+        "Address": {
+          "City": "台北市",
+          "Town": "松山區",
+          "Road": "復興北路361巷",
+          "Lane": "",
+          "Alley": "",
+          "No": "7號B1-B2停車場"
+        }
+      },
+      "Telephone": "02-26550818"
+    },
+    {
+      "StationID": "TPE0201U01",
+      "StationName": {
+        "Zh_tw": "國立臺灣大學校總區平面停車場"
+      },
+      "Description": "計時/每日/60元每小時",
+      "OperatorID": "42861108",
+      "OperationType": 2,
+      "PositionLat": 25.01972,
+      "PositionLon": 121.54025,
+      "Spaces": 6,
+      "ChargingPoints": 6,
+      "Connectors": [
+        {
+          "Type": 2,
+          "Power": 2,
+          "Quantity": 4
+        },
+        {
+          "Type": 4,
+          "Power": 2,
+          "Quantity": 2
+        }
+      ],
+      "ServiceTime": "7x24小時",
+      "ParkingRate": "計時/每日/60元每小時",
+      "ChargingRate": "計度/浮動/8元每度",
+      "Floors": "B2",
+      "PhotoURLs": [],
+      "Location": {
+        "Place": {
+          "POI": "羅斯福路4段1號臺北市羅斯福路四段一號"
+        }
+      },
+      "Telephone": "33663366"
+    }
+  ]
+}

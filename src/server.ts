@@ -5,7 +5,9 @@ import { registerAfrTools } from './tools/afr.js';
 import { registerAirTools } from './tools/air.js';
 import { registerBikeTools } from './tools/bike.js';
 import { registerBusTools } from './tools/bus.js';
+import { registerEvTools } from './tools/ev.js';
 import { registerMetroTools } from './tools/metro.js';
+import { registerParkingTools } from './tools/parking.js';
 import { registerRailTools } from './tools/rail.js';
 import { registerRawTools } from './tools/raw.js';
 import { registerShipTools } from './tools/ship.js';
@@ -30,7 +32,8 @@ availability; city and intercity bus routes, stops, live arrival times and bus p
 speed rail (THSR), Taiwan Railway (TRA), metro and Alishan railway timetables, live boards,
 seats, fares and alerts; flights (live airport boards with weather, flight status, domestic
 schedules and fares); ferries (timetables with live status, port live boards, fares, alerts);
-road traffic (live congestion, incidents and closures on freeways, highways and city roads).
+road traffic (live congestion, incidents and closures on freeways, highways and city roads);
+car parks and on-street parking with free spaces; EV chargers with live connector status.
 Cities are TDX codes such as Taipei, NewTaipei, Taoyuan, Taichung, Tainan, Kaohsiung (Chinese
 names like 臺北市 work too). Times are Taiwan time (UTC+8). Bus tools need the exact route name;
 find it with bus_route_search first. Rail tools take station names in Chinese or English
@@ -58,6 +61,8 @@ export function createServer({ tdx, maxItems = 200 }: ServerOptions): McpServer 
   registerAirTools(server, ctx);
   registerShipTools(server, ctx);
   registerTrafficTools(server, ctx);
+  registerParkingTools(server, ctx);
+  registerEvTools(server, ctx);
   registerRawTools(server, ctx);
   return server;
 }

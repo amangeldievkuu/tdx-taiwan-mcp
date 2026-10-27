@@ -8,8 +8,8 @@ An unofficial [MCP](https://modelcontextprotocol.io) server for Taiwan's
 [TDX (Transport Data eXchange)](https://tdx.transportdata.tw) API, built on the
 [`tdx-taiwan`](https://www.npmjs.com/package/tdx-taiwan) SDK. It lets Claude and other MCP
 clients answer questions such as "where is the nearest YouBike with bikes?", "when does the
-307 reach Ximen?", "which high speed trains to Zuoying still have seats tonight?" or "is CI100
-delayed?".
+307 reach Ximen?", "which high speed trains to Zuoying still have seats tonight?", "is CI100
+delayed?" or "where can I charge a CCS2 car near Taipei Main Station?".
 
 - Task-shaped tools: search by name (Chinese or English, 台/臺 folded) or by location, with
   readable output ("4 min", "last bus has passed") instead of raw status codes
@@ -133,6 +133,18 @@ inter-island boats, 旗津, 淡水) need `city`, e.g. `PenghuCounty`.
 
 Road tools take a network: `freeway` (國道), `highway` (省道) or a city. Freeway sections are
 named after interchanges, so search them by keyword (`林口`).
+
+### Parking and EV charging
+
+| Tool                | What it answers                                                                |
+| ------------------- | ------------------------------------------------------------------------------ |
+| `parking_nearby`    | Nearest car parks and on-street parking with free car or scooter spaces now    |
+| `parking_search`    | Car parks and on-street parking by name, address or road, with free spaces     |
+| `ev_charger_nearby` | Nearest EV chargers with a free connector (CCS2, Tesla, ...), AC or DC, prices |
+
+Coverage differs per city: NewTaipei has on-street parking only, and not every car park
+publishes live spaces (those show "no live data"). `ev_charger_nearby` takes `freeway` for the
+freeway service areas.
 
 ### Other
 

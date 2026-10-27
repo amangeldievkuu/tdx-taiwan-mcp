@@ -76,5 +76,8 @@ jobs:
             '{"jsonrpc":"2.0","method":"notifications/initialized"}' \
             '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' \
             | TDX_CLIENT_ID=id TDX_CLIENT_SECRET=secret npx tdx-taiwan-mcp > out.jsonl
-          grep -q '"name":"bus_eta"' out.jsonl
+          for tool in youbike_nearby bus_eta thsr_timetable flight_status ferry_timetable \
+            traffic_live parking_nearby ev_charger_nearby tdx_get; do
+            grep -q "\"name\":\"$tool\"" out.jsonl || { echo "::error::$tool missing"; exit 1; }
+          done
           echo "tools/list ok"

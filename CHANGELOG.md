@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-27
+
 ### Added
 
 - stdio MCP server (`npx tdx-taiwan-mcp`) and `createServer()` for embedding, on `tdx-taiwan`
@@ -35,4 +37,5 @@ All notable changes to this project are documented here. The format is based on
   `TDX_MAX_ITEMS` items and 40,000 characters, and TDX errors (unsupported city, 404, 429,
   bad keys) reported as readable tool errors.
 
-[Unreleased]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/commits/main
+[Unreleased]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/releases/tag/v0.1.0

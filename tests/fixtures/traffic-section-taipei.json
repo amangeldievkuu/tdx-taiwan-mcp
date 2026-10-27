@@ -1,0 +1,61 @@
+{
+  "UpdateTime": "2026-10-21T02:40:44+08:00",
+  "UpdateInterval": 21600,
+  "SrcUpdateTime": "2026-10-21T00:00:00+08:00",
+  "SrcUpdateInterval": 86400,
+  "AuthorityCode": "TPE",
+  "Sections": [
+    {
+      "SectionID": "L_2000100000020A",
+      "LinkIDs": [
+        {
+          "LinkID": "2000100000020A"
+        }
+      ],
+      "SectionName": "水源快速道路(94RFPDSV到957WPDN7)",
+      "RoadID": "200010",
+      "RoadName": "水源快速道路",
+      "RoadClass": 2,
+      "RoadDirection": "SE",
+      "RoadSection": {
+        "Start": "94RFPDSV",
+        "End": "957WPDN7"
+      },
+      "SectionLength": 0.5169,
+      "SectionStart": {
+        "PositionLat": 25.017775,
+        "PositionLon": 121.49366
+      },
+      "SectionEnd": {
+        "PositionLat": 25.016405,
+        "PositionLon": 121.49824
+      }
+    },
+    {
+      "SectionID": "L_2000100000090A",
+      "LinkIDs": [
+        {
+          "LinkID": "2000100000090A"
+        }
+      ],
+      "SectionName": "水源快速道路(95BJPDPX到95EVPDSG)",
+      "RoadID": "200010",
+      "RoadName": "水源快速道路",
+      "RoadClass": 2,
+      "RoadDirection": "SE",
+      "RoadSection": {
+        "Start": "95BJPDPX",
+        "End": "95EVPDSG"
+      },
+      "SectionLength": 0.1344,
+      "SectionStart": {
+        "PositionLat": 25.016907,
+        "PositionLon": 121.49939
+      },
+      "SectionEnd": {
+        "PositionLat": 25.017633,
+        "PositionLon": 121.50045
+      }
+    }
+  ]
+}

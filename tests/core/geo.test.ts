@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { haversine, nearest, pointOf } from '../../src/core/geo.js';
+import { haversine, nearest, pointOf, pointFromWkt } from '../../src/core/geo.js';
 
 const TAIPEI_MAIN = { lat: 25.0478, lon: 121.517 };
 
@@ -40,5 +40,16 @@ describe('nearest', () => {
   it('drops items beyond maxMeters', () => {
     const found = nearest(items, (i) => i.pos, TAIPEI_MAIN, { limit: 10, maxMeters: 500 });
     expect(found.map((f) => f.item.id)).toEqual(['near', 'mid']);
+  });
+});
+
+describe('pointFromWkt', () => {
+  it('reads lon and lat from a WKT point', () => {
+    expect(pointFromWkt('POINT(121.362315 25.064692)')).toEqual({
+      lat: 25.064692,
+      lon: 121.362315,
+    });
+    expect(pointFromWkt('LINESTRING(121 25, 122 26)')).toBeUndefined();
+    expect(pointFromWkt(undefined)).toBeUndefined();
   });
 });

@@ -1,0 +1,75 @@
+{
+  "UpdateTime": "2026-10-21T14:49:50+08:00",
+  "UpdateInterval": 60,
+  "SrcUpdateTime": "2026-10-21T14:48:30+08:00",
+  "SrcUpdateInterval": 60,
+  "AuthorityCode": "TPE",
+  "LiveTraffics": [
+    {
+      "SectionID": "L_2000100000500A",
+      "LinkIDs": [
+        {
+          "LinkID": "2000100000500A"
+        }
+      ],
+      "TravelTime": 30,
+      "TravelSpeed": 73,
+      "CongestionLevelID": "RoadClass2_default",
+      "CongestionLevel": "1",
+      "DataSources": {
+        "HasHistorical": 0,
+        "HasVD": 1,
+        "HasAVI": 0,
+        "HasETAG": 0,
+        "HasGVP": 0,
+        "HasCVP": 0,
+        "HasOthers": 0
+      },
+      "DataCollectTime": "2026-10-21T14:48:00+08:00"
+    },
+    {
+      "SectionID": "L_2000101007000A",
+      "LinkIDs": [
+        {
+          "LinkID": "2000101007000A"
+        }
+      ],
+      "TravelTime": 33,
+      "TravelSpeed": 25,
+      "CongestionLevelID": "RoadClass2_default",
+      "CongestionLevel": "6",
+      "DataSources": {
+        "HasHistorical": 0,
+        "HasVD": 1,
+        "HasAVI": 0,
+        "HasETAG": 0,
+        "HasGVP": 0,
+        "HasCVP": 0,
+        "HasOthers": 0
+      },
+      "DataCollectTime": "2026-10-21T14:48:00+08:00"
+    },
+    {
+      "SectionID": "L_2000100100680F",
+      "LinkIDs": [
+        {
+          "LinkID": "2000100100680F"
+        }
+      ],
+      "TravelTime": -99,
+      "TravelSpeed": -99,
+      "CongestionLevelID": "1",
+      "CongestionLevel": "-99",
+      "DataSources": {
+        "HasHistorical": 0,
+        "HasVD": 1,
+        "HasAVI": 0,
+        "HasETAG": 1,
+        "HasGVP": 0,
+        "HasCVP": 0,
+        "HasOthers": 0
+      },
+      "DataCollectTime": "2026-10-21T14:48:00+08:00"
+    }
+  ]
+}

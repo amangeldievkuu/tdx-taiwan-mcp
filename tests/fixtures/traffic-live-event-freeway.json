@@ -1,0 +1,74 @@
+{
+  "UpdateTime": "2026-10-21T14:52:23+08:00",
+  "UpdateInterval": 60,
+  "SrcUpdateTime": "2026-10-21T14:49:29+08:00",
+  "SrcUpdateInterval": 60,
+  "AuthorityCode": "NFB",
+  "LiveEvents": [
+    {
+      "EventID": "A15040100H-01-20261021062600000100090",
+      "EventTitle": "壅塞事件",
+      "Description": "國道一號 北向 41K+500 壅塞事件-出口壅塞",
+      "EventType": 3,
+      "EventSubType": 302,
+      "EventStep": 1,
+      "EffectiveTime": "2026-10-21T06:26:23+08:00",
+      "Positions": "POINT(121.362315 25.064692)",
+      "LocationType": 2,
+      "Location": {
+        "FreeExpressHighway": {
+          "Road": "國道一號",
+          "Direction": "北向",
+          "StartKM": "41K+500",
+          "EndKM": "41K+500",
+          "Interchange": "林口",
+          "Ramp": {
+            "Direction": "北向",
+            "EntryExit": "出口"
+          }
+        }
+      },
+      "Impact": {
+        "Description": "無影響",
+        "Severity": 0,
+        "Regulations": [0],
+        "BlockWay": 0,
+        "BlockedLanes": "-1"
+      },
+      "Source": "高公局北區交控中心",
+      "PublishTime": "2026-10-21T06:26:23+08:00",
+      "LastUpdateTime": "2026-10-21T06:26:23+08:00"
+    },
+    {
+      "EventID": "A15040100H-01-20261021070037559100021",
+      "EventTitle": "施工事件",
+      "Description": "國道一號 南向 67K+500 施工事件-施工維護",
+      "EventType": 2,
+      "EventSubType": 298,
+      "EventStep": 8,
+      "EffectiveTime": "2026-10-21T07:00:00+08:00",
+      "Positions": "POINT(121.169496 24.922922)",
+      "LocationType": 0,
+      "Location": {
+        "FreeExpressHighway": {
+          "Road": "國道一號",
+          "Direction": "南向",
+          "StartKM": "67K+500",
+          "EndKM": "68K+500",
+          "SectionStart": "幼獅",
+          "SectionEnd": "楊梅"
+        }
+      },
+      "Impact": {
+        "Description": "部分阻斷交通",
+        "Severity": 1,
+        "Regulations": [2],
+        "BlockWay": 1,
+        "BlockedLanes": "2,RS"
+      },
+      "Source": "高公局北區交控中心",
+      "PublishTime": "2026-10-21T07:00:00+08:00",
+      "LastUpdateTime": "2026-10-21T12:21:35+08:00"
+    }
+  ]
+}

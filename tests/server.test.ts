@@ -49,6 +49,8 @@ describe('server', () => {
       'tra_live_board',
       'tra_timetable',
       'tra_train',
+      'traffic_events',
+      'traffic_live',
       'youbike_nearby',
       'youbike_station',
     ]);

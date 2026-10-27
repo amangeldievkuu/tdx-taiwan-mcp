@@ -1,0 +1,52 @@
+{
+  "UpdateTime": "2026-10-21T02:48:14+08:00",
+  "UpdateInterval": 21600,
+  "SrcUpdateTime": "2026-10-21T00:00:00+08:00",
+  "SrcUpdateInterval": 86400,
+  "AuthorityCode": "TPE",
+  "CongestionLevels": [
+    {
+      "CongestionLevelID": "RoadClass2_default",
+      "CongestionLevelName": "市區快速道路",
+      "Description": "預設值",
+      "MeasureIndex": "Speed",
+      "Levels": [
+        {
+          "Level": 1,
+          "LevelName": "A",
+          "LowValue": 70
+        },
+        {
+          "Level": 2,
+          "LevelName": "B",
+          "TopValue": 70,
+          "LowValue": 65
+        },
+        {
+          "Level": 3,
+          "LevelName": "C",
+          "TopValue": 65,
+          "LowValue": 60
+        },
+        {
+          "Level": 4,
+          "LevelName": "D",
+          "TopValue": 60,
+          "LowValue": 50
+        },
+        {
+          "Level": 5,
+          "LevelName": "E",
+          "TopValue": 50,
+          "LowValue": 40
+        },
+        {
+          "Level": 6,
+          "LevelName": "F",
+          "TopValue": 40,
+          "LowValue": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "UpdateTime": "2026-10-21T02:10:44+08:00",
+  "UpdateInterval": 21600,
+  "SrcUpdateTime": "2026-10-21T01:59:38+08:00",
+  "SrcUpdateInterval": 86400,
+  "AuthorityCode": "NFB",
+  "LinkVersion": "25.12.1",
+  "Sections": [
+    {
+      "SectionID": "0001",
+      "LinkIDs": [
+        {
+          "LinkID": "0000100000000C"
+        },
+        {
+          "LinkID": "0000100000040C"
+        },
+        {
+          "LinkID": "0000100000080C"
+        },
+        {
+          "LinkID": "0000100000110C"
+        }
+      ],
+      "SubAuthorityCode": "NFB-NR",
+      "SectionName": "國道1號(基隆端到基隆)",
+      "RoadID": "000010",
+      "RoadName": "國道1號",
+      "RoadClass": 0,
+      "RoadDirection": "S",
+      "RoadSection": {
+        "Start": "基隆端",
+        "End": "基隆"
+      },
+      "SectionLength": 1.1,
+      "SectionMile": {
+        "StartKM": "0K+000",
+        "EndKM": "1K+100"
+      },
+      "SpeedLimit": 100
+    }
+  ]
+}

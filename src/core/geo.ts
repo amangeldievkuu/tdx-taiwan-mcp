@@ -41,3 +41,10 @@ export function nearest<T>(
     .sort((a, b) => a.distance - b.distance)
     .slice(0, limit);
 }
+
+/** Reads a WKT `POINT(lon lat)`, as the road event feeds give it. */
+export function pointFromWkt(wkt: string | null | undefined): LatLon | undefined {
+  const match = /^\s*POINT\s*\(\s*(-?[\d.]+)\s+(-?[\d.]+)\s*\)\s*$/i.exec(wkt ?? '');
+  if (!match) return undefined;
+  return { lat: Number(match[2]), lon: Number(match[1]) };
+}

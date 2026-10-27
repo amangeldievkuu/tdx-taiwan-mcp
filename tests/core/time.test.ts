@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { duration, hhmm, minutesBetween, startTime, taipeiNow } from '../../src/core/time.js';
+import {
+  clockOf,
+  duration,
+  hhmm,
+  minutesBetween,
+  padTime,
+  startTime,
+  taipeiNow,
+} from '../../src/core/time.js';
 
 describe('taipeiNow', () => {
   it('gives the date and time in Taiwan, whatever the machine time zone', () => {
@@ -44,5 +52,15 @@ describe('minutesBetween', () => {
     expect(minutesBetween('2026-10-21T08:50', '2026-10-21T09:01')).toBe(11);
     expect(minutesBetween('2026-10-20T00:15', '2026-10-19T23:13')).toBe(-62);
     expect(minutesBetween('2026-10-21T08:50', undefined)).toBeUndefined();
+  });
+});
+
+describe('padTime and clockOf', () => {
+  it('pads ferry times and reads the clock of a timestamp', () => {
+    expect(padTime('6:15')).toBe('06:15');
+    expect(padTime('15:00')).toBe('15:00');
+    expect(padTime('')).toBeUndefined();
+    expect(clockOf('2026-10-21T11:10:00+08:00')).toBe('11:10');
+    expect(clockOf(undefined)).toBeUndefined();
   });
 });

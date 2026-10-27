@@ -124,13 +124,21 @@ Airports are IATA codes or names (`TSA`, `松山`, `Kinmen`).
 Ports are names (`富岡`, `綠島`, `小琉球`) or port IDs. Lines run by a county (Penghu
 inter-island boats, 旗津, 淡水) need `city`, e.g. `PenghuCounty`.
 
+### Roads
+
+| Tool             | What it answers                                                                   |
+| ---------------- | --------------------------------------------------------------------------------- |
+| `traffic_live`   | Live speed and congestion per road section, worst first, with a count per level   |
+| `traffic_events` | Accidents, roadworks, closures and announced events (parades) with where they are |
+
+Road tools take a network: `freeway` (國道), `highway` (省道) or a city. Freeway sections are
+named after interchanges, so search them by keyword (`林口`).
+
 ### Other
 
 | Tool      | What it answers                                                          |
 | --------- | ------------------------------------------------------------------------ |
 | `tdx_get` | Any TDX API path with OData `filter`, `select`, `orderBy`, `top`, `skip` |
-
-Road tools are on the way; until then `tdx_get` reaches those endpoints.
 
 ## Use as a library
 

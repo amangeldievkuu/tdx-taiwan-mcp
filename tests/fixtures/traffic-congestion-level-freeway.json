@@ -1,0 +1,51 @@
+{
+  "UpdateTime": "2026-10-21T02:18:14+08:00",
+  "UpdateInterval": 21600,
+  "SrcUpdateTime": "2026-10-21T01:59:39+08:00",
+  "SrcUpdateInterval": 86400,
+  "AuthorityCode": "NFB",
+  "CongestionLevels": [
+    {
+      "CongestionLevelID": "A",
+      "CongestionLevelName": "國道",
+      "MeasureIndex": "Speed",
+      "Levels": [
+        {
+          "Level": 1,
+          "LevelName": "順暢",
+          "LowValue": 80
+        },
+        {
+          "Level": 2,
+          "LevelName": "車多",
+          "TopValue": 79,
+          "LowValue": 60
+        },
+        {
+          "Level": 3,
+          "LevelName": "車多",
+          "TopValue": 59,
+          "LowValue": 40
+        },
+        {
+          "Level": 4,
+          "LevelName": "壅塞",
+          "TopValue": 39,
+          "LowValue": 20
+        },
+        {
+          "Level": 5,
+          "LevelName": "壅塞",
+          "TopValue": 19,
+          "LowValue": 0
+        },
+        {
+          "Level": -1,
+          "LevelName": "道路封閉",
+          "TopValue": -1,
+          "LowValue": -1
+        }
+      ]
+    }
+  ]
+}

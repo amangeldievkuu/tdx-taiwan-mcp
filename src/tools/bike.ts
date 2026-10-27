@@ -7,7 +7,7 @@ import { type AnyName, name } from '../core/format.js';
 import { nearest, pointOf } from '../core/geo.js';
 import { search } from '../core/names.js';
 import { list } from '../core/respond.js';
-import { city, lat, limit, lon, take } from '../core/schemas.js';
+import { city, lat, limit, lon, radius, take } from '../core/schemas.js';
 import { defineTool } from '../core/tool.js';
 
 const BIKE_CITIES = [
@@ -60,13 +60,7 @@ export function registerBikeTools(server: McpServer, ctx: ToolContext): void {
       lon,
       city: city(BIKE_CITIES),
       want,
-      radiusMeters: z
-        .number()
-        .int()
-        .min(50)
-        .max(5000)
-        .optional()
-        .describe('Search radius in metres (default 1000).'),
+      radiusMeters: radius(1000, 5000),
       limit: limit(5, 'stations'),
     },
     run: async (args) => {

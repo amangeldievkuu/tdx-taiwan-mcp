@@ -15,6 +15,17 @@ export function city(known: readonly string[]) {
 export const lat = z.number().min(21).max(27).describe('Latitude (WGS84), e.g. 25.0478.');
 export const lon = z.number().min(118).max(123).describe('Longitude (WGS84), e.g. 121.517.');
 
+/** A search radius around `lat` / `lon`. */
+export function radius(defaultMeters: number, maxMeters: number) {
+  return z
+    .number()
+    .int()
+    .min(50)
+    .max(maxMeters)
+    .optional()
+    .describe(`Search radius in metres (default ${defaultMeters}).`);
+}
+
 export function limit(defaultValue: number, what: string) {
   return z
     .number()

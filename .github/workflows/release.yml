@@ -51,11 +51,23 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npm run check:exports
+      # Re-running a release (or a version first published by hand) only creates the GitHub
+      # release.
+      - name: Check whether this version is already on npm
+        id: npm
+        run: |
+          spec="$(node -p "require('./package.json').name")@${GITHUB_REF_NAME#v}"
+          if npm view "$spec" version > /dev/null 2>&1; then
+            echo "::notice::$spec is already on npm; skipping the publish."
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          fi
       - name: Check npm publishes package.json unchanged
+        if: steps.npm.outputs.published != 'true'
         run: |
           npm publish --dry-run 2>&1 | tee publish.log
           if grep -q 'auto-corrected' publish.log; then exit 1; fi
-      - run: npm publish --provenance --access public
+      - if: steps.npm.outputs.published != 'true'
+        run: npm publish --provenance --access public
         env:
           # Only used when trusted publishing is not set up yet (first release).
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

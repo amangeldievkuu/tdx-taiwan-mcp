@@ -5,6 +5,9 @@
 #
 # Uses npm trusted publishing (OIDC), so no npm token is stored in the repository. The trusted
 # publisher is configured on npmjs.com (package settings) for this repository and this file.
+# npm only offers that setting once the package exists, so the first version goes out with an
+# `NPM_TOKEN` repository secret (a granular token allowed to publish); delete the secret once
+# trusted publishing is set up.
 
 name: Release
 
@@ -48,7 +51,14 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npm run check:exports
-      - run: npm publish
+      - name: Check npm publishes package.json unchanged
+        run: |
+          npm publish --dry-run 2>&1 | tee publish.log
+          if grep -q 'auto-corrected' publish.log; then exit 1; fi
+      - run: npm publish --provenance --access public
+        env:
+          # Only used when trusted publishing is not set up yet (first release).
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create the GitHub release from CHANGELOG.md
         env:
           GH_TOKEN: ${{ github.token }}

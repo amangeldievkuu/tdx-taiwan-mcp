@@ -37,7 +37,7 @@
     "node": ">=20"
   },
   "bin": {
-    "tdx-taiwan-mcp": "./dist/cli.js"
+    "tdx-taiwan-mcp": "dist/cli.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

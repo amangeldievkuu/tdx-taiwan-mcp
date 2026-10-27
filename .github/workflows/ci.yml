@@ -27,6 +27,12 @@ jobs:
       - run: npm run typecheck
       - run: npm run build
       - run: npm run check:exports
+      # The release publishes with npm 11, which silently drops package.json fields it finds
+      # invalid (a "./" bin path, for one). Fail here instead.
+      - name: Check npm 11 publishes package.json unchanged
+        run: |
+          npx -y npm@11 publish --dry-run 2>&1 | tee publish.log
+          if grep -q 'auto-corrected' publish.log; then exit 1; fi
       - run: npm pack
       - uses: actions/upload-artifact@v7
         with:

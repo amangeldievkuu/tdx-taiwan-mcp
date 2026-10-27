@@ -1,0 +1,61 @@
+{
+  "UpdateInterval": -1,
+  "SrcUpdateInterval": -1,
+  "AuthorityCode": "PEN",
+  "VersionID": 123,
+  "DailySchedules": [
+    {
+      "RouteID": "NANHAI",
+      "RouteName": {
+        "Zh_tw": "馬公-望安-七美",
+        "En": "TWMZG03-TWTNM-TWCMJ"
+      },
+      "OperatorID": "PENPEN-BR96575876",
+      "Date": "2026/11/27",
+      "Direction": 0,
+      "TimeTables": [
+        {
+          "TripID": "0011",
+          "StopTimes": [
+            {
+              "StopSequence": 1,
+              "PortID": "TWMZG03",
+              "PortName": {
+                "Zh_tw": "馬公第三漁港",
+                "En": "Makung 3rd Port"
+              },
+              "ArrivalTime": "",
+              "DepartureTime": "09:30",
+              "TravelTime": 50
+            },
+            {
+              "StopSequence": 2,
+              "PortID": "TWWOT",
+              "PortName": {
+                "Zh_tw": "望安港",
+                "En": "Wonan"
+              },
+              "ArrivalTime": "10:20",
+              "DepartureTime": "10:50",
+              "TravelTime": 45
+            },
+            {
+              "StopSequence": 3,
+              "PortID": "TWCMJ",
+              "PortName": {
+                "Zh_tw": "澎湖七美漁港",
+                "En": "Chi Mei"
+              },
+              "ArrivalTime": "11:35",
+              "DepartureTime": "",
+              "TravelTime": 0
+            }
+          ]
+        }
+      ],
+      "Frequencies": []
+    }
+  ],
+  "UpdateTime": "2026-10-12T08:47:26+08:00",
+  "SrcUpdateTime": "2026-10-12T08:47:26+08:00"
+}

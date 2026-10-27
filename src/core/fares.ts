@@ -1,5 +1,5 @@
-/** 費率等級, shared by the THSR, TRA and metro fare tables (TRA and metro: 8 = group). */
-const FARE_CLASS: Record<number, string> = {
+/** 費率等級, shared by the THSR, TRA, metro and ferry fare tables (TRA, metro, ferry: 8 = group). */
+export const FARE_CLASS: Record<number, string> = {
   1: 'adult',
   2: 'student',
   3: 'child',

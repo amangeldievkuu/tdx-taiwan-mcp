@@ -23,6 +23,16 @@ export function clock(time: string): number {
   return h * 60 + m;
 }
 
+/** `06:15` of the unpadded `6:15` the ferry timetables use; `undefined` when blank. */
+export function padTime(time: string | null | undefined): string | undefined {
+  return time ? time.padStart(5, '0') : undefined;
+}
+
+/** The local `HH:mm` of a TDX timestamp such as `2026-10-21T11:10:00+08:00`. */
+export function clockOf(timestamp: string | null | undefined): string | undefined {
+  return timestamp ? timestamp.slice(11, 16) : undefined;
+}
+
 /** `HH:mm` of `HH:mm:ss`. */
 export function hhmm(time: string | null | undefined): string | undefined {
   return time ? time.slice(0, 5) : undefined;

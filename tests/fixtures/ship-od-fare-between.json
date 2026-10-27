@@ -1,0 +1,110 @@
+[
+  {
+    "RouteID": "KLMT",
+    "RouteName": {
+      "Zh_tw": "基隆－馬祖(東引-南竿)",
+      "En": "Keelung-Matsu(Dongyin Township-Nangan Township)"
+    },
+    "OperatorID": "MPB42709054",
+    "FareID": "MPBOP010",
+    "ODFares": [
+      {
+        "Direction": 0,
+        "OriginPort": {
+          "PortID": "TW011",
+          "PortName": {
+            "Zh_tw": "東引中柱港",
+            "En": "Tungyeng Chungchu"
+          }
+        },
+        "DestinationPort": {
+          "PortID": "TW007",
+          "PortName": {
+            "Zh_tw": "南竿福澳港",
+            "En": "Nankan Fuao"
+          }
+        },
+        "Fares": []
+      },
+      {
+        "Direction": 0,
+        "OriginPort": {
+          "PortID": "TWKEL",
+          "PortName": {
+            "Zh_tw": "基隆港",
+            "En": "Keelung"
+          }
+        },
+        "DestinationPort": {
+          "PortID": "TW007",
+          "PortName": {
+            "Zh_tw": "南竿福澳港",
+            "En": "Nankan Fuao"
+          }
+        },
+        "Fares": [
+          {
+            "FareName": "全票",
+            "TicketType": 1,
+            "FareClass": 1,
+            "CabinClass": "頭等艙",
+            "Price": 1890
+          },
+          {
+            "FareName": "全票",
+            "TicketType": 1,
+            "FareClass": 1,
+            "CabinClass": "臥鋪(親子)",
+            "Price": 840
+          },
+          {
+            "FareName": "半票",
+            "TicketType": 1,
+            "FareClass": 7,
+            "CabinClass": "無障礙臥鋪",
+            "Price": 525
+          },
+          {
+            "FareName": "全票",
+            "TicketType": 1,
+            "FareClass": 1,
+            "CabinClass": "座位",
+            "Price": 630
+          },
+          {
+            "FareName": "全票",
+            "TicketType": 1,
+            "FareClass": 1,
+            "CabinClass": "臥鋪(單)",
+            "Price": 1050
+          },
+          {
+            "FareName": "全票",
+            "TicketType": 1,
+            "FareClass": 1,
+            "CabinClass": "貴賓艙",
+            "Price": 1575
+          }
+        ]
+      },
+      {
+        "Direction": 0,
+        "OriginPort": {
+          "PortID": "TWKEL",
+          "PortName": {
+            "Zh_tw": "基隆港",
+            "En": "Keelung"
+          }
+        },
+        "DestinationPort": {
+          "PortID": "TW011",
+          "PortName": {
+            "Zh_tw": "東引中柱港",
+            "En": "Tungyeng Chungchu"
+          }
+        },
+        "Fares": []
+      }
+    ]
+  }
+]

@@ -1,0 +1,99 @@
+{
+  "UpdateTime": "2026-10-21T15:37:25+08:00",
+  "UpdateInterval": -1,
+  "SrcUpdateTime": "2026-10-21T15:37:25+08:00",
+  "SrcUpdateInterval": 86400,
+  "AuthorityCode": "MPB",
+  "ShipLiveBoardses": [
+    {
+      "ShipDate": "2026-10-21T00:00:00+08:00",
+      "PortID": "TW001",
+      "PortName": {
+        "ZhTw": "小琉球白沙港",
+        "En": "little Liuqiu port"
+      },
+      "DepartureLiveBoards": [
+        {
+          "RouteID": "DGLQ",
+          "VesselID": "016360",
+          "VesselName": {
+            "Zh_tw": "藍白3號",
+            "En": "Leuco Sapphire No.3"
+          },
+          "ArrivalPortID": "TWDNK",
+          "ArrivalPortName": {
+            "ZhTw": "東港",
+            "En": "Donggang Yanpu Fishing Port"
+          },
+          "ScheduledDepartureTime": "2026-10-21T11:10:00+08:00",
+          "ActualDepartureTime": "2026-10-21T12:53:30+08:00",
+          "EstimateDepartureTime": "2026-10-21T11:10:00+08:00",
+          "DepartureRemark": "離港",
+          "DepartureRemarkEn": "Departed",
+          "CancelReason": "",
+          "ChangeNotice": ""
+        },
+        {
+          "RouteID": "DGLQ",
+          "VesselID": "015632",
+          "VesselName": {
+            "Zh_tw": "翔信",
+            "En": "SHIANG SHIN"
+          },
+          "ArrivalPortID": "TWDNK",
+          "ArrivalPortName": {
+            "ZhTw": "東港",
+            "En": "Donggang Yanpu Fishing Port"
+          },
+          "ScheduledDepartureTime": "2026-10-21T07:40:00+08:00",
+          "EstimateDepartureTime": "2026-10-21T07:40:00+08:00",
+          "DepartureRemark": "準時",
+          "DepartureRemarkEn": "On Time",
+          "CancelReason": "",
+          "ChangeNotice": ""
+        }
+      ],
+      "ArrivalLiveBoards": [
+        {
+          "RouteID": "DGLQ",
+          "VesselID": "014761",
+          "VesselName": {
+            "Zh_tw": "光輝",
+            "En": "GUANG HUI"
+          },
+          "DeparturePortID": "TWDNK",
+          "DeparturePortName": {
+            "ZhTw": "東港",
+            "En": "Donggang Yanpu Fishing Port"
+          },
+          "ScheduledArrivalTime": "2026-10-21T07:30:00+08:00",
+          "EstimateArrivalTime": "2026-10-21T07:30:00+08:00",
+          "ArrivalRemark": "準時",
+          "ArrivalRemarkEn": "On Time",
+          "CancelReason": "",
+          "ChangeNotice": ""
+        },
+        {
+          "RouteID": "DGLQ",
+          "VesselID": "015354",
+          "VesselName": {
+            "Zh_tw": "泰富3號",
+            "En": "TAIFU NO.3"
+          },
+          "DeparturePortID": "TWDNK",
+          "DeparturePortName": {
+            "ZhTw": "東港",
+            "En": "Donggang Yanpu Fishing Port"
+          },
+          "ScheduledArrivalTime": "2026-10-21T07:40:00+08:00",
+          "EstimateArrivalTime": "2026-10-21T07:40:00+08:00",
+          "ArrivalRemark": "準時",
+          "ArrivalRemarkEn": "On Time",
+          "CancelReason": "",
+          "ChangeNotice": ""
+        }
+      ],
+      "UpdateTime": "2026-10-21T15:36:19+08:00"
+    }
+  ]
+}

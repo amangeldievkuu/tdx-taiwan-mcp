@@ -85,19 +85,24 @@ export interface ResolveOptions<T> {
   ids?: (item: T) => Array<string | null | undefined>;
   /** What the items are, for messages: `THSR station`. */
   label: string;
+  /**
+   * Return every best match, even under different names, instead of reporting them as
+   * ambiguous: for places that several items serve (two ferry ports on one island).
+   */
+  many?: boolean;
 }
 
 /**
  * The items `input` names: an exact ID match, else the best name matches. Several items are
- * returned only when they share one name (a metro station listed once per line). No match or
- * an ambiguous match throws a `ToolInputError` listing the candidates.
+ * returned only when they share one name (a metro station listed once per line), or with
+ * `many`. No match or an ambiguous match throws a `ToolInputError` listing the candidates.
  */
 export function resolve<T>(
   items: readonly T[],
   input: string,
   options: ResolveOptions<T>,
 ): [T, ...T[]] {
-  const { names, ids, label } = options;
+  const { names, ids, label, many = false } = options;
   const wanted = input.trim().toLowerCase();
   const byId = ids
     ? items.filter((item) => ids(item).some((id) => id?.toLowerCase() === wanted))
@@ -114,7 +119,7 @@ export function resolve<T>(
   }
   const top = ranked.filter((m) => m.score === best.score).map((m) => m.item);
   const distinct = new Set(top.map((item) => normalize(names(item)[0] ?? '')));
-  if (distinct.size === 1) return top as [T, ...T[]];
+  if (distinct.size === 1 || many) return top as [T, ...T[]];
   const candidates = [...new Set(top.map((item) => names(item)[0]).filter(Boolean))];
   throw new ToolInputError(
     `"${input}" matches several ${label}s: ${candidates.slice(0, 20).join('、')}. Give the full name.`,

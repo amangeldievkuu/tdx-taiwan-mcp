@@ -21,6 +21,9 @@ All notable changes to this project are documented here. The format is based on
 - Flight tools: `flight_status`, `flight_board` (a Taiwan airport's live departures or arrivals,
   with the airport weather) and `flight_schedule` (domestic flights between two airports on a
   day, with fares). Airports are given by IATA code or name (`松山`, `Kinmen`).
+- Ferry tools: `ferry_timetable` (sailings between two ports, with today's live status and the
+  alerts in force), `ferry_live_board`, `ferry_fare` and `ferry_alerts`. Ports are given by name;
+  county-run lines (Penghu inter-island, 旗津, 淡水) by adding `city`.
 - `tdx_get` for any TDX path with OData options.
 - Chinese city names (`臺北市`, `台北`), 台/臺-insensitive name search, output capped at
   `TDX_MAX_ITEMS` items and 40,000 characters, and TDX errors (unsupported city, 404, 429,

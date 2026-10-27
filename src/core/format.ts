@@ -28,3 +28,29 @@ export function compact(value: unknown): unknown {
   }
   return value === null || value === '' ? undefined : value;
 }
+
+/** Alert `Level` of the rail and ferry feeds. */
+export const ALERT_LEVEL: Record<number, string> = { 1: 'severe', 2: 'moderate', 3: 'minor' };
+
+/** Alert and event descriptions may hold HTML; this keeps the text. */
+export function plain(text: string | null | undefined): string | undefined {
+  const stripped = text
+    ?.replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return stripped || undefined;
+}
+
+/** Drops the `0001-01-01` placeholder TDX sends for "no time". */
+export function realTime(value: string | null | undefined): string | undefined {
+  return value && !value.startsWith('0001-') ? value : undefined;
+}
+
+/**
+ * The array of a TDX wrapper object. The types require it, but TDX leaves it out for a city
+ * without data (`{"UpdateInterval": -1, ...}`).
+ */
+export function arrayOf<T>(items: readonly T[] | undefined): readonly T[] {
+  return items ?? [];
+}

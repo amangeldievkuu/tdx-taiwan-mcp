@@ -112,13 +112,25 @@ IDs. For today, timetables start from the current time in Taiwan.
 
 Airports are IATA codes or names (`TSA`, `松山`, `Kinmen`).
 
+### Ferries
+
+| Tool               | What it answers                                                                   |
+| ------------------ | --------------------------------------------------------------------------------- |
+| `ferry_timetable`  | Sailings between two ports on a day, with live status and alerts (typhoons) today |
+| `ferry_live_board` | A port's departures and arrivals today, with delays and cancellations             |
+| `ferry_fare`       | Fares between two ports per ticket, cabin and passenger type                      |
+| `ferry_alerts`     | Current suspensions and changes to ferry service                                  |
+
+Ports are names (`富岡`, `綠島`, `小琉球`) or port IDs. Lines run by a county (Penghu
+inter-island boats, 旗津, 淡水) need `city`, e.g. `PenghuCounty`.
+
 ### Other
 
 | Tool      | What it answers                                                          |
 | --------- | ------------------------------------------------------------------------ |
 | `tdx_get` | Any TDX API path with OData `filter`, `select`, `orderBy`, `top`, `skip` |
 
-Road and ferry tools are on the way; until then `tdx_get` reaches those endpoints.
+Road tools are on the way; until then `tdx_get` reaches those endpoints.
 
 ## Use as a library
 

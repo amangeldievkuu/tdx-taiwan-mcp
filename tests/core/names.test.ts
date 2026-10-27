@@ -73,6 +73,11 @@ describe('resolve', () => {
     expect(resolve(stations, '台北車站', options).map((s) => s.id)).toEqual(['BL12', 'R10']);
   });
 
+  it('returns every best match under different names with many', () => {
+    const many = { ...options, many: true };
+    expect(resolve(stations, '臺', many).map((s) => s.id)).toEqual(['1000', 'BL12', 'R10', '3300']);
+  });
+
   it('accepts a unique partial match', () => {
     expect(resolve(stations, '彰', options).map((s) => s.id)).toEqual(['3360']);
   });

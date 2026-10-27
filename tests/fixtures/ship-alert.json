@@ -1,0 +1,48 @@
+{
+  "UpdateTime": "2026-10-21T15:34:25+08:00",
+  "UpdateInterval": -1,
+  "SrcUpdateTime": "2026-10-21T15:34:07+08:00",
+  "SrcUpdateInterval": 60,
+  "AuthorityCode": "MPB",
+  "Alerts": [
+    {
+      "AlertID": "fedbb87b-dcf8-47ba-849a-61756ef7613a",
+      "Title": "受薔琵颱風影響，115年10月21日10時以後至23日富岡往返綠島船班全部停航。",
+      "Description": "受薔琵颱風影響，115年10月21日10時以後至23日富岡往返綠島船班全部停航。",
+      "Department": "航港局",
+      "Status": 2,
+      "Level": 1,
+      "Cause": "天災",
+      "Effect": 4,
+      "Scope": {
+        "Operators": [
+          {
+            "OperatorID": "80217430",
+            "OperatorName": {
+              "Zh_tw": "長杰航運股份有限公司"
+            }
+          },
+          {
+            "OperatorID": "22979327",
+            "OperatorName": {
+              "Zh_tw": "帆利航運有限公司"
+            }
+          }
+        ],
+        "Routes": [
+          {
+            "RouteID": "FGGI",
+            "RouteName": {
+              "Zh_tw": "臺東(富岡)-綠島",
+              "En": "Fugang,Taitung－Green Island,Taitung"
+            }
+          }
+        ]
+      },
+      "StartTime": "2026-10-19T16:23:00+08:00",
+      "EndTime": "2026-10-23T23:55:00+08:00",
+      "PublishTime": "2026-10-19T16:28:05+08:00",
+      "UpdateTime": "2026-10-19T16:23:00+08:00"
+    }
+  ]
+}

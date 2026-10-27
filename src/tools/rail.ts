@@ -1,7 +1,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import type { ToolContext } from '../core/context.js';
-import { name } from '../core/format.js';
+import { ALERT_LEVEL, name, plain, realTime } from '../core/format.js';
 import { nearest } from '../core/geo.js';
 import { search } from '../core/names.js';
 import { list } from '../core/respond.js';
@@ -10,7 +10,6 @@ import { defineTool } from '../core/tool.js';
 import { railSystem, stationsOf } from './rail-stations.js';
 
 const ALERT_SYSTEMS = ['THSR', 'TRA', 'TRTC', 'KRTC', 'TYMC', 'KLRT', 'TMRT', 'TRTCMG'] as const;
-const LEVEL: Record<number, string> = { 1: 'severe', 2: 'moderate', 3: 'minor' };
 /** TRA and metro alert status. */
 const STATUS: Record<number, string> = { 0: 'line stopped', 1: 'normal', 2: 'disrupted' };
 /** THSR alert status. */
@@ -93,7 +92,7 @@ export function registerRailTools(server: McpServer, ctx: ToolContext): void {
         title: a.Title,
         status: a.status,
         description: plain(a.Description) !== a.Title ? plain(a.Description) : undefined,
-        level: a.Level == null ? undefined : LEVEL[a.Level],
+        level: a.Level == null ? undefined : ALERT_LEVEL[a.Level],
         effect: a.Effect || undefined,
         reason: a.Reason || undefined,
         start: realTime(a.StartTime),
@@ -104,19 +103,4 @@ export function registerRailTools(server: McpServer, ctx: ToolContext): void {
       return list(items, ctx.maxItems, { system });
     },
   });
-}
-
-/** Alert descriptions may hold HTML. */
-function plain(text: string | null | undefined): string | undefined {
-  const stripped = text
-    ?.replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-  return stripped || undefined;
-}
-
-/** Drops the `0001-01-01` placeholder TDX sends for "no time". */
-function realTime(value: string | null | undefined): string | undefined {
-  return value && !value.startsWith('0001-') ? value : undefined;
 }

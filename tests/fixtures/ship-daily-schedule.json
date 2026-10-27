@@ -1,0 +1,105 @@
+{
+  "UpdateInterval": -1,
+  "SrcUpdateInterval": -1,
+  "AuthorityCode": "MPB",
+  "VersionID": 4443,
+  "DailySchedules": [
+    {
+      "RouteID": "CKJB",
+      "RouteName": {
+        "Zh_tw": "赤崁漁港-吉貝漁港",
+        "En": "Chikan Village-Jibei Village"
+      },
+      "OperatorID": "MPB24633080",
+      "Date": "2026-11-17",
+      "Direction": 0,
+      "TimeTables": [
+        {
+          "TripID": "001",
+          "StopTimes": [
+            {
+              "StopSequence": 1,
+              "PortID": "TW028",
+              "PortName": {
+                "Zh_tw": "赤崁漁港",
+                "En": "Chihkan"
+              },
+              "ArrivalTime": "",
+              "DepartureTime": "6:15",
+              "TravelTime": 20
+            },
+            {
+              "StopSequence": 2,
+              "PortID": "TW027",
+              "PortName": {
+                "Zh_tw": "吉貝漁港",
+                "En": "Ceiba"
+              },
+              "ArrivalTime": "6:35",
+              "DepartureTime": "7:00",
+              "TravelTime": 20
+            },
+            {
+              "StopSequence": 3,
+              "PortID": "TW028",
+              "PortName": {
+                "Zh_tw": "赤崁漁港",
+                "En": "Chihkan"
+              },
+              "ArrivalTime": "7:20",
+              "DepartureTime": "11:15",
+              "TravelTime": 20
+            },
+            {
+              "StopSequence": 4,
+              "PortID": "TW027",
+              "PortName": {
+                "Zh_tw": "吉貝漁港",
+                "En": "Ceiba"
+              },
+              "ArrivalTime": "11:35",
+              "DepartureTime": "13:30",
+              "TravelTime": 20
+            },
+            {
+              "StopSequence": 5,
+              "PortID": "TW028",
+              "PortName": {
+                "Zh_tw": "赤崁漁港",
+                "En": "Chihkan"
+              },
+              "ArrivalTime": "13:50",
+              "DepartureTime": "17:00",
+              "TravelTime": 20
+            },
+            {
+              "StopSequence": 6,
+              "PortID": "TW027",
+              "PortName": {
+                "Zh_tw": "吉貝漁港",
+                "En": "Ceiba"
+              },
+              "ArrivalTime": "17:20",
+              "DepartureTime": "17:30",
+              "TravelTime": 20
+            },
+            {
+              "StopSequence": 7,
+              "PortID": "TW028",
+              "PortName": {
+                "Zh_tw": "赤崁漁港",
+                "En": "Chihkan"
+              },
+              "ArrivalTime": "17:50",
+              "DepartureTime": "",
+              "TravelTime": 0
+            }
+          ]
+        }
+      ],
+      "Frequencies": []
+    }
+  ],
+  "UpdateTime": "2026-10-15T16:17:26+08:00",
+  "SrcUpdateTime": "2026-10-15T14:47:31+08:00"
+}

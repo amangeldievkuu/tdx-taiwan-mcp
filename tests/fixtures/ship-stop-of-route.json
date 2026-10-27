@@ -1,0 +1,90 @@
+{
+  "UpdateInterval": -1,
+  "SrcUpdateInterval": -1,
+  "AuthorityCode": "MPB",
+  "VersionID": 4443,
+  "StopOfRoutes": [
+    {
+      "RouteID": "FGGI",
+      "RouteName": {
+        "Zh_tw": "臺東（富岡）─綠島",
+        "En": "Fugang,Taitung－Green Island,Taitung"
+      },
+      "Operators": [
+        {
+          "OperatorID": "MPB86688823"
+        },
+        {
+          "OperatorID": "MPB16358139"
+        },
+        {
+          "OperatorID": "MPB80217430"
+        },
+        {
+          "OperatorID": "MPB22979327"
+        }
+      ],
+      "Direction": 0,
+      "Stops": [
+        {
+          "StopSequence": 1,
+          "PortID": "TWTTT",
+          "PortName": {
+            "Zh_tw": "台東富岡漁港",
+            "En": "Taitung Fugang"
+          }
+        },
+        {
+          "StopSequence": 2,
+          "PortID": "TWGNI",
+          "PortName": {
+            "Zh_tw": "綠島南寮漁港",
+            "En": "Green Island Nanlao"
+          }
+        }
+      ]
+    },
+    {
+      "RouteID": "FGGI",
+      "RouteName": {
+        "Zh_tw": "臺東（富岡）─綠島",
+        "En": "Fugang,Taitung－Green Island,Taitung"
+      },
+      "Operators": [
+        {
+          "OperatorID": "MPB86688823"
+        },
+        {
+          "OperatorID": "MPB16358139"
+        },
+        {
+          "OperatorID": "MPB80217430"
+        },
+        {
+          "OperatorID": "MPB22979327"
+        }
+      ],
+      "Direction": 1,
+      "Stops": [
+        {
+          "StopSequence": 1,
+          "PortID": "TWGNI",
+          "PortName": {
+            "Zh_tw": "綠島南寮漁港",
+            "En": "Green Island Nanlao"
+          }
+        },
+        {
+          "StopSequence": 2,
+          "PortID": "TWTTT",
+          "PortName": {
+            "Zh_tw": "台東富岡漁港",
+            "En": "Taitung Fugang"
+          }
+        }
+      ]
+    }
+  ],
+  "UpdateTime": "2026-10-15T16:17:26+08:00",
+  "SrcUpdateTime": "2026-10-15T14:47:31+08:00"
+}

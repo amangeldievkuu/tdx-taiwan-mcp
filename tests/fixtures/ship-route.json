@@ -1,0 +1,162 @@
+{
+  "UpdateInterval": -1,
+  "SrcUpdateInterval": -1,
+  "AuthorityCode": "MPB",
+  "VersionID": 4443,
+  "Routes": [
+    {
+      "RouteID": "FGGI",
+      "RouteName": {
+        "Zh_tw": "臺東（富岡）─綠島",
+        "En": "Fugang,Taitung－Green Island,Taitung"
+      },
+      "ServiceStatus": 1,
+      "Description": "臺東富岡漁港-綠島南寮漁港航程約1小時",
+      "Operators": [
+        {
+          "OperatorID": "MPB86688823"
+        },
+        {
+          "OperatorID": "MPB16358139"
+        },
+        {
+          "OperatorID": "MPB80217430"
+        },
+        {
+          "OperatorID": "MPB22979327"
+        }
+      ],
+      "StartPortID": "TWTTT",
+      "StartPortName": "台東富岡漁港",
+      "EndPortID": "TWGNI",
+      "EndPortName": "綠島南寮漁港",
+      "TicketPriceDescription": {
+        "Zh_tw": "臺東→綠島約600(實際依業者公告)",
+        "En": "Adult NT$600/Child  NT$300"
+      },
+      "RouteType": 2,
+      "Vessels": [
+        {
+          "VesselID": "015366",
+          "VesselName": {
+            "Zh_tw": "綠島之星",
+            "En": "GREEN ISLAND STAR"
+          }
+        },
+        {
+          "VesselID": "014321",
+          "VesselName": {
+            "Zh_tw": "凱旋3號",
+            "En": "KAI SHIUAN NO.3"
+          }
+        },
+        {
+          "VesselID": "014032",
+          "VesselName": {
+            "Zh_tw": "凱旋1號",
+            "En": "KAI SHIUAN NO.1"
+          }
+        },
+        {
+          "VesselID": "014094",
+          "VesselName": {
+            "Zh_tw": "綠島之星2號",
+            "En": "GREEN ISLAND STAR NO.2"
+          }
+        },
+        {
+          "VesselID": "015778",
+          "VesselName": {
+            "Zh_tw": "綠島之星3號",
+            "En": "GREEN ISLAND STAR NO.3"
+          }
+        },
+        {
+          "VesselID": "014659",
+          "VesselName": {
+            "Zh_tw": "金星3號",
+            "En": "GOLD STAR No.3"
+          }
+        },
+        {
+          "VesselID": "016018",
+          "VesselName": {
+            "Zh_tw": "綠島之晟",
+            "En": "GREEN ISLAND SUCCESS"
+          }
+        },
+        {
+          "VesselID": "016555",
+          "VesselName": {
+            "Zh_tw": "天王星21號",
+            "En": "URANUS NO.21"
+          }
+        },
+        {
+          "VesselID": "016654",
+          "VesselName": {
+            "Zh_tw": "凱旋9號",
+            "En": "KAI SHIUAN NO.9"
+          }
+        },
+        {
+          "VesselID": "016129",
+          "VesselName": {
+            "Zh_tw": "金星8號",
+            "En": "GOLDEN STAR NO.8"
+          }
+        }
+      ],
+      "RouteMapURL": "https://www.cwa.gov.tw/V8/C/M/bluehighway_type.html?id=AE",
+      "RouteDistance": 18,
+      "WeatherURL": ""
+    },
+    {
+      "RouteID": "KLMT",
+      "RouteName": {
+        "Zh_tw": "基隆－馬祖(東引-南竿)",
+        "En": "Keelung-Matsu(Dongyin Township-Nangan Township)"
+      },
+      "ServiceStatus": 1,
+      "Description": "基隆往返馬祖(東引至南竿)航線",
+      "Operators": [
+        {
+          "OperatorID": "MPB78752245"
+        },
+        {
+          "OperatorID": "MPB42709054"
+        }
+      ],
+      "StartPortID": "TWKEL",
+      "StartPortName": "基隆港",
+      "EndPortID": "TW007",
+      "EndPortName": "南竿福澳港",
+      "TicketPriceDescription": {
+        "Zh_tw": "經濟艙-全票1,050元、半票525元",
+        "En": "Economy class-Adult$1,050, Half Price $525"
+      },
+      "RouteType": 2,
+      "Vessels": [
+        {
+          "VesselID": "016577",
+          "VesselName": {
+            "Zh_tw": "新臺馬",
+            "En": "NEW TAIMA"
+          }
+        },
+        {
+          "VesselID": "015426",
+          "VesselName": {
+            "Zh_tw": "臺馬之星",
+            "En": "TAIMA STAR"
+          }
+        }
+      ],
+      "RouteMapURL": "https://www.cwa.gov.tw/V8/C/M/bluehighway_type.html?id=AA",
+      "RouteDistance": 120,
+      "WeatherURL": ""
+    }
+  ],
+  "UpdateTime": "2026-10-15T16:17:26+08:00",
+  "SrcUpdateTime": "2026-10-15T14:47:31+08:00"
+}

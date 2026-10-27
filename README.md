@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/tdx-taiwan-mcp)](https://www.npmjs.com/package/tdx-taiwan-mcp)
 [![CI](https://github.com/amangeldievkuu/tdx-taiwan-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/amangeldievkuu/tdx-taiwan-mcp/actions/workflows/ci.yml)
-[![license](https://img.shields.io/npm/l/tdx-taiwan-mcp)](https://github.com/amangeldievkuu/tdx-taiwan-mcp/blob/main/LICENSE)
+[![license](https://img.shields.io/github/license/amangeldievkuu/tdx-taiwan-mcp)](https://github.com/amangeldievkuu/tdx-taiwan-mcp/blob/main/LICENSE)
 
 An unofficial [MCP](https://modelcontextprotocol.io) server for Taiwan's
 [TDX (Transport Data eXchange)](https://tdx.transportdata.tw) API, built on the

@@ -6,6 +6,20 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+
+- `bus_stops_nearby`: the bus stops near a coordinate, each with its heading and the city bus
+  and InterCity coach routes that stop there, ready for `bus_eta`. Uses `tdx-taiwan` 0.16's
+  station lists with a `nearby` filter.
+- `traffic_travel_time`: car travel time between two national freeway interchanges right now,
+  over the fastest route of live eTag gantry times, with each segment's time and speed.
+- An MCP registry entry (`server.json`, `mcpName` `io.github.amangeldievkuu/tdx-taiwan-mcp`);
+  the release workflow publishes each version to the registry after npm.
+
+### Changed
+
+- Requires `tdx-taiwan` 0.16.
+
 ## [0.1.0] - 2026-10-27
 
 ### Added

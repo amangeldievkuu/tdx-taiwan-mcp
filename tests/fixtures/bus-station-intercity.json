@@ -1,0 +1,63 @@
+[
+  {
+    "StationUID": "THB107352",
+    "StationID": "107352",
+    "StationName": {
+      "Zh_tw": "臺北轉運站"
+    },
+    "StationPosition": {
+      "PositionLon": 121.51761,
+      "PositionLat": 25.04887,
+      "GeoHash": "wsqqt0n2j"
+    },
+    "StationGroupID": "103－050",
+    "Stops": [
+      {
+        "StopUID": "THB289792",
+        "StopID": "289792",
+        "StopName": {
+          "Zh_tw": "臺北轉運站",
+          "En": "Taipei Bus Station"
+        },
+        "RouteUID": "THB1610",
+        "RouteID": "1610",
+        "RouteName": {
+          "Zh_tw": "1610",
+          "En": "1610"
+        }
+      },
+      {
+        "StopUID": "THB289792",
+        "StopID": "289792",
+        "StopName": {
+          "Zh_tw": "臺北轉運站",
+          "En": "Taipei Bus Station"
+        },
+        "RouteUID": "THB1611",
+        "RouteID": "1611",
+        "RouteName": {
+          "Zh_tw": "1611",
+          "En": "1611"
+        }
+      },
+      {
+        "StopUID": "THB289792",
+        "StopID": "289792",
+        "StopName": {
+          "Zh_tw": "臺北轉運站",
+          "En": "Taipei Bus Station"
+        },
+        "RouteUID": "THB1613",
+        "RouteID": "1613",
+        "RouteName": {
+          "Zh_tw": "1613",
+          "En": "1613"
+        }
+      }
+    ],
+    "LocationCityCode": "TPE",
+    "Bearing": "W",
+    "UpdateTime": "2026-10-27T13:57:36+08:00",
+    "VersionID": 7908
+  }
+]

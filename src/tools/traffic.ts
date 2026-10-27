@@ -12,7 +12,7 @@ import { z } from 'zod';
 import { CITIES, normalizeCity } from '../core/cities.js';
 import type { ToolContext } from '../core/context.js';
 import { ToolInputError } from '../core/errors.js';
-import { arrayOf, plain, realTime } from '../core/format.js';
+import { arrayOf, HEADING, plain, realTime } from '../core/format.js';
 import { haversine, type LatLon, pointFromWkt, pointOf } from '../core/geo.js';
 import { search } from '../core/names.js';
 import { list } from '../core/respond.js';
@@ -48,16 +48,6 @@ const EVENT_CITIES = [
 /** Cities with a live road event feed. */
 const LIVE_EVENT_CITIES = [...EVENT_CITIES, 'Kaohsiung'];
 
-const DIRECTION: Record<string, string> = {
-  N: 'northbound',
-  S: 'southbound',
-  E: 'eastbound',
-  W: 'westbound',
-  NE: 'northeastbound',
-  NW: 'northwestbound',
-  SE: 'southeastbound',
-  SW: 'southwestbound',
-};
 /** Congestion levels with no level of service. */
 const LEVEL_SENTINEL: Record<string, string> = { '0': 'unknown', '-1': 'closed', '-99': 'no data' };
 const EVENT_TYPES = {
@@ -184,7 +174,7 @@ export function registerTrafficTools(server: McpServer, ctx: ToolContext): void 
         .map(({ t, section, congestion, distance }) => ({
           road: section?.RoadName,
           section: section ? section.SectionName : `${t.SectionID ?? '?'} (no section record)`,
-          direction: section && (DIRECTION[section.RoadDirection] ?? section.RoadDirection),
+          direction: section && (HEADING[section.RoadDirection] ?? section.RoadDirection),
           km: kmRange(section),
           congestion,
           speedKmh: t.TravelSpeed > 0 ? t.TravelSpeed : undefined,

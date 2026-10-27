@@ -18,6 +18,26 @@ describe('server', () => {
     expect(t.client.getInstructions()).toMatch(/bus_route_search/);
   });
 
+  it('keeps server.json, the MCP registry entry, in step with package.json', () => {
+    const pkg = JSON.parse(readFileSync('package.json', 'utf8')) as {
+      name: string;
+      version: string;
+      mcpName: string;
+    };
+    const entry = JSON.parse(readFileSync('server.json', 'utf8')) as {
+      name: string;
+      version: string;
+      description: string;
+      packages: Array<{ identifier: string; version: string }>;
+    };
+    expect(entry.name).toBe(pkg.mcpName);
+    expect(entry.version).toBe(pkg.version);
+    expect(entry.packages).toEqual([
+      expect.objectContaining({ identifier: pkg.name, version: pkg.version }),
+    ]);
+    expect(entry.description.length).toBeLessThanOrEqual(100);
+  });
+
   it('lists the tools, all read-only with a description', async () => {
     const t = await connect([]);
     close = t.close;
@@ -28,6 +48,7 @@ describe('server', () => {
       'bus_positions',
       'bus_route_search',
       'bus_route_stops',
+      'bus_stops_nearby',
       'ev_charger_nearby',
       'ferry_alerts',
       'ferry_fare',
@@ -54,6 +75,7 @@ describe('server', () => {
       'tra_train',
       'traffic_events',
       'traffic_live',
+      'traffic_travel_time',
       'youbike_nearby',
       'youbike_station',
     ]);

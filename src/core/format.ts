@@ -29,6 +29,18 @@ export function compact(value: unknown): unknown {
   return value === null || value === '' ? undefined : value;
 }
 
+/** Compass codes of road sections and bus stops (`RoadDirection`, `Bearing`) as words. */
+export const HEADING: Record<string, string> = {
+  N: 'northbound',
+  S: 'southbound',
+  E: 'eastbound',
+  W: 'westbound',
+  NE: 'northeastbound',
+  NW: 'northwestbound',
+  SE: 'southeastbound',
+  SW: 'southwestbound',
+};
+
 /** Alert `Level` of the rail and ferry feeds. */
 export const ALERT_LEVEL: Record<number, string> = { 1: 'severe', 2: 'moderate', 3: 'minor' };
 

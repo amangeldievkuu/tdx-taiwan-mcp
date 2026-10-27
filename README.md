@@ -72,6 +72,7 @@ A `.env` file in the working directory is read too; variables already set take p
 | ------------------ | -------------------------------------------------------------------------------------- |
 | `youbike_nearby`   | Nearest YouBike / Moovo stations to a coordinate with bikes (or empty docks) right now |
 | `youbike_station`  | YouBike stations by name or address, with live bikes, e-bikes and empty docks          |
+| `bus_stops_nearby` | Bus stops near a coordinate, with their heading and the city and coach routes there    |
 | `bus_route_search` | Bus routes by name or terminal stop, with endpoints, operators and fare                |
 | `bus_route_stops`  | The stops of a route in order, per direction and sub-route                             |
 | `bus_eta`          | Live arrival estimates at the stops of a route, optionally at one stop                 |
@@ -126,12 +127,14 @@ inter-island boats, 旗津, 淡水) need `city`, e.g. `PenghuCounty`.
 
 ### Roads
 
-| Tool             | What it answers                                                                   |
-| ---------------- | --------------------------------------------------------------------------------- |
-| `traffic_live`   | Live speed and congestion per road section, worst first, with a count per level   |
-| `traffic_events` | Accidents, roadworks, closures and announced events (parades) with where they are |
+| Tool                  | What it answers                                                                        |
+| --------------------- | -------------------------------------------------------------------------------------- |
+| `traffic_live`        | Live speed and congestion per road section, worst first, with a count per level        |
+| `traffic_travel_time` | Car travel time between two freeway interchanges now, from live eTag data, per segment |
+| `traffic_events`      | Accidents, roadworks, closures and announced events (parades) with where they are      |
 
-Road tools take a network: `freeway` (國道), `highway` (省道) or a city. Freeway sections are
+Road tools take a network: `freeway` (國道), `highway` (省道) or a city; `traffic_travel_time`
+takes freeway interchange names in Chinese (`林口`, `新竹`). Freeway sections are
 named after interchanges, so search them by keyword (`林口`).
 
 ### Parking and EV charging
@@ -151,6 +154,12 @@ freeway service areas.
 | Tool      | What it answers                                                          |
 | --------- | ------------------------------------------------------------------------ |
 | `tdx_get` | Any TDX API path with OData `filter`, `select`, `orderBy`, `top`, `skip` |
+
+## MCP registry
+
+The server is listed in the [MCP registry](https://registry.modelcontextprotocol.io) as
+`io.github.amangeldievkuu/tdx-taiwan-mcp`, so clients that browse the registry can install it
+with the two TDX variables above.
 
 ## Use as a library
 

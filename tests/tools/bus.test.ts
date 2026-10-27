@@ -8,6 +8,8 @@ const ROUTES: Route[] = [
   ['/v2/Bus/StopOfRoute/City/Taipei/307', loadFixture('bus-stop-of-route-taipei-307.json')],
   ['/v2/Bus/EstimatedTimeOfArrival/City/Taipei/307', loadFixture('bus-eta-taipei-307.json')],
   ['/v2/Bus/RealTimeByFrequency/City/Taipei/307', loadFixture('bus-position-taipei-307.json')],
+  ['/v2/Bus/Station/City/Taipei', loadFixture('bus-station-taipei.json')],
+  ['/v2/Bus/Station/InterCity', loadFixture('bus-station-intercity.json')],
   ['/v2/Bus/Route/InterCity', loadFixture('bus-intercity-route-1610.json')],
   ['/v2/Bus/EstimatedTimeOfArrival/InterCity/1610', loadFixture('bus-intercity-eta-1610.json')],
 ];
@@ -22,6 +24,51 @@ async function setup(routes = ROUTES) {
   close = t.close;
   return t;
 }
+
+describe('bus_stops_nearby', () => {
+  const MAIN_STATION = { lat: 25.0478, lon: 121.517, city: '臺北市' };
+
+  it('lists city and coach stops around a point, nearest first, with their routes', async () => {
+    const t = await setup();
+    const result = await t.call('bus_stops_nearby', MAIN_STATION);
+    expect(t.apiUrls.sort()).toEqual([
+      `${API}/v2/Bus/Station/City/Taipei?$spatialFilter=nearby(25.0478,121.517,300)&$format=JSON`,
+      `${API}/v2/Bus/Station/InterCity?$spatialFilter=nearby(25.0478,121.517,300)&$format=JSON`,
+    ]);
+    expect(result.json.city).toBe('Taipei');
+    expect(result.json.items.map((i) => [i.stationUID, i.city])).toEqual([
+      ['TPE1895', 'Taipei'],
+      ['THB107352', 'InterCity'],
+      ['TPE1000082', 'Taipei'],
+    ]);
+    expect(result.json.items[0]).toEqual({
+      distanceMeters: 80,
+      stop: '臺北車站(鄭州) / Taipei Main Sta. (Zhengzhou)',
+      heading: 'eastbound',
+      address: '捷運臺北車站M1出口~臺北車站北1門(向東)',
+      city: 'Taipei',
+      routes: ['2', '669', '641'],
+      stationUID: 'TPE1895',
+      lat: 25.0484971857801,
+      lon: 121.51719764702355,
+    });
+  });
+
+  it('still answers when the coach stations fail, and notes an empty area', async () => {
+    const t = await setup([
+      ['/v2/Bus/Station/InterCity', () => new Response('{}', { status: 500 })],
+      ['/v2/Bus/Station/City/Kaohsiung', []],
+      ...ROUTES,
+    ]);
+    const result = await t.call('bus_stops_nearby', { ...MAIN_STATION, radiusMeters: 1000 });
+    expect(t.apiUrls[0]).toContain('nearby(25.0478,121.517,1000)');
+    expect(result.json.items.map((i) => i.city)).toEqual(['Taipei', 'Taipei']);
+    const empty = await t.call('bus_stops_nearby', { lat: 22.6, lon: 120.3, city: 'Kaohsiung' });
+    expect(empty.json.note).toBe(
+      'No bus stop within 300 m; try a larger radiusMeters (up to 1000).',
+    );
+  });
+});
 
 describe('bus_route_search', () => {
   it('matches route names, with endpoints, operators and fare', async () => {

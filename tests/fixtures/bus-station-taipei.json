@@ -1,0 +1,124 @@
+[
+  {
+    "StationUID": "TPE1000082",
+    "StationID": "1000082",
+    "StationName": {
+      "Zh_tw": "臺北車站(忠孝)"
+    },
+    "StationPosition": {
+      "PositionLon": 121.5167218,
+      "PositionLat": 25.0465408,
+      "GeoHash": "wsqqmptf8"
+    },
+    "StationAddress": "捷運臺北車站M5出口~M4出口(交7)(向西)",
+    "Stops": [
+      {
+        "StopUID": "TPE34726",
+        "StopID": "34726",
+        "StopName": {
+          "Zh_tw": "臺北車站(忠孝)",
+          "En": "Taipei Main Sta. (Zhongxiao)"
+        },
+        "RouteUID": "TPE10181",
+        "RouteID": "10181",
+        "RouteName": {
+          "Zh_tw": "205",
+          "En": "205"
+        }
+      },
+      {
+        "StopUID": "TPE35854",
+        "StopID": "35854",
+        "StopName": {
+          "Zh_tw": "臺北車站(忠孝)",
+          "En": "Taipei Main Sta. (Zhongxiao)"
+        },
+        "RouteUID": "TPE10415",
+        "RouteID": "10415",
+        "RouteName": {
+          "Zh_tw": "221",
+          "En": "221"
+        }
+      },
+      {
+        "StopUID": "TPE35979",
+        "StopID": "35979",
+        "StopName": {
+          "Zh_tw": "臺北車站(忠孝)",
+          "En": "Taipei Main Sta. (Zhongxiao)"
+        },
+        "RouteUID": "TPE10416",
+        "RouteID": "10416",
+        "RouteName": {
+          "Zh_tw": "232",
+          "En": "232"
+        }
+      }
+    ],
+    "LocationCityCode": "TPE",
+    "Bearing": "W",
+    "UpdateTime": "2026-10-27T14:16:13+08:00",
+    "VersionID": 8283
+  },
+  {
+    "StationUID": "TPE1895",
+    "StationID": "1895",
+    "StationName": {
+      "Zh_tw": "臺北車站(鄭州)"
+    },
+    "StationPosition": {
+      "PositionLon": 121.51719764702355,
+      "PositionLat": 25.0484971857801,
+      "GeoHash": "wsqqmpyn5"
+    },
+    "StationAddress": "捷運臺北車站M1出口~臺北車站北1門(向東)",
+    "Stops": [
+      {
+        "StopUID": "TPE20576",
+        "StopID": "20576",
+        "StopName": {
+          "Zh_tw": "臺北車站(鄭州)",
+          "En": "Taipei Main Sta. (Zhengzhou)"
+        },
+        "RouteUID": "TPE10262",
+        "RouteID": "10262",
+        "RouteName": {
+          "Zh_tw": "2",
+          "En": "2"
+        }
+      },
+      {
+        "StopUID": "TPE35429",
+        "StopID": "35429",
+        "StopName": {
+          "Zh_tw": "臺北車站(鄭州)",
+          "En": "Taipei Main Sta. (Zhengzhou)"
+        },
+        "RouteUID": "TPE10278",
+        "RouteID": "10278",
+        "RouteName": {
+          "Zh_tw": "669",
+          "En": "669"
+        }
+      },
+      {
+        "StopUID": "TPE36489",
+        "StopID": "36489",
+        "StopName": {
+          "Zh_tw": "臺北車站(鄭州)",
+          "En": "Taipei Main Sta. (Zhengzhou)"
+        },
+        "RouteUID": "TPE10452",
+        "RouteID": "10452",
+        "RouteName": {
+          "Zh_tw": "641",
+          "En": "641"
+        }
+      }
+    ],
+    "LocationCityCode": "TPE",
+    "Bearing": "E",
+    "UpdateTime": "2026-10-27T14:16:13+08:00",
+    "VersionID": 8283
+  }
+]

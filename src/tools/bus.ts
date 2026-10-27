@@ -4,6 +4,7 @@ import type {
   BusEstimatedTimeOfArrival,
   BusPosition,
   BusRoute,
+  BusStation,
   BusStopOfRoute,
   Field,
 } from 'tdx-taiwan';
@@ -11,10 +12,11 @@ import { z } from 'zod';
 import { normalizeCity } from '../core/cities.js';
 import type { ToolContext } from '../core/context.js';
 import { ToolInputError } from '../core/errors.js';
-import { name } from '../core/format.js';
+import { arrayOf, HEADING, name } from '../core/format.js';
+import { haversine, pointOf } from '../core/geo.js';
 import { search } from '../core/names.js';
 import { list } from '../core/respond.js';
-import { city, limit, take } from '../core/schemas.js';
+import { city, lat, limit, lon, radius, take } from '../core/schemas.js';
 import { defineTool } from '../core/tool.js';
 
 const INTERCITY = 'InterCity';
@@ -105,6 +107,43 @@ const direction = z
   .describe('Only one direction: "outbound" (去程) or "inbound" (返程). Default: both.');
 
 export function registerBusTools(server: McpServer, ctx: ToolContext): void {
+  defineTool(server, 'bus_stops_nearby', {
+    title: 'Bus stops nearby',
+    description:
+      'Bus stops nearest to a coordinate, each with its heading and the city bus and InterCity ' +
+      'coach routes that stop there, nearest first. Pass a stop and route to bus_eta for live ' +
+      'arrivals. Example: lat 25.0478, lon 121.517, city "Taipei".',
+    input: {
+      lat,
+      lon,
+      city: city(BUS_CITIES).describe(
+        `City the point is in: a TDX code (${BUS_CITIES.join(', ')}) or its Chinese name ` +
+          '(臺北市, 新北市, ...). InterCity coach stops are always included.',
+      ),
+      radiusMeters: radius(300, 1000),
+      limit: limit(10, 'stops'),
+    },
+    run: async (args) => {
+      const cityCode = normalizeCity(args.city);
+      const nearby = { lat: args.lat, lon: args.lon, meters: args.radiusMeters ?? 300 };
+      const [cityStations, coachStations] = await Promise.all([
+        ctx.tdx.bus.stations(cityCode, { nearby }),
+        // Coach stations are a bonus: a failure there should not hide the city's buses.
+        ctx.tdx.bus.interCity.stations({ nearby }).catch((): BusStation[] => []),
+      ]);
+      const items = [
+        ...cityStations.map((s) => describeStation(s, cityCode, args)),
+        ...coachStations.map((s) => describeStation(s, INTERCITY, args)),
+      ].sort((a, b) => (a.distanceMeters ?? Infinity) - (b.distanceMeters ?? Infinity));
+      return list(items, take(ctx, args.limit, 10), {
+        city: cityCode,
+        note: items.length
+          ? "For live arrivals, call bus_eta with the stop's city, one of its routes and the stop name."
+          : `No bus stop within ${nearby.meters} m; try a larger radiusMeters (up to 1000).`,
+      });
+    },
+  });
+
   defineTool(server, 'bus_route_search', {
     title: 'Search bus routes',
     description:
@@ -267,6 +306,25 @@ export function registerBusTools(server: McpServer, ctx: ToolContext): void {
       });
     },
   });
+}
+
+/** A station as a stop to walk to: where it is, which way buses go and which routes stop. */
+function describeStation(station: BusStation, where: string, from: { lat: number; lon: number }) {
+  const stops = arrayOf(station.Stops);
+  const position = pointOf(station.StationPosition);
+  // Station names are Chinese only; the stops carry the English name.
+  const english = stops.find((s) => s.StopName.En)?.StopName.En;
+  return {
+    distanceMeters: position && Math.round(haversine(from, position)),
+    stop: name({ Zh_tw: station.StationName.Zh_tw, En: english }),
+    heading: station.Bearing ? (HEADING[station.Bearing] ?? station.Bearing) : undefined,
+    address: station.StationAddress || undefined,
+    city: where,
+    routes: [...new Set(stops.map((s) => s.RouteName.Zh_tw))],
+    stationUID: station.StationUID,
+    lat: position?.lat,
+    lon: position?.lon,
+  };
 }
 
 /** `InterCity` (also 公路客運 / 國道客運) or a TDX city code. */

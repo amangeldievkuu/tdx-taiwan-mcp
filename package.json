@@ -21,6 +21,7 @@
     "ev-charging",
     "claude"
   ],
+  "mcpName": "io.github.amangeldievkuu/tdx-taiwan-mcp",
   "license": "MIT",
   "author": "Kutman",
   "homepage": "https://github.com/amangeldievkuu/tdx-taiwan-mcp#readme",
@@ -67,11 +68,11 @@
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "check:exports": "publint && attw --pack . --profile esm-only",
-    "version": "node scripts/sync-version.mjs && git add src/version.ts"
+    "version": "node scripts/sync-version.mjs && git add src/version.ts server.json"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",
-    "tdx-taiwan": "^0.15.0",
+    "tdx-taiwan": "^0.16.0",
     "zod": "^4.6.7"
   },
   "devDependencies": {

@@ -44,7 +44,9 @@ cp .env.example .env   # only needed to run the server against TDX
 
 1. Move the `## [Unreleased]` items under `## [x.y.z] - YYYY-MM-DD` and update the links at the
    bottom of `CHANGELOG.md`.
-2. `npm version minor` (or `patch` / `major`) bumps `package.json` and `src/version.ts`,
-   commits and tags `vX.Y.Z`.
+2. `npm version minor` (or `patch` / `major`) bumps `package.json`, `src/version.ts` and
+   `server.json`, commits and tags `vX.Y.Z`.
 3. `git push --follow-tags`. The release workflow checks the tag, runs the checks, publishes
-   with provenance and creates the GitHub release from the changelog.
+   to npm with provenance, creates the GitHub release from the changelog and lists the version
+   in the MCP registry. Each step is skipped when that version is already out, so a failed run
+   can be re-run.

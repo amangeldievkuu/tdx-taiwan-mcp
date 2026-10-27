@@ -1,0 +1,62 @@
+[
+  {
+    "AirportID": "TPE",
+    "AirportName": {
+      "Zh_tw": "桃園國際機場",
+      "En": "Taoyuan"
+    },
+    "AirportIATA": "TPE",
+    "AirportICAO": "RCTP",
+    "AirportPosition": {
+      "PositionLon": 121.231976,
+      "PositionLat": 25.0770119995,
+      "GeoHash": "wsqnwtnkj"
+    },
+    "AirportCityName": {},
+    "AirportAddress": "桃園市大園區航站南路9號",
+    "AirportPhone": "03-2735081",
+    "AirportNationality": "TW",
+    "AuthorityID": "CAA",
+    "UpdateTime": "2026-10-21T09:55:40+08:00",
+    "VersionID": 5840
+  },
+  {
+    "AirportID": "TSA",
+    "AirportName": {
+      "Zh_tw": "臺北松山國際機場",
+      "En": "Songshan Airport"
+    },
+    "AirportIATA": "TSA",
+    "AirportICAO": "RCSS",
+    "AirportPosition": {
+      "PositionLon": 121.551880574,
+      "PositionLat": 25.0636769655,
+      "GeoHash": "wsqqtfxqs"
+    },
+    "AirportCityName": {
+      "Zh_tw": "臺北",
+      "En": "Taipei"
+    },
+    "AirportAddress": "臺北市松山區敦化北路340之9號",
+    "AirportPhone": "國內線:(02)87703460國際線:(02)877",
+    "AirportNationality": "TW",
+    "AuthorityID": "CAA",
+    "UpdateTime": "2026-10-21T09:55:40+08:00",
+    "VersionID": 5840
+  },
+  {
+    "AirportID": "AAN",
+    "AirportName": {
+      "Zh_tw": "艾因國際機場",
+      "En": "AL AIN"
+    },
+    "AirportIATA": "AAN",
+    "AirportICAO": "OMAL",
+    "AirportPosition": {},
+    "AirportCityName": {},
+    "AirportNationality": "AE",
+    "AuthorityID": "CAA",
+    "UpdateTime": "2026-10-21T09:55:40+08:00",
+    "VersionID": 5840
+  }
+]

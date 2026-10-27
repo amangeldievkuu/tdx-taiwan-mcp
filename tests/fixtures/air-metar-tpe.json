@@ -1,0 +1,33 @@
+[
+  {
+    "AirportID": "TPE",
+    "StationID": "RCTP",
+    "CountryName": {
+      "Zh_tw": "臺灣",
+      "En": "Taiwan"
+    },
+    "CityName": {},
+    "AirportName": {
+      "Zh_tw": "桃園國際機場",
+      "En": "Taoyuan"
+    },
+    "StationPosition": {
+      "PositionLon": 121.232224,
+      "PositionLat": 25.080166,
+      "GeoHash": "wsqnwtwwe"
+    },
+    "ObservationTime": "2026-10-21T17:30:00+08:00",
+    "MetarText": "METAR RCTP 210930Z 04025KT 9999 VCSH FEW008 BKN015 BKN030 26/23 Q1016 WS ALL RWY NOSIG RMK A3001(D)=",
+    "MetarTime": "2026-10-21T17:30:00+08:00",
+    "WindDirection": "40 degree",
+    "WindSpeed": "25 KT",
+    "Visibility": "9999 M",
+    "Ceiling": "800 FT",
+    "Temperature": "26°C",
+    "WeatherDescription": {
+      "Zh_tw": "多雲時晴",
+      "En": "Mostly Cloudy"
+    },
+    "UpdateTime": "2026-10-21T17:33:36+08:00"
+  }
+]

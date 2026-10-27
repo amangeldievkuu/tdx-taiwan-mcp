@@ -1,0 +1,54 @@
+[
+  {
+    "AirlineID": "AE",
+    "AirRouteID": "KHH-KNH",
+    "FlightDate": "2026-10-22",
+    "FlightNumber": "307",
+    "DepartureAirport": {
+      "AirportID": "KHH",
+      "AirportName": {
+        "Zh_tw": "高雄小港國際機場",
+        "En": "Kaohsiung"
+      }
+    },
+    "DepartureTime": "13:30",
+    "AircraftType": "AT7",
+    "ArrivalAirport": {
+      "AirportID": "KNH",
+      "AirportName": {
+        "Zh_tw": "金門機場",
+        "En": "Kinmen Airport"
+      }
+    },
+    "ArrivalTime": "14:35",
+    "FlightRemark": "",
+    "SrcUpdateTime": "2026-10-21T16:30:06+08:00",
+    "UpdateTime": "2026-10-21T16:30:21+08:00"
+  },
+  {
+    "AirlineID": "AE",
+    "AirRouteID": "HUN-KHH",
+    "FlightDate": "2026-10-22",
+    "FlightNumber": "7932",
+    "DepartureAirport": {
+      "AirportID": "HUN",
+      "AirportName": {
+        "Zh_tw": "花蓮機場",
+        "En": "Hualien"
+      }
+    },
+    "DepartureTime": "20:30",
+    "AircraftType": "N/A",
+    "ArrivalAirport": {
+      "AirportID": "KHH",
+      "AirportName": {
+        "Zh_tw": "高雄小港國際機場",
+        "En": "Kaohsiung"
+      }
+    },
+    "ArrivalTime": "21:35",
+    "FlightRemark": "X",
+    "SrcUpdateTime": "2026-10-21T16:30:06+08:00",
+    "UpdateTime": "2026-10-21T16:30:21+08:00"
+  }
+]

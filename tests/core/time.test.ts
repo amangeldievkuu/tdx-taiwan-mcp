@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { duration, hhmm, startTime, taipeiNow } from '../../src/core/time.js';
+import { duration, hhmm, minutesBetween, startTime, taipeiNow } from '../../src/core/time.js';
 
 describe('taipeiNow', () => {
   it('gives the date and time in Taiwan, whatever the machine time zone', () => {
@@ -36,5 +36,13 @@ describe('startTime', () => {
     expect(startTime('2026-10-21', '08:00', now)).toBe('08:00');
     expect(startTime('2026-10-21', undefined, now)).toBe('11:05');
     expect(startTime('2026-10-22', undefined, now)).toBe('00:00');
+  });
+});
+
+describe('minutesBetween', () => {
+  it('counts minutes between local flight times, across days and backwards', () => {
+    expect(minutesBetween('2026-10-21T08:50', '2026-10-21T09:01')).toBe(11);
+    expect(minutesBetween('2026-10-20T00:15', '2026-10-19T23:13')).toBe(-62);
+    expect(minutesBetween('2026-10-21T08:50', undefined)).toBeUndefined();
   });
 });

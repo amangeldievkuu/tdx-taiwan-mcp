@@ -18,6 +18,9 @@ All notable changes to this project are documented here. The format is based on
   `metro_first_last_train`, `afr_timetable`, `rail_station_search` and `rail_alerts`. Stations
   are given by Chinese or English name (`台北車站` finds TRA 臺北 and both Taipei Metro IDs) or
   by ID, and today's departures start from the current time in Taiwan.
+- Flight tools: `flight_status`, `flight_board` (a Taiwan airport's live departures or arrivals,
+  with the airport weather) and `flight_schedule` (domestic flights between two airports on a
+  day, with fares). Airports are given by IATA code or name (`松山`, `Kinmen`).
 - `tdx_get` for any TDX path with OData options.
 - Chinese city names (`臺北市`, `台北`), 台/臺-insensitive name search, output capped at
   `TDX_MAX_ITEMS` items and 40,000 characters, and TDX errors (unsupported city, 404, 429,

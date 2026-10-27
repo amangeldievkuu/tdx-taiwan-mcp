@@ -1,0 +1,64 @@
+[
+  {
+    "AirportID": "TSA",
+    "FIDSDeparture": [
+      {
+        "FlightDate": "2026-10-21",
+        "FlightNumber": "9091",
+        "AirlineID": "B7",
+        "DepartureAirportID": "TSA",
+        "ArrivalAirportID": "LZN",
+        "DepartureRemark": "預計出發",
+        "Terminal": "",
+        "Gate": "",
+        "IsCargo": false,
+        "UpdateTime": "2026-10-21T13:57:42+08:00"
+      },
+      {
+        "FlightDate": "2026-10-21",
+        "FlightNumber": "8751",
+        "AirlineID": "B7",
+        "DepartureAirportID": "TSA",
+        "ArrivalAirportID": "LZN",
+        "ScheduleDepartureTime": "2026-10-21T06:30",
+        "ActualDepartureTime": "2026-10-21T06:24",
+        "DepartureRemark": "已飛",
+        "Terminal": "2",
+        "Gate": "13",
+        "IsCargo": false,
+        "UpdateTime": "2026-10-21T13:57:42+08:00"
+      }
+    ],
+    "FIDSArrival": [
+      {
+        "FlightDate": "2026-10-21",
+        "FlightNumber": "1262",
+        "AirlineID": "AE",
+        "DepartureAirportID": "KNH",
+        "ArrivalAirportID": "TSA",
+        "ScheduleArrivalTime": "2026-10-21T09:45",
+        "ActualArrivalTime": "2026-10-21T09:56",
+        "ArrivalRemark": "抵達",
+        "Terminal": "2",
+        "Gate": "",
+        "IsCargo": false,
+        "UpdateTime": "2026-10-21T13:57:42+08:00"
+      },
+      {
+        "FlightDate": "2026-10-21",
+        "FlightNumber": "8802",
+        "AirlineID": "B7",
+        "DepartureAirportID": "KNH",
+        "ArrivalAirportID": "TSA",
+        "ScheduleArrivalTime": "2026-10-21T09:55",
+        "ActualArrivalTime": "2026-10-21T09:51",
+        "ArrivalRemark": "抵達",
+        "Terminal": "2",
+        "Gate": "",
+        "IsCargo": false,
+        "UpdateTime": "2026-10-21T13:57:42+08:00"
+      }
+    ],
+    "UpdateTime": "2026-10-21T13:57:42+08:00"
+  }
+]

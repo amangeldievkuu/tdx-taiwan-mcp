@@ -1,0 +1,20 @@
+[
+  {
+    "FlightDate": "2026-10-21",
+    "FlightNumber": "100",
+    "AirRouteType": 1,
+    "AirlineID": "CI",
+    "DepartureAirportID": "TPE",
+    "ArrivalAirportID": "NRT",
+    "ScheduleDepartureTime": "2026-10-21T08:50",
+    "ActualDepartureTime": "2026-10-21T09:01",
+    "EstimatedDepartureTime": "2026-10-21T09:01",
+    "DepartureRemark": "出發",
+    "DepartureTerminal": "2",
+    "DepartureGate": "D9",
+    "IsCargo": false,
+    "AcType": "A330-300",
+    "CheckCounter": "7",
+    "UpdateTime": "2026-10-21T13:57:42+08:00"
+  }
+]

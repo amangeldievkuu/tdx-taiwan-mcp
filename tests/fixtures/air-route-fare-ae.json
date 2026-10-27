@@ -1,0 +1,60 @@
+[
+  {
+    "AirlineID": "AE",
+    "AirRouteID": "HUN-KHH",
+    "DepartureAirport": {
+      "AirportID": "HUN",
+      "AirportName": {
+        "Zh_tw": "花蓮機場",
+        "En": "Hualien"
+      }
+    },
+    "ArrivalAirport": {
+      "AirportID": "KHH",
+      "AirportName": {
+        "Zh_tw": "高雄小港國際機場",
+        "En": "Kaohsiung"
+      }
+    },
+    "Fares": [
+      {
+        "FareName": "愛心陪同票",
+        "TicketType": 1,
+        "FareClass": 7,
+        "Price": 1165
+      },
+      {
+        "FareName": "全額票",
+        "TicketType": 1,
+        "FareClass": 1,
+        "Price": 2329
+      },
+      {
+        "FareName": "政府-軍人票",
+        "TicketType": 1,
+        "FareClass": 8,
+        "Price": 2213
+      },
+      {
+        "FareName": "敬老票",
+        "TicketType": 1,
+        "FareClass": 4,
+        "Price": 1165
+      },
+      {
+        "FareName": "兒童票",
+        "TicketType": 1,
+        "FareClass": 3,
+        "Price": 1747
+      },
+      {
+        "FareName": "愛心票",
+        "TicketType": 1,
+        "FareClass": 5,
+        "Price": 1165
+      }
+    ],
+    "SrcUpdateTime": "2026-10-01T02:17:06+08:00",
+    "UpdateTime": "2026-10-01T02:17:09+08:00"
+  }
+]

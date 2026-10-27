@@ -8,7 +8,8 @@ An unofficial [MCP](https://modelcontextprotocol.io) server for Taiwan's
 [TDX (Transport Data eXchange)](https://tdx.transportdata.tw) API, built on the
 [`tdx-taiwan`](https://www.npmjs.com/package/tdx-taiwan) SDK. It lets Claude and other MCP
 clients answer questions such as "where is the nearest YouBike with bikes?", "when does the
-307 reach Ximen?" or "which high speed trains to Zuoying still have seats tonight?".
+307 reach Ximen?", "which high speed trains to Zuoying still have seats tonight?" or "is CI100
+delayed?".
 
 - Task-shaped tools: search by name (Chinese or English, 台/臺 folded) or by location, with
   readable output ("4 min", "last bus has passed") instead of raw status codes
@@ -101,13 +102,23 @@ coaches.
 Rail tools take station names in Chinese or English (`台北`, `Taipei`, `台北車站`) or station
 IDs. For today, timetables start from the current time in Taiwan.
 
+### Flights
+
+| Tool              | What it answers                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------ |
+| `flight_status`   | Times, delay, gate and status of a flight (`CI100`)                                  |
+| `flight_board`    | A Taiwan airport's departure or arrival board, with the current weather              |
+| `flight_schedule` | Domestic flights between two Taiwan airports on a day (華信, 立榮, 德安), with fares |
+
+Airports are IATA codes or names (`TSA`, `松山`, `Kinmen`).
+
 ### Other
 
 | Tool      | What it answers                                                          |
 | --------- | ------------------------------------------------------------------------ |
 | `tdx_get` | Any TDX API path with OData `filter`, `select`, `orderBy`, `top`, `skip` |
 
-Road, air and ferry tools are on the way; until then `tdx_get` reaches those endpoints.
+Road and ferry tools are on the way; until then `tdx_get` reaches those endpoints.
 
 ## Use as a library
 

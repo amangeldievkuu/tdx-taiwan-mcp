@@ -2,6 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { TdxClient } from 'tdx-taiwan';
 import type { ToolContext } from './core/context.js';
 import { registerAfrTools } from './tools/afr.js';
+import { registerAirTools } from './tools/air.js';
 import { registerBikeTools } from './tools/bike.js';
 import { registerBusTools } from './tools/bus.js';
 import { registerMetroTools } from './tools/metro.js';
@@ -25,11 +26,14 @@ const INSTRUCTIONS = `\
 Taiwan transport data from TDX (交通部 Transport Data eXchange): YouBike stations and live
 availability; city and intercity bus routes, stops, live arrival times and bus positions; high
 speed rail (THSR), Taiwan Railway (TRA), metro and Alishan railway timetables, live boards,
-seats, fares and alerts.
+seats, fares and alerts; flights (live airport boards with weather, flight status, domestic
+schedules and fares).
 Cities are TDX codes such as Taipei, NewTaipei, Taoyuan, Taichung, Tainan, Kaohsiung (Chinese
 names like 臺北市 work too). Times are Taiwan time (UTC+8). Bus tools need the exact route name;
 find it with bus_route_search first. Rail tools take station names in Chinese or English
-(台北, Taipei) or station IDs. Use tdx_get only when no other tool covers the data.
+(台北, Taipei) or station IDs. Airports are IATA codes or names (TPE 桃園, TSA 松山,
+KNH 金門); flight numbers include the airline code (CI100). Use tdx_get only when no other
+tool covers the data.
 Cite the data as 資料來源：交通部 TDX 運輸資料流通服務平臺.`;
 
 /** An MCP server exposing the TDX tools. Connect it to any transport. */
@@ -46,6 +50,7 @@ export function createServer({ tdx, maxItems = 200 }: ServerOptions): McpServer 
   registerMetroTools(server, ctx);
   registerAfrTools(server, ctx);
   registerRailTools(server, ctx);
+  registerAirTools(server, ctx);
   registerRawTools(server, ctx);
   return server;
 }

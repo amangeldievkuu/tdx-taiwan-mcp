@@ -39,6 +39,4 @@ export const after = z
   .string()
   .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Use HH:mm')
   .optional()
-  .describe(
-    'Only trains departing at or after this time, HH:mm (default: now for today, else 00:00).',
-  );
+  .describe('Only departures at or after this time, HH:mm (default: now for today, else 00:00).');

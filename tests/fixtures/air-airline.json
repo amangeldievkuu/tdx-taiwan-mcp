@@ -1,0 +1,33 @@
+[
+  {
+    "AirlineID": "CI",
+    "AirlineName": {
+      "Zh_tw": "中華航空",
+      "En": "China Airlines"
+    },
+    "AirlineNameAlias": {
+      "Zh_tw": "中華航空",
+      "En": "China Airlines"
+    },
+    "AirlineIATA": "CI",
+    "AirlineICAO": "CAL",
+    "AirlineEmail": "",
+    "AirlineAddress": "桃園縣大園鄉航站南路1號",
+    "AirlinePhone": "03-0998888",
+    "AirlineNationality": "TW",
+    "UpdateTime": "2026-10-21T09:55:40+08:00",
+    "VersionID": 5840
+  },
+  {
+    "AirlineID": "",
+    "AirlineName": {
+      "En": "Executive Aviation Taiwan Corp."
+    },
+    "AirlineNameAlias": {},
+    "AirlineEmail": "",
+    "AirlineAddress": "台北市民生東路三段132號4樓D室",
+    "AirlinePhone": "02-87125280",
+    "UpdateTime": "2026-10-21T09:55:40+08:00",
+    "VersionID": 5840
+  }
+]

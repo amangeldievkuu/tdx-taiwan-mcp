@@ -1,0 +1,52 @@
+[
+  {
+    "FlightDate": "2026-10-20",
+    "FlightNumber": "12",
+    "AirlineID": "JX",
+    "DepartureAirportID": "TPE",
+    "ArrivalAirportID": "SFO",
+    "ScheduleDepartureTime": "2026-10-20T00:05",
+    "ActualDepartureTime": "2026-10-20T00:07",
+    "EstimatedDepartureTime": "2026-10-20T00:07",
+    "DepartureRemark": "出發DEPARTED",
+    "Terminal": "2",
+    "Gate": "D12",
+    "IsCargo": false,
+    "AcType": "A350-900",
+    "CheckCounter": "9",
+    "UpdateTime": "2026-10-21T13:55:36+08:00"
+  },
+  {
+    "FlightDate": "2026-10-20",
+    "FlightNumber": "5895",
+    "AirlineID": "CI",
+    "DepartureAirportID": "TPE",
+    "ArrivalAirportID": "CAN",
+    "ScheduleDepartureTime": "2026-10-20T01:35",
+    "ActualDepartureTime": "2026-10-20T02:14",
+    "EstimatedDepartureTime": "2026-10-20T02:14",
+    "DepartureRemark": "出發DEPARTED",
+    "Terminal": "1",
+    "Apron": "509",
+    "IsCargo": true,
+    "AcType": "B747-400",
+    "CheckCounter": "",
+    "UpdateTime": "2026-10-21T13:55:36+08:00"
+  },
+  {
+    "FlightDate": "2026-10-20",
+    "FlightNumber": "78",
+    "AirlineID": "NZ",
+    "DepartureAirportID": "TPE",
+    "ArrivalAirportID": "AKL",
+    "ScheduleDepartureTime": "2026-10-20T18:35",
+    "EstimatedDepartureTime": "2026-10-20T18:35",
+    "DepartureRemark": "取消CANCELLED",
+    "Terminal": "2",
+    "Gate": "   ",
+    "IsCargo": false,
+    "AcType": "B787-9",
+    "CheckCounter": "",
+    "UpdateTime": "2026-10-21T13:57:36+08:00"
+  }
+]

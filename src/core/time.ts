@@ -48,3 +48,16 @@ export function startTime(date: string, after: string | undefined, now = taipeiN
   if (after) return after;
   return date === now.date ? now.time : '00:00';
 }
+
+/**
+ * Minutes from `a` to `b`, both local Taiwan times as the flight boards give them
+ * (`yyyy-MM-ddTHH:mm`); negative when `b` is earlier.
+ */
+export function minutesBetween(
+  a: string | null | undefined,
+  b: string | null | undefined,
+): number | undefined {
+  if (!a || !b) return undefined;
+  const ms = Date.parse(`${b}:00+08:00`) - Date.parse(`${a}:00+08:00`);
+  return Number.isNaN(ms) ? undefined : Math.round(ms / 60_000);
+}

@@ -2,6 +2,8 @@
 import { existsSync } from 'node:fs';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { TdxClient } from 'tdx-taiwan';
+import { FileCacheStore } from 'tdx-taiwan/file-cache';
+import { cacheDir } from './core/cache-dir.js';
 import { parseToolGroups } from './core/groups.js';
 import { createServer } from './server.js';
 import { VERSION } from './version.js';
@@ -13,6 +15,9 @@ Environment:
                                      → 會員中心 → 資料服務 → API金鑰
   TDX_REQUESTS_PER_SECOND            Client-side rate limit (default 5)
   TDX_MAX_ITEMS                      Most items any tool returns (default 200)
+  TDX_CACHE_DIR                      Where static data (stations, routes) is kept for a day
+                                     between runs (default ~/.cache/tdx-taiwan-mcp); "off"
+                                     turns it off
   TDX_TOOLS                          Tool groups to load (default all): bike, bus, rail,
                                      flight, ferry, road, parking, ev, raw (tdx_get);
                                      e.g. "bus,rail", or "-road,-raw" to leave some out
@@ -43,10 +48,15 @@ if (!TDX_CLIENT_ID || !TDX_CLIENT_SECRET) {
   process.exit(1);
 }
 
+// Static lists outlive the process on disk, so a new session does not refetch them from TDX.
+const dir = cacheDir();
+const store = dir ? new FileCacheStore(dir) : undefined;
+void store?.prune().catch(() => undefined);
+
 const tdx = new TdxClient({
   clientId: TDX_CLIENT_ID,
   clientSecret: TDX_CLIENT_SECRET,
-  cache: true,
+  cache: { store },
   requestsPerSecond: numberEnv('TDX_REQUESTS_PER_SECOND'),
   onRetry: ({ url, attempt, status, delayMs }) => {
     log(`retry ${attempt} in ${delayMs} ms (${status ?? 'network error'}): ${url}`);
@@ -64,7 +74,7 @@ if (!groups.length) {
 
 const server = createServer({ tdx, maxItems: numberEnv('TDX_MAX_ITEMS'), tools: groups });
 await server.connect(new StdioServerTransport());
-log(`${VERSION} running on stdio`);
+log(`${VERSION} running on stdio, ${dir ? `caching static data in ${dir}` : 'disk cache off'}`);
 
 function numberEnv(key: string): number | undefined {
   const raw = process.env[key];

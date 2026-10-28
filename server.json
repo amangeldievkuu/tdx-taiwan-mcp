@@ -47,6 +47,15 @@
           "description": "Most items any tool returns.",
           "default": "200",
           "format": "number"
+        },
+        {
+          "name": "TDX_TOOLS",
+          "description": "Tool groups to load: bike, bus, rail, flight, ferry, road, parking, ev, raw; e.g. bus,rail or -road,-raw.",
+          "default": "all"
+        },
+        {
+          "name": "TDX_CACHE_DIR",
+          "description": "Folder where static data is kept for a day between runs (default ~/.cache/tdx-taiwan-mcp); off turns it off."
         }
       ]
     }

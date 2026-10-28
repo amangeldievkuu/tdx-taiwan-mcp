@@ -55,15 +55,22 @@ Add the server to the client's MCP configuration (for Claude Desktop,
 
 ### Environment
 
-| Variable                  | Default  | Meaning                                                              |
-| ------------------------- | -------- | -------------------------------------------------------------------- |
-| `TDX_CLIENT_ID`           | required | TDX API key Client Id                                                |
-| `TDX_CLIENT_SECRET`       | required | TDX API key Client Secret                                            |
-| `TDX_REQUESTS_PER_SECOND` | `5`      | Client-side rate limit; match it to your TDX plan (`0` turns it off) |
-| `TDX_MAX_ITEMS`           | `200`    | Most items any tool returns                                          |
-| `TDX_TOOLS`               | `all`    | Tool groups to load, e.g. `bus,rail` or `-road,-raw` (see below)     |
+| Variable                  | Default   | Meaning                                                              |
+| ------------------------- | --------- | -------------------------------------------------------------------- |
+| `TDX_CLIENT_ID`           | required  | TDX API key Client Id                                                |
+| `TDX_CLIENT_SECRET`       | required  | TDX API key Client Secret                                            |
+| `TDX_REQUESTS_PER_SECOND` | `5`       | Client-side rate limit; match it to your TDX plan (`0` turns it off) |
+| `TDX_MAX_ITEMS`           | `200`     | Most items any tool returns                                          |
+| `TDX_CACHE_DIR`           | see below | Where static data is kept between runs; `off` turns it off           |
+| `TDX_TOOLS`               | `all`     | Tool groups to load, e.g. `bus,rail` or `-road,-raw` (see below)     |
 
 A `.env` file in the working directory is read too; variables already set take precedence.
+
+**Disk cache.** Station, route and timetable lists are kept on disk for a day, so a new
+session answers from them instead of calling TDX again. A first metro journey that took close
+to two minutes on the free plan's per-minute quota then takes a fraction of a second. The
+default folder is `~/.cache/tdx-taiwan-mcp` (`$XDG_CACHE_HOME` if set; `%LOCALAPPDATA%` on
+Windows), a few MB at most. Live data (arrivals, availability, positions) is never stored.
 
 **Loading fewer tools.** Every tool's description goes into the model's context, and with 47 of
 them a model can pick the wrong one. If you only need some areas, list them in `TDX_TOOLS`:

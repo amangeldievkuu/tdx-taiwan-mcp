@@ -8,6 +8,12 @@ All notable changes to this project are documented here. The format is based on
 
 ### Added
 
+- A disk cache for static data (stations, routes, timetables, fares), kept for a day so a new
+  session does not fetch the same lists from TDX again: a cold `metro_travel_time` drops from
+  about 110 s to under a second. It lives in `~/.cache/tdx-taiwan-mcp` (`%LOCALAPPDATA%` on
+  Windows); `TDX_CACHE_DIR` moves it, and `TDX_CACHE_DIR=off` turns it off. Live data is never
+  stored. Needs `tdx-taiwan` 0.18.1.
+
 - `TDX_TOOLS` (and `tools` in `createServer`): load only some groups of tools, e.g. `bus,rail`,
   or leave groups out with `-road,-raw`. The server instructions describe only the loaded
   groups. `TOOL_GROUPS`, `parseToolGroups()` and `instructionsFor()` are exported.

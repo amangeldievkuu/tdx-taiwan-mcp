@@ -39,6 +39,64 @@ const FREEWAY_LIVE = {
   ],
 };
 
+/** Two freeway cameras: the SDK's camera fixture is Taipei's. */
+const FREEWAY_CAMERAS = {
+  UpdateInterval: 21600,
+  CCTVs: [
+    {
+      CCTVID: 'CCTV-N1-S-38.300-M',
+      VideoStreamURL: 'https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=13830',
+      PositionLon: 121.393198,
+      PositionLat: 25.063245,
+      RoadName: '國道1號',
+      RoadDirection: 'S',
+      RoadSection: { Start: '泰山轉接道', End: '林口交流道' },
+      LocationMile: '38K+300',
+    },
+    {
+      CCTVID: 'CCTV-N1-N-12.080-M',
+      VideoStreamURL: 'https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=11208',
+      PositionLon: 121.638828,
+      PositionLat: 25.071347,
+      RoadName: '國道1號',
+      RoadDirection: 'N',
+      RoadSection: { Start: '高架汐止端', End: '汐止系統交流道' },
+      LocationMile: '12K+080',
+    },
+  ],
+};
+
+/** What the two freeway signs of the fixture show, plus a sign TDX has no record of. */
+const FREEWAY_SIGNS_LIVE = {
+  UpdateInterval: 60,
+  CMSLives: [
+    {
+      CMSID: 'CMS-N1-S-0.000-M',
+      MessageStatus: 1,
+      Messages: [{ Text: '平面10-15K內線移動施工請小心駕駛', Type: 7, Priority: 51 }],
+      Status: 0,
+      DataCollectTime: '2026-10-21T14:34:00+08:00',
+    },
+    {
+      CMSID: 'CMS-N1-S-0.730-M',
+      MessageStatus: 1,
+      Messages: [
+        { Text: '至  汐止  約 7分至  \u3000\u3000  約12分', Type: 1 },
+        { Text: ' ', Type: 7 },
+      ],
+      Status: 0,
+      DataCollectTime: '2026-10-21T14:34:00+08:00',
+    },
+    {
+      CMSID: 'CMS-N1-S-9.999-M',
+      MessageStatus: 0,
+      Messages: [{ Text: ' ' }],
+      Status: 0,
+      DataCollectTime: '2026-10-21T14:34:00+08:00',
+    },
+  ],
+};
+
 const ROUTES: Route[] = [
   ['/v2/Road/Traffic/Section/City/Taipei', TAIPEI_SECTIONS],
   ['/v2/Road/Traffic/Live/City/Taipei', loadFixture('traffic-live-taipei.json')],
@@ -55,6 +113,12 @@ const ROUTES: Route[] = [
   ['/v1/Traffic/RoadEvent/LiveEvent/Freeway', loadFixture('traffic-live-event-freeway.json')],
   ['/v1/Traffic/RoadEvent/LiveEvent/City/Taipei', { UpdateInterval: 60, LiveEvents: [] }],
   ['/v1/Traffic/RoadEvent/Event/City/Taipei', loadFixture('traffic-event-taipei.json')],
+  ['/v2/Road/Traffic/Live/News/Freeway', loadFixture('traffic-news-freeway.json')],
+  ['/v2/Road/Traffic/Live/News/City/Taipei', { UpdateInterval: 60, Newses: [] }],
+  ['/v2/Road/Traffic/CCTV/City/Taipei', loadFixture('traffic-cctv-taipei.json')],
+  ['/v2/Road/Traffic/CCTV/Freeway', FREEWAY_CAMERAS],
+  ['/v2/Road/Traffic/CMS/Freeway', loadFixture('traffic-cms-freeway.json')],
+  ['/v2/Road/Traffic/Live/CMS/Freeway', FREEWAY_SIGNS_LIVE],
 ];
 
 let close: (() => Promise<void>) | undefined;
@@ -160,7 +224,14 @@ describe('traffic_events', () => {
   it('describes freeway events, newest first', async () => {
     const t = await setup();
     const result = await t.call('traffic_events', { network: 'freeway' });
-    expect(t.apiUrls).toEqual([`${API}/v1/Traffic/RoadEvent/LiveEvent/Freeway?$format=JSON`]);
+    expect(t.apiUrls.sort()).toEqual([
+      `${API}/v1/Traffic/RoadEvent/LiveEvent/Freeway?$format=JSON`,
+      `${API}/v2/Road/Traffic/Live/News/Freeway?$format=JSON`,
+    ]);
+    expect(result.json.news).toEqual([
+      expect.objectContaining({ title: '封閉預告', published: '2026-10-20T08:49:00+08:00' }),
+      expect.objectContaining({ title: '封閉預告', published: '2026-10-19T07:23:00+08:00' }),
+    ]);
     expect(result.json.items).toEqual([
       {
         title: '施工事件',
@@ -224,5 +295,65 @@ describe('traffic_events', () => {
       }),
     ]);
     expect(result.json.items[0]?.where).toMatch(/^北路線：新仁愛路/);
+  });
+});
+
+describe('traffic_events news', () => {
+  it('leaves the news out when the events are filtered', async () => {
+    const t = await setup();
+    const result = await t.call('traffic_events', { network: 'freeway', type: 'works' });
+    expect(result.json.news).toBeUndefined();
+    expect(t.apiUrls.some((url) => url.includes('/News/'))).toBe(false);
+  });
+});
+
+describe('traffic_cameras', () => {
+  it('finds cameras by place along a road, with their streams', async () => {
+    const t = await setup();
+    const result = await t.call('traffic_cameras', { network: '國道', keyword: '林口' });
+    expect(result.json.items).toEqual([
+      {
+        road: '國道1號',
+        at: '38K+300 泰山轉接道–林口交流道',
+        direction: 'southbound',
+        stream: 'https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=13830',
+        id: 'CCTV-N1-S-38.300-M',
+        lat: 25.063245,
+        lon: 121.393198,
+      },
+    ]);
+    const north = await t.call('traffic_cameras', { network: 'freeway', direction: 'N' });
+    expect(north.json.items.map((i) => i.id)).toEqual(['CCTV-N1-N-12.080-M']);
+  });
+
+  it('finds city cameras nearest a point', async () => {
+    const t = await setup();
+    const result = await t.call('traffic_cameras', {
+      network: 'Taipei',
+      lat: 25.0486,
+      lon: 121.5164,
+      radiusMeters: 1500,
+    });
+    expect(result.json.items.map((i) => [i.id, i.distanceMeters])).toEqual([
+      ['T000001', 6],
+      ['T000002', 1046],
+    ]);
+  });
+});
+
+describe('traffic_signs', () => {
+  it('shows what each sign says, cleaned, without blank messages or idle signs', async () => {
+    const t = await setup();
+    const result = await t.call('traffic_signs', { network: 'freeway' });
+    expect(t.apiUrls.sort()).toEqual([
+      `${API}/v2/Road/Traffic/CMS/Freeway?$format=JSON`,
+      `${API}/v2/Road/Traffic/Live/CMS/Freeway?$format=JSON`,
+    ]);
+    expect(result.json.items.map((i) => [i.at, i.messages])).toEqual([
+      ['0K+000 基隆端–基隆交流道', [{ text: '平面10-15K內線移動施工請小心駕駛', type: 'other' }]],
+      ['0K+730 基隆端–基隆交流道', [{ text: '至 汐止 約 7分至 約12分', type: 'travel time' }]],
+    ]);
+    const travel = await t.call('traffic_signs', { network: 'freeway', keyword: '汐止' });
+    expect(travel.json.items.map((i) => i.id)).toEqual(['CMS-N1-S-0.730-M']);
   });
 });

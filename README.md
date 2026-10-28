@@ -113,11 +113,12 @@ IDs. For today, timetables start from the current time in Taiwan.
 
 ### Flights
 
-| Tool              | What it answers                                                                      |
-| ----------------- | ------------------------------------------------------------------------------------ |
-| `flight_status`   | Times, delay, gate and status of a flight (`CI100`)                                  |
-| `flight_board`    | A Taiwan airport's departure or arrival board, with the current weather              |
-| `flight_schedule` | Domestic flights between two Taiwan airports on a day (華信, 立榮, 德安), with fares |
+| Tool              | What it answers                                                                                 |
+| ----------------- | ----------------------------------------------------------------------------------------------- |
+| `flight_status`   | Times, delay, gate and status of a flight (`CI100`)                                             |
+| `flight_board`    | A Taiwan airport's departure or arrival board, with the current weather                         |
+| `flight_schedule` | Flights between two airports on a day: domestic (華信, 立榮, 德安) with fares, or international |
+| `flight_seats`    | Seats left on a domestic flight (available, fewer than 5, sold out); slow, asks the airline     |
 
 Airports are IATA codes or names (`TSA`, `松山`, `Kinmen`).
 
@@ -129,17 +130,20 @@ Airports are IATA codes or names (`TSA`, `松山`, `Kinmen`).
 | `ferry_live_board` | A port's departures and arrivals today, with delays and cancellations             |
 | `ferry_fare`       | Fares between two ports per ticket, cabin and passenger type                      |
 | `ferry_alerts`     | Current suspensions and changes to ferry service                                  |
+| `ferry_positions`  | Where ferries are now (AIS): position, speed, status and nearest port             |
 
 Ports are names (`富岡`, `綠島`, `小琉球`) or port IDs. Lines run by a county (Penghu
 inter-island boats, 旗津, 淡水) need `city`, e.g. `PenghuCounty`.
 
 ### Roads
 
-| Tool                  | What it answers                                                                        |
-| --------------------- | -------------------------------------------------------------------------------------- |
-| `traffic_live`        | Live speed and congestion per road section, worst first, with a count per level        |
-| `traffic_travel_time` | Car travel time between two freeway interchanges now, from live eTag data, per segment |
-| `traffic_events`      | Accidents, roadworks, closures and announced events (parades) with where they are      |
+| Tool                  | What it answers                                                                          |
+| --------------------- | ---------------------------------------------------------------------------------------- |
+| `traffic_live`        | Live speed and congestion per road section, worst first, with a count per level          |
+| `traffic_travel_time` | Car travel time between two freeway interchanges now, from live eTag data, per segment   |
+| `traffic_events`      | Accidents, roadworks, closures and announced events (parades), with the latest road news |
+| `traffic_cameras`     | Live traffic cameras by road, place or distance, with their stream links                 |
+| `traffic_signs`       | What the message signs over the road show now: travel times, warnings                    |
 
 Road tools take a network: `freeway` (國道), `highway` (省道) or a city; `traffic_travel_time`
 takes freeway interchange names in Chinese (`林口`, `新竹`). Freeway sections are

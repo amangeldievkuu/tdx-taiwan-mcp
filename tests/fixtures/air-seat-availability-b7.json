@@ -1,0 +1,24 @@
+[
+  {
+    "AirlineID": "B7",
+    "AirRouteID": "CYI-KNH",
+    "FlightDate": "2026-10-30",
+    "FlightNumber": "8901",
+    "DepartureAirport": {
+      "AirportID": "CYI",
+      "AirportName": {
+        "Zh_tw": "嘉義",
+        "En": "Chiayi"
+      }
+    },
+    "ArrivalAirport": {
+      "AirportID": "KNH",
+      "AirportName": {
+        "Zh_tw": "金門",
+        "En": "Kinmen"
+      }
+    },
+    "SeatStatus": 3,
+    "UpdateTime": "2026-10-21T17:41:25+08:00"
+  }
+]

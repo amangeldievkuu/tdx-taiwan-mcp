@@ -35,9 +35,12 @@ const CALLS = [
   ['afr_timetable', {}],
   ['flight_board', { airport: 'TSA' }],
   ['ferry_alerts', {}],
+  ['ferry_positions', { port: '小琉球', radiusKm: 20 }],
   ['traffic_live', { network: 'freeway', keyword: '林口' }],
   ['traffic_travel_time', { from: '林口', to: '新竹' }],
   ['traffic_events', { network: 'freeway' }],
+  ['traffic_cameras', { network: 'freeway', keyword: '林口' }],
+  ['traffic_signs', { network: 'freeway', keyword: '汐止' }],
   ['parking_nearby', { ...TAIPEI_MAIN, city: 'Taipei', want: 'any' }],
   ['ev_charger_nearby', { ...TAIPEI_MAIN, city: 'Taipei', want: 'any' }],
 ];

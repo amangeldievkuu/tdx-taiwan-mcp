@@ -1,0 +1,43 @@
+{
+  "UpdateTime": "2026-10-21T15:37:31+08:00",
+  "UpdateInterval": -1,
+  "SrcUpdateTime": "2026-10-21T15:37:31+08:00",
+  "SrcUpdateInterval": 60,
+  "AuthorityCode": "MPB",
+  "LivePositions": [
+    {
+      "VesselID": "416009193",
+      "MMSI": "416009193",
+      "VesselName": {
+        "Zh_tw": "",
+        "En": "NEW TAIMA"
+      },
+      "VesselPosition": {
+        "PositionLat": 25.1343117,
+        "PositionLon": 121.74133
+      },
+      "NAVSTAT": 5,
+      "SOG": 0,
+      "COG": 309.7,
+      "VesselType": 60,
+      "GPSTime": "2026-10-21T15:36:13+08:00"
+    },
+    {
+      "VesselID": "416004172",
+      "MMSI": "416004172",
+      "VesselName": {
+        "Zh_tw": "",
+        "En": "MAI LIAO NO.205"
+      },
+      "VesselPosition": {
+        "PositionLat": 23.779655,
+        "PositionLon": 120.146947
+      },
+      "NAVSTAT": 0,
+      "SOG": 10.8,
+      "COG": 269.5,
+      "VesselType": 90,
+      "GPSTime": "2026-10-21T15:36:40+08:00"
+    }
+  ]
+}

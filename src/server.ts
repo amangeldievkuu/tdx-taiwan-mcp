@@ -7,6 +7,7 @@ import { registerBikeTools } from './tools/bike.js';
 import { registerBusServiceTools } from './tools/bus-service.js';
 import { registerBusTools } from './tools/bus.js';
 import { registerEvTools } from './tools/ev.js';
+import { registerFerryPositionTools } from './tools/ferry-positions.js';
 import { registerMetroTripTools } from './tools/metro-trip.js';
 import { registerMetroTools } from './tools/metro.js';
 import { registerParkingTools } from './tools/parking.js';
@@ -16,6 +17,7 @@ import { registerRawTools } from './tools/raw.js';
 import { registerShipTools } from './tools/ship.js';
 import { registerThsrTools } from './tools/thsr.js';
 import { registerTraTools } from './tools/tra.js';
+import { registerTrafficDeviceTools } from './tools/traffic-devices.js';
 import { registerTrafficTools } from './tools/traffic.js';
 import { registerTravelTimeTools } from './tools/travel-time.js';
 import { VERSION } from './version.js';
@@ -35,9 +37,10 @@ Taiwan transport data from TDX (交通部 Transport Data eXchange): YouBike stat
 availability; city and intercity bus routes, stops, live arrival times, timetables, alerts and
 bus positions; high speed rail (THSR), Taiwan Railway (TRA), metro and Alishan railway
 timetables, journey times, station departures, exits, live boards, seats, fares and alerts;
-flights (live airport boards with weather, flight status, domestic schedules and fares); ferries
-(timetables with live status, port live boards, fares, alerts); road traffic (live congestion,
-incidents and closures on freeways, highways and city roads); car parks and on-street parking
+flights (live airport boards with weather, flight status, domestic and international schedules,
+domestic fares and seats); ferries (timetables with live status, port live boards, vessel
+positions, fares, alerts); road traffic (live congestion, incidents, closures, road news,
+cameras and message signs on freeways, highways and city roads); car parks and on-street parking
 with free spaces; EV chargers with live connector status.
 Cities are TDX codes such as Taipei, NewTaipei, Taoyuan, Taichung, Tainan, Kaohsiung (Chinese
 names like 臺北市 work too). Times are Taiwan time (UTC+8). Bus tools need the exact route name;
@@ -71,7 +74,9 @@ export function createServer({ tdx, maxItems = 200 }: ServerOptions): McpServer 
   registerRailStationTools(server, ctx);
   registerAirTools(server, ctx);
   registerShipTools(server, ctx);
+  registerFerryPositionTools(server, ctx);
   registerTrafficTools(server, ctx);
+  registerTrafficDeviceTools(server, ctx);
   registerTravelTimeTools(server, ctx);
   registerParkingTools(server, ctx);
   registerEvTools(server, ctx);

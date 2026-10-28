@@ -6,6 +6,23 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+
+- `traffic_cameras`: live traffic cameras on the freeways, provincial highways or a city's roads,
+  by road, place or distance, with their stream links.
+- `traffic_signs`: what the changeable message signs show now (travel times, congestion,
+  incidents, roadworks), joined to where each sign stands.
+- `ferry_positions`: where ferries and other passenger vessels are (AIS), with speed, status
+  and the nearest port; by vessel name, near a port or near a point.
+- `flight_seats`: whether seats are left on a domestic AE, B7 or DA flight, per cabin when the
+  airline says; TDX asks the airline live, so it can take up to 30 s.
+
+### Changed
+
+- `flight_schedule` also covers flights to and from abroad, from the published international
+  timetable, with code-share numbers grouped under one flight.
+- `traffic_events` adds the latest road news of the network when no filter is set.
+
 ## [0.5.0] - 2026-10-28
 
 ### Added

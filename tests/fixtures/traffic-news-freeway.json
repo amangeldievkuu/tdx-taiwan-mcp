@@ -1,0 +1,27 @@
+{
+  "UpdateTime": "2026-10-21T14:45:02+08:00",
+  "UpdateInterval": 60,
+  "SrcUpdateTime": "2026-10-21T14:42:00+08:00",
+  "SrcUpdateInterval": 60,
+  "AuthorityCode": "NFB",
+  "Newses": [
+    {
+      "NewsID": "20261019072344130100043",
+      "Language": "Zh_tw",
+      "Title": "封閉預告",
+      "NewsCategory": 99,
+      "NewsURL": "https://www.freeway.gov.tw/default.aspx",
+      "PublishTime": "2026-10-19T07:23:00+08:00",
+      "UpdateTime": "0001-01-01T00:00:00+08:06"
+    },
+    {
+      "NewsID": "20261020084951847100043",
+      "Language": "Zh_tw",
+      "Title": "封閉預告",
+      "NewsCategory": 99,
+      "NewsURL": "https://www.freeway.gov.tw/default.aspx",
+      "PublishTime": "2026-10-20T08:49:00+08:00",
+      "UpdateTime": "0001-01-01T00:00:00+08:06"
+    }
+  ]
+}

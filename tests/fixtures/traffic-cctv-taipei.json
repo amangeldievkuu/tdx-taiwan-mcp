@@ -1,0 +1,35 @@
+{
+  "UpdateTime": "2026-10-21T03:00:44+08:00",
+  "UpdateInterval": 21600,
+  "SrcUpdateTime": "2026-10-21T00:00:00+08:00",
+  "SrcUpdateInterval": 86400,
+  "AuthorityCode": "TPE",
+  "CCTVs": [
+    {
+      "CCTVID": "T000001",
+      "LinkID": "6002650200000A",
+      "VideoStreamURL": "https://hls.bote.gov.taipei/live/index.html?id=001",
+      "LocationType": 1,
+      "PositionLon": 121.5164,
+      "PositionLat": 25.04865,
+      "SurveillanceType": -1,
+      "RoadID": "600265A",
+      "RoadName": "市民大道一段",
+      "RoadClass": 6,
+      "RoadDirection": "E"
+    },
+    {
+      "CCTVID": "T000002",
+      "LinkID": "2001001108000A",
+      "VideoStreamURL": "https://hls.bote.gov.taipei/live/index.html?id=002",
+      "LocationType": 1,
+      "PositionLon": 121.50604,
+      "PositionLat": 25.04925,
+      "SurveillanceType": -1,
+      "RoadID": "200100",
+      "RoadName": "環河快速道路",
+      "RoadClass": 2,
+      "RoadDirection": "N"
+    }
+  ]
+}

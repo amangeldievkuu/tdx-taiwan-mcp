@@ -4,6 +4,58 @@ import { API, connect, loadFixture, type Route } from '../helpers.js';
 
 const TSA_BOARD = (loadFixture('air-fids-airport-tsa.json') as Array<Record<string, unknown>>)[0];
 
+/** A week of TPE→NRT rows: a code-share pair, a flight not on Wednesdays, an expired period. */
+function scheduled(
+  FlightNumber: string,
+  DepartureTime: string,
+  ArrivalTime: string,
+  period: [string, string],
+  Terminal: string,
+  wednesday = true,
+) {
+  const days = { Monday: true, Tuesday: true, Thursday: true, Friday: true, Saturday: true };
+  return {
+    AirlineID: FlightNumber.slice(0, 2),
+    FlightNumber,
+    ScheduleStartDate: period[0],
+    ScheduleEndDate: period[1],
+    DepartureAirportID: 'TPE',
+    ArrivalAirportID: 'NRT',
+    DepartureTime,
+    ArrivalTime,
+    ...days,
+    Wednesday: wednesday,
+    Sunday: true,
+    Terminal,
+    CodeShare: [],
+    UpdateTime: '2026-10-28T09:55:36+08:00',
+    VersionID: 1,
+  };
+}
+// A week safely in the future, so `after` never defaults to the current time.
+const WEEK: [string, string] = ['2030-01-07', '2030-01-13'];
+const INTERNATIONAL = [
+  scheduled('BR184', '07:55', '12:00', WEEK, '2'),
+  scheduled('NH5850', '07:55', '12:00', WEEK, '2'),
+  scheduled('JX800', '08:25', '12:35', WEEK, '1', false),
+  scheduled('CI100', '09:30', '13:50', ['2026-10-01', '2026-10-20'], '2'),
+];
+const SEATS_7932 = [
+  {
+    AirlineID: 'AE',
+    AirRouteID: 'HUN-KHH',
+    FlightDate: '2026-10-22',
+    FlightNumber: '7932',
+    DepartureAirport: { AirportID: 'HUN', AirportName: {} },
+    ArrivalAirport: { AirportID: 'KHH', AirportName: {} },
+    TotalSeats: 70,
+    SoldSeats: 66,
+    SeatStatus: 2,
+    CabinSeats: [{ CabinClass: 4, TotalSeats: 70, SoldSeats: 66, SeatStatus: 2 }],
+    UpdateTime: '2026-10-21T17:41:25+08:00',
+  },
+];
+
 const ROUTES: Route[] = [
   ['/v2/Air/Airport', loadFixture('air-airport.json')],
   ['/v2/Air/Airline', loadFixture('air-airline.json')],
@@ -16,6 +68,8 @@ const ROUTES: Route[] = [
   ['/v2/Air/DailyFlightSchedule/Domestic/', []],
   ['/v2/Air/RouteFare/Domestic/AE', loadFixture('air-route-fare-ae.json')],
   ['/v2/Air/RouteFare/Domestic/', []],
+  ['/v2/Air/GeneralSchedule/International', INTERNATIONAL],
+  ['/v2/Air/SeatAvailability/Domestic/AE/AirRoute/HUN-KHH', SEATS_7932],
 ];
 
 let close: (() => Promise<void>) | undefined;
@@ -240,6 +294,91 @@ describe('flight_schedule', () => {
     expect(result.json.total).toBe(0);
     expect(result.json.note).toBe(
       'No scheduled AE, B7 or DA flight from TSA to KNH on 2026-10-22 after 00:00. TDX did not answer for DA.',
+    );
+  });
+});
+
+describe('flight_schedule abroad', () => {
+  it('reads the international timetable for the day, merging code-shares', async () => {
+    const t = await setup();
+    const result = await t.call('flight_schedule', { from: 'TPE', to: 'NRT', date: '2030-01-09' });
+    expect(t.apiUrls).toContain(
+      `${API}/v2/Air/GeneralSchedule/International?$filter=(DepartureAirportID eq 'TPE') and ` +
+        "(ArrivalAirportID eq 'NRT')&$format=JSON",
+    );
+    expect(result.json).toMatchObject({ from: 'TPE 桃園國際機場 / Taoyuan', to: 'NRT', total: 1 });
+    expect(result.json.items).toEqual([
+      {
+        departs: '07:55',
+        arrives: '12:00',
+        flights: ['BR184', 'NH5850'],
+        airlines: ['BR', 'NH'],
+        terminal: '2',
+      },
+    ]);
+    const thursday = await t.call('flight_schedule', {
+      from: 'TPE',
+      to: 'NRT',
+      date: '2030-01-10',
+      after: '08:00',
+    });
+    expect(thursday.json.items.map((i) => i.flights)).toEqual([['JX800']]);
+  });
+
+  it('takes a name for several airports, and says which one each flight uses', async () => {
+    const t = await setup();
+    const result = await t.call('flight_schedule', {
+      from: 'Taipei',
+      to: 'NRT',
+      date: '2030-01-09',
+    });
+    expect(t.apiUrls).toContain(
+      `${API}/v2/Air/GeneralSchedule/International?$filter=(DepartureAirportID eq 'TPE' or ` +
+        "DepartureAirportID eq 'TSA') and (ArrivalAirportID eq 'NRT')&$format=JSON",
+    );
+    expect(result.json.items[0]).toMatchObject({ from: 'TPE', flights: ['BR184', 'NH5850'] });
+    const domestic = await t.call('flight_schedule', { from: 'Taipei', to: '金門' });
+    expect(domestic.text).toMatch(/matches several Taiwan airports/);
+  });
+});
+
+describe('flight_seats', () => {
+  it("finds the flight's route, then its seats", async () => {
+    const t = await setup();
+    const result = await t.call('flight_seats', { flight: 'AE7932', date: '2026-10-22' });
+    expect(t.apiUrls).toContain(
+      `${API}/v2/Air/SeatAvailability/Domestic/AE/AirRoute/HUN-KHH/FlightDate/2026-10-22` +
+        '/FlightNumber/7932?$format=JSON',
+    );
+    expect(result.json).toEqual({
+      flight: 'AE7932',
+      route: 'HUN-KHH',
+      date: '2026-10-22',
+      departs: '20:30',
+      arrives: '21:35',
+      cancelled: true,
+      seats: 'fewer than 5 left',
+      seatsLeft: 4,
+      cabins: [{ cabin: 'economy', seats: 'fewer than 5 left', seatsLeft: 4 }],
+      updated: '2026-10-21T17:41:25+08:00',
+    });
+  });
+
+  it('reports a flight not in the schedule, an airline without seats, and a slow airline', async () => {
+    const t = await setup([
+      [
+        '/v2/Air/SeatAvailability/Domestic/AE/AirRoute/KHH-KNH',
+        () => new Response('{}', { status: 504 }),
+      ],
+      ...ROUTES,
+    ]);
+    const missing = await t.call('flight_seats', { flight: 'B7 8751', date: '2026-10-22' });
+    expect(missing.text).toBe("B78751 is not in B7's schedule for 2026-10-22.");
+    const abroad = await t.call('flight_seats', { flight: 'CI100' });
+    expect(abroad.text).toMatch(/^TDX has seat availability only for Mandarin Airlines/);
+    const slow = await t.call('flight_seats', { flight: 'AE307', date: '2026-10-22' });
+    expect(slow.text).toBe(
+      'The airline did not answer TDX in time (HTTP 504); try again in a minute.',
     );
   });
 });

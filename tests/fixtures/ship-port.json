@@ -1,0 +1,47 @@
+{
+  "UpdateInterval": -1,
+  "AuthorityCode": "MPB",
+  "VersionID": 4443,
+  "Ports": [
+    {
+      "PortID": "TWMZG",
+      "PortName": {
+        "Zh_tw": "澎湖港馬公碼頭區",
+        "En": "Magong, Penghu(1)"
+      },
+      "PortPosition": {
+        "PositionLat": 23.5631091150989,
+        "PositionLon": 119.564422964545
+      },
+      "City": "澎湖縣",
+      "CityCode": "PEN"
+    },
+    {
+      "PortID": "TW001",
+      "PortName": {
+        "Zh_tw": "小琉球白沙港",
+        "En": "Baisha Port"
+      },
+      "PortPosition": {
+        "PositionLat": 22.35218789,
+        "PositionLon": 120.3844867
+      },
+      "City": "屏東縣",
+      "CityCode": "PIF"
+    },
+    {
+      "PortID": "TWKEL",
+      "PortName": {
+        "Zh_tw": "基隆港",
+        "En": "Keelung"
+      },
+      "PortPosition": {
+        "PositionLat": 25.1348595906906,
+        "PositionLon": 121.741177648686
+      },
+      "City": "基隆市",
+      "CityCode": "KEE"
+    }
+  ],
+  "UpdateTime": "2026-10-15T16:17:26+08:00"
+}

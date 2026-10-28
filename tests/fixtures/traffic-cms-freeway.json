@@ -1,0 +1,44 @@
+{
+  "UpdateTime": "2026-10-20T00:27:03+08:00",
+  "UpdateInterval": 21600,
+  "SrcUpdateTime": "2026-10-20T00:05:17+08:00",
+  "SrcUpdateInterval": 86400,
+  "AuthorityCode": "NFB",
+  "LinkVersion": "25.12.1",
+  "CMSs": [
+    {
+      "CMSID": "CMS-N1-S-0.000-M",
+      "SubAuthorityCode": "NFB-NR",
+      "LinkID": "0000100000000C",
+      "LocationType": 1,
+      "PositionLon": 121.7358071,
+      "PositionLat": 25.1231278,
+      "RoadID": "000010",
+      "RoadName": "國道1號",
+      "RoadClass": 0,
+      "RoadDirection": "S",
+      "RoadSection": {
+        "Start": "基隆端",
+        "End": "基隆交流道"
+      },
+      "LocationMile": "0K+000"
+    },
+    {
+      "CMSID": "CMS-N1-S-0.730-M",
+      "SubAuthorityCode": "NFB-NR",
+      "LinkID": "0000100000040C",
+      "LocationType": 1,
+      "PositionLon": 121.7304291,
+      "PositionLat": 25.1176049,
+      "RoadID": "000010",
+      "RoadName": "國道1號",
+      "RoadClass": 0,
+      "RoadDirection": "S",
+      "RoadSection": {
+        "Start": "基隆端",
+        "End": "基隆交流道"
+      },
+      "LocationMile": "0K+730"
+    }
+  ]
+}

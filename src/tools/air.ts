@@ -1,12 +1,20 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { AirArrival, AirDeparture, AirFlight, AirMetar } from 'tdx-taiwan';
+import {
+  odata,
+  TdxApiError,
+  type AirArrival,
+  type AirDeparture,
+  type AirFlight,
+  type AirGeneralSchedule,
+  type AirMetar,
+} from 'tdx-taiwan';
 import { z } from 'zod';
 import type { ToolContext } from '../core/context.js';
 import { ToolInputError } from '../core/errors.js';
 import { fareTable } from '../core/fares.js';
 import { compact, name } from '../core/format.js';
 import { search } from '../core/names.js';
-import { list } from '../core/respond.js';
+import { list, ok } from '../core/respond.js';
 import { after, date, limit, take } from '../core/schemas.js';
 import { clock, duration, minutesBetween, startTime, taipeiNow } from '../core/time.js';
 import { defineTool } from '../core/tool.js';
@@ -36,6 +44,22 @@ const DOMESTIC_AIRLINES: Record<string, string> = {
   DA: '德安航空 / Daily Air',
 };
 const SCHEDULE_REMARK: Record<string, string> = { X: 'cancelled', S: 'code share' };
+const SEATS: Record<number, string> = { 1: 'available', 2: 'fewer than 5 left', 3: 'sold out' };
+const CABIN: Record<number, string> = {
+  1: 'first',
+  2: 'business',
+  3: 'premium economy',
+  4: 'economy',
+};
+const WEEKDAYS = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+] as const;
 const FARE_CLASS = {
   8: 'militaryPolice',
   9: 'countyDisabled',
@@ -179,22 +203,43 @@ export function registerAirTools(server: McpServer, ctx: ToolContext): void {
   });
 
   defineTool(server, 'flight_schedule', {
-    title: 'Domestic flight schedule',
+    title: 'Flight schedule',
     description:
-      'Scheduled domestic flights between two Taiwan airports on a day (Mandarin Airlines, ' +
-      'UNI Air and Daily Air, the airlines TDX publishes daily schedules for), with times, ' +
-      'cancellations and fares in NT$. Use flight_status or flight_board for live status. ' +
-      'Example: from "松山", to "金門", date "2026-11-02".',
+      'Scheduled flights between two airports on a day. Between Taiwan airports: the domestic ' +
+      'flights of Mandarin Airlines, UNI Air and Daily Air with cancellations and fares in ' +
+      'NT$. To or from abroad: the published international timetable, code-share numbers ' +
+      'grouped under one flight. Use flight_status or flight_board for live status. Example: ' +
+      'from "松山", to "金門", date "2026-11-02"; or from "TPE", to "NRT".',
     input: {
-      from: airport('Departure'),
-      to: airport('Arrival'),
+      from: airport('Departure').describe(
+        'Departure airport: a Taiwan airport (TPE, 松山, 金門) or any IATA code or name abroad ' +
+          '(NRT, HND, Tokyo).',
+      ),
+      to: airport('Arrival').describe(
+        'Arrival airport: a Taiwan airport (TSA, 高雄) or any IATA code or name abroad (HKG, Osaka).',
+      ),
       date,
       after,
       limit: limit(20, 'flights'),
     },
     run: async (args) => {
-      const from = findAirport(args.from);
-      const to = findAirport(args.to);
+      const domesticFrom = tryAirport(args.from);
+      const domesticTo = tryAirport(args.to);
+      if (!domesticFrom || !domesticTo) {
+        // Abroad, or a name for several airports ("Taipei"): match each end as a set of codes.
+        const names = await airportNames(ctx);
+        const fromIds = otherAirports(args.from, names);
+        const toIds = otherAirports(args.to, names);
+        const taiwan = new Set(TAIWAN_AIRPORTS.map((a) => a.id));
+        if ([...fromIds, ...toIds].every((id) => taiwan.has(id))) {
+          // Both in Taiwan after all: let the lookup say which name is ambiguous.
+          findAirport(args.from);
+          findAirport(args.to);
+        }
+        return international(ctx, names, fromIds, toIds, args);
+      }
+      const from = domesticFrom;
+      const to = domesticTo;
       if (from.id === to.id) {
         throw new ToolInputError(`"${args.from}" and "${args.to}" are the same airport.`);
       }
@@ -265,6 +310,156 @@ export function registerAirTools(server: McpServer, ctx: ToolContext): void {
         note: notes.length ? notes.join(' ') : undefined,
       });
     },
+  });
+
+  defineTool(server, 'flight_seats', {
+    title: 'Domestic flight seats',
+    description:
+      'Whether seats are left on a domestic flight of Mandarin Airlines (AE), UNI Air (B7) or ' +
+      'Daily Air (DA): available, fewer than 5 left, or sold out, per cabin when the airline ' +
+      'says. TDX asks the airline live, so this can take up to 30 s, and UNI Air allows few ' +
+      'requests; call it for one flight at a time. Example: flight "AE1273", date "2026-11-02".',
+    input: {
+      flight: z
+        .string()
+        .trim()
+        .regex(FLIGHT, 'Use an airline code and number, e.g. AE1273')
+        .describe('Domestic flight with its airline code: AE, B7 or DA, e.g. "AE1273", "B7 8751".'),
+      date,
+    },
+    run: async (args) => {
+      const [, code, digits = ''] = FLIGHT.exec(args.flight) ?? [];
+      const airline = code?.toUpperCase();
+      if (!airline || !(airline in DOMESTIC_AIRLINES)) {
+        throw new ToolInputError(
+          'TDX has seat availability only for Mandarin Airlines (AE), UNI Air (B7) and Daily ' +
+            'Air (DA); give the flight with one of those codes, e.g. AE1273.',
+        );
+      }
+      const day = args.date ?? taipeiNow().date;
+      // The same query flight_schedule makes, so the day's schedule is usually cached.
+      const flights = await ctx.tdx.air.dailySchedule(airline, {
+        filter: `FlightDate eq '${day}'`,
+      });
+      const flight = flights.find((f) => Number(f.FlightNumber) === Number(digits));
+      if (!flight) {
+        throw new ToolInputError(`${airline}${digits} is not in ${airline}'s schedule for ${day}.`);
+      }
+      let seats;
+      try {
+        seats = await ctx.tdx.air.seatAvailability(
+          airline,
+          flight.AirRouteID,
+          day,
+          flight.FlightNumber,
+        );
+      } catch (error) {
+        if (error instanceof TdxApiError && error.status >= 500) {
+          throw new ToolInputError(
+            `The airline did not answer TDX in time (HTTP ${error.status}); try again in a minute.`,
+          );
+        }
+        throw error;
+      }
+      const [status] = seats;
+      return ok({
+        flight: `${airline}${flight.FlightNumber}`,
+        route: flight.AirRouteID,
+        date: day,
+        departs: flight.DepartureTime,
+        arrives: flight.ArrivalTime,
+        cancelled: flight.FlightRemark === 'X' || undefined,
+        seats: status ? SEATS[status.SeatStatus] : undefined,
+        seatsLeft:
+          status?.TotalSeats !== undefined && status.SoldSeats !== undefined
+            ? status.TotalSeats - status.SoldSeats
+            : undefined,
+        cabins: status?.CabinSeats?.map((c) => ({
+          cabin: CABIN[c.CabinClass] ?? `cabin ${c.CabinClass}`,
+          seats: SEATS[c.SeatStatus],
+          seatsLeft: c.TotalSeats - c.SoldSeats,
+        })),
+        updated: status?.UpdateTime,
+        note: status ? undefined : 'The airline returned no seat data for this flight.',
+      });
+    },
+  });
+}
+
+/** A Taiwan airport, or `undefined` when the input names none or several. */
+function tryAirport(input: string) {
+  try {
+    return findAirport(input);
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Flights to or from abroad on a day, from the published international timetable: rows valid
+ * on that date and weekday, code-shares (same times, same terminal) merged into one flight.
+ */
+async function international(
+  ctx: ToolContext,
+  names: Map<string, string>,
+  fromIds: Set<string>,
+  toIds: Set<string>,
+  args: { date?: string; after?: string; limit?: number },
+) {
+  const day = args.date ?? taipeiNow().date;
+  const start = startTime(day, args.after);
+  const weekday = WEEKDAYS[new Date(`${day}T12:00:00+08:00`).getUTCDay()] ?? 'Monday';
+  const anyOf = (field: string, ids: Set<string>) =>
+    [...ids].map((id) => `${field} eq ${odata.str(id)}`).join(' or ');
+  const [rows, airlines] = await Promise.all([
+    ctx.tdx.air.generalSchedule('International', {
+      filter: [anyOf('DepartureAirportID', fromIds), anyOf('ArrivalAirportID', toIds)],
+    }),
+    airlineNames(ctx),
+  ]);
+  const groups = new Map<
+    string,
+    { row: AirGeneralSchedule; flights: string[]; airlines: string[] }
+  >();
+  for (const row of rows) {
+    if (row.ScheduleStartDate > day || day > row.ScheduleEndDate || !row[weekday]) continue;
+    if (row.DepartureTime < start) continue;
+    const key = [
+      row.DepartureAirportID,
+      row.ArrivalAirportID,
+      row.DepartureTime,
+      row.ArrivalTime,
+      row.Terminal ?? '',
+    ].join('|');
+    const group = groups.get(key) ?? { row, flights: [], airlines: [] };
+    if (!group.flights.includes(row.FlightNumber)) group.flights.push(row.FlightNumber);
+    const airline = airlines.get(row.AirlineID) ?? row.AirlineID;
+    if (!group.airlines.includes(airline)) group.airlines.push(airline);
+    groups.set(key, group);
+  }
+  const items = [...groups.values()]
+    .sort((a, b) => a.row.DepartureTime.localeCompare(b.row.DepartureTime))
+    .map(({ row, flights, airlines: carriers }) => ({
+      departs: row.DepartureTime,
+      arrives: row.ArrivalTime,
+      from: fromIds.size > 1 ? row.DepartureAirportID : undefined,
+      to: toIds.size > 1 ? row.ArrivalAirportID : undefined,
+      flights,
+      airlines: carriers,
+      terminal: text(row.Terminal),
+    }));
+  const label = (ids: Set<string>) => [...ids].map((id) => airportLabel(id, names)).join('、');
+  return list(items, take(ctx, args.limit, 20), {
+    from: label(fromIds),
+    to: label(toIds),
+    date: day,
+    after: start,
+    note: items.length
+      ? 'Published timetable; one entry per departure, with its code-share flight numbers. ' +
+        'Times are local at each airport.'
+      : `No scheduled flight from ${label(fromIds)} to ${label(toIds)} on ${day} after ${start} ` +
+        "in TDX's international timetable, which misses some airports (Songshan); flight_board " +
+        "shows an airport's flights today.",
   });
 }
 

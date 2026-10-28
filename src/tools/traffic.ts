@@ -5,6 +5,7 @@ import type {
   TrafficEvents,
   TrafficLiveEvents,
   TrafficLiveTraffics,
+  TrafficNews,
   TrafficSection,
   TrafficSections,
 } from 'tdx-taiwan';
@@ -71,9 +72,9 @@ const SEVERITY: Record<number, string> = {
   2: 'fully blocked',
 };
 
-type Network = { kind: 'freeway' | 'highway' } | { kind: 'city'; city: string };
+export type Network = { kind: 'freeway' | 'highway' } | { kind: 'city'; city: string };
 
-const network = z
+export const network = z
   .string()
   .trim()
   .min(1)
@@ -81,14 +82,24 @@ const network = z
     'Road network: "freeway" (國道, national freeways), "highway" (省道, provincial highways) ' +
       'or a city (Taipei, Taoyuan, Taichung, 臺北市, ...).',
   );
-const keyword = z
+export const keyword = z
   .string()
   .trim()
   .min(1)
   .optional()
   .describe('Only results whose road or place contains this, e.g. "國道1號", "林口", "建國高架".');
-const latitude = z.number().min(21).max(27).optional().describe('Latitude, to search nearby.');
-const longitude = z.number().min(118).max(123).optional().describe('Longitude, to search nearby.');
+export const latitude = z
+  .number()
+  .min(21)
+  .max(27)
+  .optional()
+  .describe('Latitude, to search nearby.');
+export const longitude = z
+  .number()
+  .min(118)
+  .max(123)
+  .optional()
+  .describe('Longitude, to search nearby.');
 
 export function registerTrafficTools(server: McpServer, ctx: ToolContext): void {
   defineTool(server, 'traffic_live', {
@@ -223,7 +234,11 @@ export function registerTrafficTools(server: McpServer, ctx: ToolContext): void 
     run: async (args) => {
       const net = networkOf(args.network, LIVE_EVENT_CITIES, 'road events');
       const origin = pointArg(args.lat, args.lon);
-      const [live, planned] = await eventFeeds(ctx, net);
+      const filtered = Boolean(args.keyword || args.type || origin);
+      const [[live, planned], news] = await Promise.all([
+        eventFeeds(ctx, net),
+        filtered ? [] : newsOf(ctx, net),
+      ]);
       // TDX repeats some events within a feed, and an announced event that has started is in
       // the live feed too: keep the first copy, live before announced.
       const seen = new Set<string>();
@@ -278,6 +293,22 @@ export function registerTrafficTools(server: McpServer, ctx: ToolContext): void 
         });
       return list(items, take(ctx, args.limit, 20), {
         network: label(net),
+        news: news.length
+          ? [...news]
+              .sort((a, b) => b.PublishTime.localeCompare(a.PublishTime))
+              .slice(0, 5)
+              .map((n) => {
+                const description = plain(n.Description);
+                return {
+                  title: n.Title,
+                  description: description !== n.Title ? description : undefined,
+                  published: realTime(n.PublishTime),
+                  from: realTime(n.StartTime),
+                  to: realTime(n.EndTime),
+                  url: n.NewsURL || undefined,
+                };
+              })
+          : undefined,
         note: items.length ? undefined : 'No road events match.',
       });
     },
@@ -285,7 +316,7 @@ export function registerTrafficTools(server: McpServer, ctx: ToolContext): void 
 }
 
 /** `freeway`, `highway` or a city, checked against the cities that have the feed. */
-function networkOf(input: string, cities: readonly string[], what: string): Network {
+export function networkOf(input: string, cities: readonly string[], what: string): Network {
   const folded = input
     .trim()
     .toLowerCase()
@@ -310,12 +341,12 @@ function networkOf(input: string, cities: readonly string[], what: string): Netw
   return { kind: 'city', city };
 }
 
-function label(net: Network): string {
+export function label(net: Network): string {
   if (net.kind === 'city') return net.city;
   return net.kind === 'freeway' ? 'national freeways (國道)' : 'provincial highways (省道)';
 }
 
-function pointArg(lat: number | undefined, lon: number | undefined): LatLon | undefined {
+export function pointArg(lat: number | undefined, lon: number | undefined): LatLon | undefined {
   if (lat === undefined && lon === undefined) return undefined;
   if (lat === undefined || lon === undefined) {
     throw new ToolInputError('Give both lat and lon, or neither.');
@@ -360,6 +391,18 @@ function eventFeeds(
     traffic[net.kind].liveEvents(),
     net.kind === 'highway' ? traffic.highway.events() : undefined,
   ]);
+}
+
+/** Road news of the network (closures, control measures); none if TDX has no feed for it. */
+async function newsOf(ctx: ToolContext, net: Network): Promise<TrafficNews[]> {
+  const traffic = ctx.tdx.traffic;
+  const list =
+    net.kind === 'city'
+      ? traffic.news(net.city)
+      : net.kind === 'freeway'
+        ? traffic.freeway.news()
+        : traffic.highway.news();
+  return list.then((l) => [...arrayOf(l.Newses)]).catch((): TrafficNews[] => []);
 }
 
 /** `0K+000–1K+100`, when the section has mileage. */

@@ -61,8 +61,16 @@ Add the server to the client's MCP configuration (for Claude Desktop,
 | `TDX_CLIENT_SECRET`       | required | TDX API key Client Secret                                            |
 | `TDX_REQUESTS_PER_SECOND` | `5`      | Client-side rate limit; match it to your TDX plan (`0` turns it off) |
 | `TDX_MAX_ITEMS`           | `200`    | Most items any tool returns                                          |
+| `TDX_TOOLS`               | `all`    | Tool groups to load, e.g. `bus,rail` or `-road,-raw` (see below)     |
 
 A `.env` file in the working directory is read too; variables already set take precedence.
+
+**Loading fewer tools.** Every tool's description goes into the model's context, and with 47 of
+them a model can pick the wrong one. If you only need some areas, list them in `TDX_TOOLS`:
+`bike`, `bus`, `rail` (THSR, TRA, metro, Alishan), `flight`, `ferry`, `road`, `parking`, `ev`
+and `raw` (`tdx_get`). A list loads only those groups (`bus,rail`); names with a minus leave
+groups out of all of them (`-road,-raw`). The server's instructions to the model cover only the
+loaded groups.
 
 ## Tools
 

@@ -6,6 +6,12 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+
+- `TDX_TOOLS` (and `tools` in `createServer`): load only some groups of tools, e.g. `bus,rail`,
+  or leave groups out with `-road,-raw`. The server instructions describe only the loaded
+  groups. `TOOL_GROUPS`, `parseToolGroups()` and `instructionsFor()` are exported.
+
 ## [0.6.0] - 2026-10-28
 
 ### Added

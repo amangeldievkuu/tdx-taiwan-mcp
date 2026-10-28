@@ -105,4 +105,25 @@ describe('server', () => {
     expect(result.isError).toBe(true);
     expect(t.apiUrls).toEqual([]);
   });
+
+  it('loads only the chosen groups, with instructions for them alone', async () => {
+    const t = await connect([], { tools: ['bus', 'raw'] });
+    close = t.close;
+    const { tools } = await t.client.listTools();
+    expect(tools.map((tool) => tool.name).sort()).toEqual([
+      'bus_alerts',
+      'bus_eta',
+      'bus_positions',
+      'bus_route_search',
+      'bus_route_stops',
+      'bus_stop_arrivals',
+      'bus_stops_nearby',
+      'bus_timetable',
+      'tdx_get',
+    ]);
+    const instructions = t.client.getInstructions() ?? '';
+    expect(instructions).toMatch(/bus_route_search/);
+    expect(instructions).toMatch(/tdx_get/);
+    expect(instructions).not.toMatch(/Airports|Rail tools|freeway/);
+  });
 });

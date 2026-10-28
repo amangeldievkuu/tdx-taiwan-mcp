@@ -2,6 +2,7 @@
 import { existsSync } from 'node:fs';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { TdxClient } from 'tdx-taiwan';
+import { parseToolGroups } from './core/groups.js';
 import { createServer } from './server.js';
 import { VERSION } from './version.js';
 
@@ -12,6 +13,9 @@ Environment:
                                      → 會員中心 → 資料服務 → API金鑰
   TDX_REQUESTS_PER_SECOND            Client-side rate limit (default 5)
   TDX_MAX_ITEMS                      Most items any tool returns (default 200)
+  TDX_TOOLS                          Tool groups to load (default all): bike, bus, rail,
+                                     flight, ferry, road, parking, ev, raw (tdx_get);
+                                     e.g. "bus,rail", or "-road,-raw" to leave some out
 
 A .env file in the working directory is read if present.`;
 
@@ -49,7 +53,16 @@ const tdx = new TdxClient({
   },
 });
 
-const server = createServer({ tdx, maxItems: numberEnv('TDX_MAX_ITEMS') });
+const { groups, unknown } = parseToolGroups(process.env.TDX_TOOLS);
+if (unknown.length) {
+  log(`Ignoring unknown tool groups in TDX_TOOLS: ${unknown.join(', ')}.`);
+}
+if (!groups.length) {
+  log(`TDX_TOOLS=${process.env.TDX_TOOLS ?? ''} loads no tools (run with --help for the groups).`);
+  process.exit(1);
+}
+
+const server = createServer({ tdx, maxItems: numberEnv('TDX_MAX_ITEMS'), tools: groups });
 await server.connect(new StdioServerTransport());
 log(`${VERSION} running on stdio`);
 

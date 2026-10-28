@@ -33,10 +33,18 @@ claude mcp add tdx \
   -- npx -y tdx-taiwan-mcp
 ```
 
-### Claude Desktop and other clients
+### Claude Desktop
 
-Add the server to the client's MCP configuration (for Claude Desktop,
-`claude_desktop_config.json`):
+Download `tdx-taiwan-mcp-<version>.mcpb` from the
+[latest release](https://github.com/amangeldievkuu/tdx-taiwan-mcp/releases/latest) and open it
+(or drag it into Settings → Extensions). Claude Desktop asks for your TDX Client Id and Secret,
+stores the secret in the system keychain, and runs the server with its own Node.js. The
+settings also take the tool groups to load (see `TDX_TOOLS` below).
+
+### Other clients
+
+Add the server to the client's MCP configuration (or Claude Desktop's
+`claude_desktop_config.json`, instead of the extension):
 
 ```json
 {

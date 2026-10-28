@@ -60,6 +60,7 @@
   },
   "scripts": {
     "build": "tsup",
+    "build:mcpb": "node scripts/build-mcpb.mjs",
     "start": "node dist/cli.js",
     "inspect": "npm run build && npx -y @modelcontextprotocol/inspector node dist/cli.js",
     "test": "vitest run",

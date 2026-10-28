@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- A transit-map mark: two lines crossing at an interchange. -->
+  <rect width="512" height="512" rx="112" fill="#0f5c8c"/>
+  <path d="M112 256 H400" stroke="#ffffff" stroke-width="40" stroke-linecap="round"/>
+  <path d="M152 360 L360 152" stroke="#f2b134" stroke-width="40" stroke-linecap="round"/>
+  <circle cx="112" cy="256" r="30" fill="#ffffff"/>
+  <circle cx="400" cy="256" r="30" fill="#ffffff"/>
+  <circle cx="152" cy="360" r="30" fill="#f2b134"/>
+  <circle cx="360" cy="152" r="30" fill="#f2b134"/>
+  <circle cx="256" cy="256" r="52" fill="#ffffff" stroke="#0f5c8c" stroke-width="18"/>
+</svg>

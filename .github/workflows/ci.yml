@@ -90,3 +90,34 @@ jobs:
             grep -q "\"name\":\"$tool\"" out.jsonl || { echo "::error::$tool missing"; exit 1; }
           done
           echo "tools/list ok"
+
+  mcpb:
+    name: Claude Desktop extension
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Validates the manifest and packs; then runs the unpacked server as Claude Desktop would,
+      # from another directory with the settings' defaults.
+      - run: npm run build:mcpb
+      - name: Smoke test
+        run: |
+          mkdir unpacked && unzip -q build/*.mcpb -d unpacked
+          cd /tmp
+          printf '%s\n' \
+            '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"ci","version":"1"}}}' \
+            '{"jsonrpc":"2.0","method":"notifications/initialized"}' \
+            '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' \
+            | TDX_CLIENT_ID=id TDX_CLIENT_SECRET=secret TDX_TOOLS=all TDX_REQUESTS_PER_SECOND=5 \
+              node "$GITHUB_WORKSPACE/unpacked/server/cli.js" > out.jsonl
+          grep -q '"name":"tdx_get"' out.jsonl || { echo "::error::tools/list failed"; exit 1; }
+          echo "tools/list ok"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: mcpb
+          path: build/*.mcpb

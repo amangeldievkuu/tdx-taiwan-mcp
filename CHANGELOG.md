@@ -6,6 +6,13 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+
+- A Claude Desktop extension, `tdx-taiwan-mcp-<version>.mcpb`, attached to every GitHub release:
+  open it to install, and Claude Desktop asks for the TDX keys and the tool groups. Built with
+  `npm run build:mcpb`, which takes the tool list from the server and validates the manifest;
+  CI builds it and runs the unpacked server.
+
 ## [0.7.0] - 2026-10-28
 
 ### Added

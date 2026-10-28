@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-28
+
 ### Added
 
 - `rail_station_departures`: a TRA, THSR or metro station's departures on a day toward every
@@ -83,7 +85,8 @@ All notable changes to this project are documented here. The format is based on
   `TDX_MAX_ITEMS` items and 40,000 characters, and TDX errors (unsupported city, 404, 429,
   bad keys) reported as readable tool errors.
 
-[Unreleased]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/releases/tag/v0.1.0

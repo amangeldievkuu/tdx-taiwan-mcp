@@ -1,0 +1,66 @@
+{
+  "UpdateTime": "2026-10-22T07:22:48+08:00",
+  "UpdateInterval": 14400,
+  "SrcUpdateTime": "2026-10-22T07:22:48+08:00",
+  "SrcUpdateInterval": 86400,
+  "EffectiveDate": "2017-04-12",
+  "ExpireDate": "",
+  "ODFares": [
+    {
+      "OriginStationID": "360",
+      "OriginStationName": {
+        "Zh_tw": "嘉義",
+        "En": "Chiayi"
+      },
+      "DestinationStationID": "361",
+      "DestinationStationName": {
+        "Zh_tw": "北門",
+        "En": "Beimen"
+      },
+      "Direction": 0,
+      "TrainType": 1,
+      "Fares": [
+        {
+          "TicketType": 1,
+          "FareClass": 1,
+          "CabinClass": 1,
+          "Price": 45
+        },
+        {
+          "TicketType": 1,
+          "FareClass": 2,
+          "CabinClass": 1,
+          "Price": 23
+        }
+      ]
+    },
+    {
+      "OriginStationID": "360",
+      "OriginStationName": {
+        "Zh_tw": "嘉義",
+        "En": "Chiayi"
+      },
+      "DestinationStationID": "361",
+      "DestinationStationName": {
+        "Zh_tw": "北門",
+        "En": "Beimen"
+      },
+      "Direction": 0,
+      "TrainType": 5,
+      "Fares": [
+        {
+          "TicketType": 1,
+          "FareClass": 1,
+          "CabinClass": 2,
+          "Price": 50
+        },
+        {
+          "TicketType": 1,
+          "FareClass": 2,
+          "CabinClass": 2,
+          "Price": 25
+        }
+      ]
+    }
+  ]
+}

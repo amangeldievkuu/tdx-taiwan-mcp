@@ -3,7 +3,7 @@ import { z } from 'zod';
 import type { ToolContext } from '../core/context.js';
 import { ToolInputError } from '../core/errors.js';
 import { fareTable } from '../core/fares.js';
-import { name } from '../core/format.js';
+import { arrayOf, name } from '../core/format.js';
 import { list, ok } from '../core/respond.js';
 import { after, date, limit, take } from '../core/schemas.js';
 import { duration, startTime, taipeiNow } from '../core/time.js';
@@ -39,7 +39,10 @@ export function registerThsrTools(server: McpServer, ctx: ToolContext): void {
       const [from, to] = await stations(ctx, args.from, args.to);
       const day = args.date ?? taipeiNow().date;
       const start = startTime(day, args.after);
-      const trains = await ctx.tdx.thsr.timetable(from.id, to.id, day);
+      const [trains, cars] = await Promise.all([
+        ctx.tdx.thsr.timetable(from.id, to.id, day),
+        nonReservedCars(ctx, day),
+      ]);
       const items = trains
         .map((t) => ({
           trainNo: t.DailyTrainInfo.TrainNo,
@@ -48,6 +51,7 @@ export function registerThsrTools(server: McpServer, ctx: ToolContext): void {
           duration: duration(t.OriginStopTime.DepartureTime, t.DestinationStopTime.ArrivalTime),
           direction: DIRECTION[t.DailyTrainInfo.Direction],
           runs: `${t.DailyTrainInfo.StartingStationName?.Zh_tw ?? '?'} → ${t.DailyTrainInfo.EndingStationName?.Zh_tw ?? '?'}`,
+          nonReservedCars: cars.get(Number(t.DailyTrainInfo.TrainNo)),
         }))
         .filter((t) => t.departs >= start)
         .sort((a, b) => a.departs.localeCompare(b.departs));
@@ -142,7 +146,10 @@ export function registerThsrTools(server: McpServer, ctx: ToolContext): void {
     run: async (args) => {
       const trainNo = args.trainNo.padStart(4, '0');
       const day = args.date ?? taipeiNow().date;
-      const [train] = await ctx.tdx.thsr.trainTimetable(trainNo, day);
+      const [[train], cars] = await Promise.all([
+        ctx.tdx.thsr.trainTimetable(trainNo, day),
+        nonReservedCars(ctx, day),
+      ]);
       if (!train) throw new ToolInputError(`No THSR train ${trainNo} runs on ${day}.`);
       const info = train.DailyTrainInfo;
       return ok({
@@ -151,6 +158,7 @@ export function registerThsrTools(server: McpServer, ctx: ToolContext): void {
         direction: DIRECTION[info.Direction],
         from: name(info.StartingStationName),
         to: name(info.EndingStationName),
+        nonReservedCars: cars.get(Number(trainNo)),
         stops: [...train.StopTimes]
           .sort((a, b) => a.StopSequence - b.StopSequence)
           .map((s) => ({
@@ -161,6 +169,23 @@ export function registerThsrTools(server: McpServer, ctx: ToolContext): void {
       });
     },
   });
+}
+
+/**
+ * The non-reserved (自由座) cars of each train on `day`, by train number. Empty when TDX does not
+ * answer: the cars are a detail, not worth failing the timetable over.
+ */
+async function nonReservedCars(ctx: ToolContext, day: string): Promise<Map<number, number[]>> {
+  try {
+    const { FreeSeatingCars: cars } = await ctx.tdx.thsr.freeSeatingCars(day);
+    return new Map(
+      arrayOf(cars).flatMap((c) =>
+        c.TrainNo && c.Cars?.length ? [[Number(c.TrainNo), c.Cars]] : [],
+      ),
+    );
+  } catch {
+    return new Map();
+  }
 }
 
 async function stations(

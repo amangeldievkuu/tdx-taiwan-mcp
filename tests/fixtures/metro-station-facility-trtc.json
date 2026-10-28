@@ -1,0 +1,54 @@
+[
+  {
+    "StationID": "BL01",
+    "StationName": {
+      "Zh_tw": "頂埔",
+      "En": "Dingpu",
+      "Ja": "頂埔",
+      "Ko": "딩푸"
+    },
+    "FacilityMapURLs": [
+      {
+        "MapName": {
+          "Zh_tw": "頂埔站資訊圖",
+          "En": "Dingpu Station Information Map"
+        },
+        "MapURL": "https://web.metro.taipei/img/ALL/INFOPDF/076.pdf",
+        "FloorLevel": "參考車站資訊圖"
+      }
+    ],
+    "Elevators": [],
+    "InformationSpots": [],
+    "DrinkingFountains": [],
+    "Toilets": [],
+    "SrcUpdateTime": "2024-11-08T14:45:30+08:00",
+    "UpdateTime": "2025-01-07T00:00:00+08:00",
+    "VersionID": 1
+  },
+  {
+    "StationID": "BL02",
+    "StationName": {
+      "Zh_tw": "永寧",
+      "En": "Yongning",
+      "Ja": "永寧",
+      "Ko": "융닝"
+    },
+    "FacilityMapURLs": [
+      {
+        "MapName": {
+          "Zh_tw": "永寧站資訊圖",
+          "En": "Yongning Station Information Map"
+        },
+        "MapURL": "https://web.metro.taipei/img/ALL/INFOPDF/077.pdf",
+        "FloorLevel": "參考車站資訊圖"
+      }
+    ],
+    "Elevators": [],
+    "InformationSpots": [],
+    "DrinkingFountains": [],
+    "Toilets": [],
+    "SrcUpdateTime": "2024-11-08T14:45:30+08:00",
+    "UpdateTime": "2025-01-07T00:00:00+08:00",
+    "VersionID": 1
+  }
+]

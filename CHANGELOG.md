@@ -6,6 +6,19 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+
+- `rail_station_departures`: a TRA, THSR or metro station's departures on a day toward every
+  destination, from the station timetables (Taipei Metro included, whose live board shows
+  arrivals only; late trains after midnight sort last).
+- `rail_station_info`: a station's exits with where they come out, stairs, escalators and lifts,
+  sorted by distance to a destination when given, plus its lifts, toilets and information
+  desks (TRA, THSR, metro).
+- `metro_frequency`: minutes between trains through the day per line, for the kind of day of a
+  date; covers the Taipei Wenhu line (文湖線), which has no timetable.
+- `afr_fare`: Alishan Forest Railway fares per train type and passenger type.
+- `thsr_timetable` and `thsr_train` list each train's non-reserved (自由座) cars.
+
 ## [0.3.0] - 2026-10-27
 
 ### Added

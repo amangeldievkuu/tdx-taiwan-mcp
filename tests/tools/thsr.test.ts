@@ -11,6 +11,7 @@ const ROUTES: Route[] = [
   ['/v2/Rail/THSR/ODFare/1000/to/1070', loadFixture('thsr-od-fare.json')],
   ['/v2/Rail/THSR/DailyTimetable/TrainNo/0108/', loadFixture('thsr-daily-timetable.json')],
   ['/v2/Rail/THSR/DailyTimetable/TrainNo/', []],
+  ['/v2/Rail/THSR/DailyFreeSeatingCar/TrainDate/', loadFixture('thsr-free-seating-car.json')],
 ];
 
 let close: (() => Promise<void>) | undefined;
@@ -111,7 +112,8 @@ describe('thsr_train', () => {
   it('pads the train number and lists its stops', async () => {
     const t = await setup();
     const result = await t.call('thsr_train', { trainNo: '108', date: '2026-10-22' });
-    expect(t.apiUrls).toEqual([
+    expect(t.apiUrls.sort()).toEqual([
+      `${API}/v2/Rail/THSR/DailyFreeSeatingCar/TrainDate/2026-10-22?$format=JSON`,
       `${API}/v2/Rail/THSR/DailyTimetable/TrainNo/0108/TrainDate/2026-10-22?$format=JSON`,
     ]);
     expect(result.json).toMatchObject({
@@ -119,6 +121,7 @@ describe('thsr_train', () => {
       direction: 'northbound',
       from: '左營 / Zuoying',
       to: '南港 / Nangang',
+      nonReservedCars: [10, 11, 12],
     });
     expect((result.json.stops as unknown[])[1]).toEqual({
       station: '台中 / Taichung',

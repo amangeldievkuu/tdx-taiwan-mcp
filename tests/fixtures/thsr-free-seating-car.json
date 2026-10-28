@@ -1,0 +1,18 @@
+{
+  "UpdateTime": "2026-10-22T01:52:54+08:00",
+  "UpdateInterval": 86400,
+  "AuthorityCode": "THSR",
+  "TrainDate": "2026-10-22",
+  "FreeSeatingCars": [
+    {
+      "TrainNo": "108",
+      "CarConfig": "3: 10-12",
+      "Cars": [10, 11, 12]
+    },
+    {
+      "TrainNo": "109",
+      "CarConfig": "3: 10-12",
+      "Cars": [10, 11, 12]
+    }
+  ]
+}

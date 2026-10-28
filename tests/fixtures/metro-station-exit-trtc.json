@@ -1,0 +1,66 @@
+[
+  {
+    "StationID": "BL01",
+    "StationName": {
+      "Zh_tw": "頂埔",
+      "En": "Dingpu",
+      "Ja": "頂埔",
+      "Ko": "딩푸"
+    },
+    "ExitID": "1",
+    "ExitName": {
+      "Zh_tw": "頂埔站出口1",
+      "En": "Dingpu Exit 1"
+    },
+    "ExitPosition": {
+      "PositionLon": 121.418336,
+      "PositionLat": 24.959327,
+      "GeoHash": "wsqmfzwns"
+    },
+    "LocationDescription": "中央路4段約100號旁",
+    "Stair": true,
+    "Escalator": 2,
+    "Elevator": true,
+    "ExitMapURLs": [
+      {
+        "MapName": {},
+        "MapURL": "https://web.metro.taipei/img/ALL/Route2200/076.jpg"
+      }
+    ],
+    "SrcUpdateTime": "2026-09-30T00:00:00+08:00",
+    "UpdateTime": "2026-10-02T17:00:00+08:00",
+    "VersionID": 7
+  },
+  {
+    "StationID": "BL01",
+    "StationName": {
+      "Zh_tw": "頂埔",
+      "En": "Dingpu",
+      "Ja": "頂埔",
+      "Ko": "딩푸"
+    },
+    "ExitID": "2",
+    "ExitName": {
+      "Zh_tw": "頂埔站出口2",
+      "En": "Dingpu Exit 2"
+    },
+    "ExitPosition": {
+      "PositionLon": 121.419,
+      "PositionLat": 24.95931,
+      "GeoHash": "wsqmfzwwe"
+    },
+    "LocationDescription": "中央路4段，近鴻海精密工業",
+    "Stair": true,
+    "Escalator": 2,
+    "Elevator": false,
+    "ExitMapURLs": [
+      {
+        "MapName": {},
+        "MapURL": "https://web.metro.taipei/img/ALL/Route2200/076.jpg"
+      }
+    ],
+    "SrcUpdateTime": "2026-09-30T00:00:00+08:00",
+    "UpdateTime": "2026-10-02T17:00:00+08:00",
+    "VersionID": 7
+  }
+]

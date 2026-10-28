@@ -43,6 +43,7 @@ describe('server', () => {
     close = t.close;
     const { tools } = await t.client.listTools();
     expect(tools.map((tool) => tool.name).sort()).toEqual([
+      'afr_fare',
       'afr_timetable',
       'bus_alerts',
       'bus_eta',
@@ -62,10 +63,13 @@ describe('server', () => {
       'flight_status',
       'metro_fare',
       'metro_first_last_train',
+      'metro_frequency',
       'metro_live_board',
       'parking_nearby',
       'parking_search',
       'rail_alerts',
+      'rail_station_departures',
+      'rail_station_info',
       'rail_station_search',
       'tdx_get',
       'thsr_fare',

@@ -6,6 +6,7 @@ import { ToolInputError } from '../core/errors.js';
 import { fareTable } from '../core/fares.js';
 import { name } from '../core/format.js';
 import { list, ok } from '../core/respond.js';
+import { taipeiNow } from '../core/time.js';
 import { defineTool } from '../core/tool.js';
 import { findStation, metroSystem, type RailStation } from './rail-stations.js';
 
@@ -15,8 +16,17 @@ const SERVICE_STATUS: Record<number, string> = {
   3: 'last train has passed',
   4: 'no service today',
 };
-const TRAIN_TYPE: Record<number, string> = { 1: 'local', 2: 'express' };
-const DAYS = [
+export const TRAIN_TYPE: Record<number, string> = { 1: 'local', 2: 'express' };
+const WEEKDAYS = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+] as const;
+export const DAYS = [
   'Monday',
   'Tuesday',
   'Wednesday',
@@ -27,7 +37,7 @@ const DAYS = [
   'NationalHolidays',
 ] as const;
 
-const station = (role: string) =>
+export const station = (role: string) =>
   z
     .string()
     .trim()
@@ -110,6 +120,61 @@ export function registerMetroTools(server: McpServer, ctx: ToolContext): void {
     },
   });
 
+  defineTool(server, 'metro_frequency', {
+    title: 'Metro train frequency',
+    description:
+      'How often metro trains run on each line through the day (minutes between trains, peak ' +
+      'and off-peak) and its operating hours, for a day of the week. Covers the Taipei Wenhu ' +
+      'line (文湖線), which has no timetable. Example: system "TRTC", line "BR".',
+    input: {
+      system: metroSystem(['TRTC', 'NTMC', 'TYMC', 'TMRT', 'KRTC']),
+      line: z
+        .string()
+        .trim()
+        .min(1)
+        .optional()
+        .describe('Only this line ID, e.g. "BR" (文湖線), "R", "BL" (default: every line).'),
+      date: z
+        .string()
+        .regex(/^\d{4}-\d{2}-\d{2}$/, 'Use YYYY-MM-DD')
+        .optional()
+        .describe('Day in Taiwan, YYYY-MM-DD, for its day of the week (default: today).'),
+    },
+    run: async (args) => {
+      const day = args.date ?? taipeiNow().date;
+      const weekday = WEEKDAYS[new Date(`${day}T12:00:00+08:00`).getUTCDay()] ?? 'Monday';
+      const line = args.line?.toUpperCase();
+      const routes = (await ctx.tdx.metro.frequency(args.system)).filter(
+        (r) => r.ServiceDay[weekday] && (!line || r.LineID.toUpperCase() === line),
+      );
+      const items = routes.map((r) => ({
+        line: r.LineID,
+        route: r.RouteID,
+        trainType: r.TrainType ? TRAIN_TYPE[r.TrainType] : undefined,
+        hours: `${r.OperationTime.StartTime}–${r.OperationTime.EndTime}`,
+        headways: [...r.Headways]
+          .sort((a, b) => a.StartTime.localeCompare(b.StartTime))
+          .map((h) => ({
+            from: h.StartTime,
+            to: h.EndTime,
+            everyMinutes:
+              h.MinHeadwayMins === h.MaxHeadwayMins
+                ? `${h.MinHeadwayMins}`
+                : `${h.MinHeadwayMins}–${h.MaxHeadwayMins}`,
+            peak: h.PeakFlag === '1' ? true : undefined,
+          })),
+      }));
+      return list(items, ctx.maxItems, {
+        system: args.system,
+        date: day,
+        days: routes[0]?.ServiceDay.ServiceTag ?? undefined,
+        note: items.length
+          ? undefined
+          : `TDX lists no frequency for ${line ? `line ${line} of ` : ''}${args.system} on a ${weekday}.`,
+      });
+    },
+  });
+
   defineTool(server, 'metro_first_last_train', {
     title: 'Metro first and last trains',
     description:
@@ -146,7 +211,7 @@ function idsOf(stations: RailStation[]): Set<string> {
  * `Field eq 'A' or Field eq 'B'`: a station listed once per line has several IDs. The SDK
  * parenthesises each filter when it joins several.
  */
-function anyOf(field: string, stations: RailStation[]): string {
+export function anyOf(field: string, stations: RailStation[]): string {
   return stations.map((s) => `${field} eq ${odata.str(s.id)}`).join(' or ');
 }
 
@@ -158,7 +223,7 @@ function arrival(status: number | null | undefined, minutes: number | null | und
 }
 
 /** `daily`, or the days the row applies to. */
-function days(
+export function days(
   service: Partial<Record<(typeof DAYS)[number], boolean>> | null | undefined,
 ): string | undefined {
   if (!service) return undefined;

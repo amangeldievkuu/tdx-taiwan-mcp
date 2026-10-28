@@ -1,0 +1,61 @@
+{
+  "UpdateTime": "2026-10-21T06:22:49+08:00",
+  "UpdateInterval": 14400,
+  "SrcUpdateTime": "2026-10-21T04:00:00+08:00",
+  "SrcUpdateInterval": -1,
+  "AuthorityCode": "TRA",
+  "StationExits": [
+    {
+      "StationID": "0900",
+      "StationName": {
+        "Zh_tw": "基隆",
+        "En": "Keelung",
+        "Ja": "基隆",
+        "Kr": "지롱"
+      },
+      "Exits": [
+        {
+          "ExitID": "0900-S Station (Zhongshan 1st Rd.)",
+          "ExitName": {
+            "Zh_tw": "南站 (中山一路)",
+            "En": "S Station (Zhongshan 1st Rd.)"
+          },
+          "ExitPosition": {
+            "PositionLon": 121.73837,
+            "PositionLat": 25.13191
+          },
+          "LocationDescription": "基隆市中山區中山一路 16 之 1 號",
+          "Stair": false,
+          "Escalator": 1,
+          "Elevator": true
+        }
+      ],
+      "ExitMapURLs": [
+        {
+          "MapName": {
+            "Zh_tw": "北側出口平面圖",
+            "En": ""
+          },
+          "MapURL": "https://www.trc.com.tw/tra-tip-web/tip/img/60f4fc93-fdda-40ae-a4f8-60eb2a52cefc",
+          "FloorLevel": ""
+        },
+        {
+          "MapName": {
+            "Zh_tw": "",
+            "En": ""
+          },
+          "MapURL": "https://www.trc.com.tw/tra-tip-web/tip/img/bd190c5a-fae0-440a-b5de-ab9aa9bf14e8",
+          "FloorLevel": ""
+        },
+        {
+          "MapName": {
+            "Zh_tw": "南側出口平面圖",
+            "En": ""
+          },
+          "MapURL": "https://www.trc.com.tw/tra-tip-web/tip/img/6e037021-53e0-41bb-bc5a-a7246d763d6c",
+          "FloorLevel": ""
+        }
+      ]
+    }
+  ]
+}

@@ -188,7 +188,7 @@ export function registerTraTools(server: McpServer, ctx: ToolContext): void {
   });
 }
 
-function trainType(info: {
+export function trainType(info: {
   TrainTypeCode?: string | null;
   TrainTypeName: { Zh_tw?: string | null; En?: string | null };
 }): string | undefined {

@@ -28,6 +28,8 @@ const CALLS = [
   ['thsr_timetable', { from: '台北', to: '左營' }],
   ['tra_live_board', { station: '臺北' }],
   ['metro_first_last_train', { system: 'TRTC', station: '台北車站' }],
+  ['rail_station_departures', { system: 'TRTC', station: '台北車站' }],
+  ['rail_station_info', { system: 'TRA', station: '高雄' }],
   ['rail_alerts', { system: 'TRA' }],
   ['afr_timetable', {}],
   ['flight_board', { airport: 'TSA' }],

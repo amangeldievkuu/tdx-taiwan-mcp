@@ -1,0 +1,52 @@
+[
+  {
+    "RouteID": "BL-1",
+    "LineID": "BL",
+    "StationID": "BL01",
+    "StationName": {
+      "Zh_tw": "頂埔",
+      "En": "Dingpu",
+      "Ja": "頂埔",
+      "Ko": "딩푸"
+    },
+    "Direction": 0,
+    "DestinationStaionID": "BL23",
+    "DestinationStationName": {
+      "Zh_tw": "南港展覽館",
+      "En": "Taipei Nangang Exhibition Center",
+      "Ja": "南港展覧館",
+      "Ko": "난강 전람관"
+    },
+    "Timetables": [
+      {
+        "Sequence": 1,
+        "DepartureTime": "06:00",
+        "TrainType": 0
+      },
+      {
+        "Sequence": 2,
+        "DepartureTime": "06:07",
+        "TrainType": 0
+      },
+      {
+        "Sequence": 3,
+        "DepartureTime": "06:15",
+        "TrainType": 0
+      }
+    ],
+    "ServiceDay": {
+      "ServiceTag": "假日",
+      "Monday": false,
+      "Tuesday": false,
+      "Wednesday": false,
+      "Thursday": false,
+      "Friday": false,
+      "Saturday": true,
+      "Sunday": true,
+      "NationalHolidays": true
+    },
+    "SrcUpdateTime": "2026-10-03T00:00:00+08:00",
+    "UpdateTime": "2026-10-12T09:37:12+08:00",
+    "VersionID": 41
+  }
+]

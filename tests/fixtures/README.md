@@ -1,11 +1,11 @@
 # Test fixtures
 
 > 資料來源：交通部運輸資料流通服務平臺 (MOTC Transport Data eXchange, TDX). The
-> `bus-position-taipei-307.json`, `bus-intercity-*.json`, `bus-station-*.json`,
-> `bus-eta-stop-taipei.json`, `bus-schedule-*.json`, `bus-alert-*.json`, `bus-news-taipei.json`,
-> `air-*.json`, `ship-*.json`, `traffic-*.json`, `parking-*.json` and `ev-*.json` files contain
-> TDX data and are used under the [TDX 資料授權利用條款](https://tdx.transportdata.tw/term), not
-> this repository's MIT license.
+> `metro-*.json`, `thsr-*.json`, `tra-*.json`, `afr-*.json`, `bus-position-taipei-307.json`,
+> `bus-intercity-*.json`, `bus-station-*.json`, `bus-eta-stop-taipei.json`, `bus-schedule-*.json`,
+> `bus-alert-*.json`, `bus-news-taipei.json`, `air-*.json`, `ship-*.json`, `traffic-*.json`,
+> `parking-*.json` and `ev-*.json` files contain TDX data and are used under the
+> [TDX 資料授權利用條款](https://tdx.transportdata.tw/term), not this repository's MIT license.
 
 Copied unchanged from the [`tdx-taiwan`](https://github.com/amangeldievkuu/tdx-taiwan) test
 fixtures, which describe how each was made. In short: `bike-*.json` and the other Taipei 307

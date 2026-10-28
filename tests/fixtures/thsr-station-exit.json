@@ -1,0 +1,70 @@
+[
+  {
+    "StationID": "0990",
+    "StationName": {
+      "Zh_tw": "南港",
+      "En": "Nangang",
+      "Ja": "南港",
+      "Ko": "난강"
+    },
+    "ExitID": "North Exit",
+    "ExitName": {
+      "Zh_tw": "北出口",
+      "En": "North Exit"
+    },
+    "ExitPosition": {
+      "PositionLon": 121.60706,
+      "PositionLat": 25.05348,
+      "GeoHash": "wsqqx0ze1"
+    },
+    "LocationDescription": "臺北市 南港區 南港里南港路一段 313 號",
+    "Stair": true,
+    "Escalator": true,
+    "Elevator": true,
+    "ExitMapURLs": [
+      {
+        "MapName": {
+          "Zh_tw": "高鐵南港站平面圖"
+        },
+        "MapURL": "https://www.thsrc.com.tw/ArticleContent/2f940836-cedc-41ef-8e28-c2336ac8fe68",
+        "FloorLevel": "1,B1,B2"
+      }
+    ],
+    "SrcUpdateTime": "2019-12-04T00:00:00+08:00",
+    "UpdateTime": "2019-12-04T15:42:05+08:00"
+  },
+  {
+    "StationID": "0990",
+    "StationName": {
+      "Zh_tw": "南港",
+      "En": "Nangang",
+      "Ja": "南港",
+      "Ko": "난강"
+    },
+    "ExitID": "South Exit",
+    "ExitName": {
+      "Zh_tw": "南出口",
+      "En": "South Exit"
+    },
+    "ExitPosition": {
+      "PositionLon": 121.6071513,
+      "PositionLat": 25.05289856,
+      "GeoHash": "wsqqx0xxs"
+    },
+    "LocationDescription": "臺北市 南港區 南港里南港路一段 313 號",
+    "Stair": true,
+    "Escalator": true,
+    "Elevator": true,
+    "ExitMapURLs": [
+      {
+        "MapName": {
+          "Zh_tw": "高鐵南港站平面圖"
+        },
+        "MapURL": "https://www.thsrc.com.tw/ArticleContent/2f940836-cedc-41ef-8e28-c2336ac8fe68",
+        "FloorLevel": "1,B1,B2"
+      }
+    ],
+    "SrcUpdateTime": "2023-10-17T00:00:00+08:00",
+    "UpdateTime": "2023-10-26T00:00:00+08:00"
+  }
+]

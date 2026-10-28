@@ -2,7 +2,8 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import type { ToolContext } from '../core/context.js';
 import { ToolInputError } from '../core/errors.js';
-import { name } from '../core/format.js';
+import { fareTable } from '../core/fares.js';
+import { arrayOf, name } from '../core/format.js';
 import { list } from '../core/respond.js';
 import { duration } from '../core/time.js';
 import { defineTool } from '../core/tool.js';
@@ -17,6 +18,44 @@ const station = (role: string) =>
     .describe(`${role} AFR station: name (嘉義, 奮起湖, Alishan) or station ID (360).`);
 
 export function registerAfrTools(server: McpServer, ctx: ToolContext): void {
+  defineTool(server, 'afr_fare', {
+    title: 'Alishan Forest Railway fares',
+    description:
+      'Alishan Forest Railway (阿里山林業鐵路) single-journey fares in NT$ between two stations, ' +
+      'per train type and passenger type, with the distance. Example: from "嘉義", to "奮起湖".',
+    input: {
+      from: station('Departure').unwrap(),
+      to: station('Arrival').unwrap(),
+    },
+    run: async (args) => {
+      const [[from], [to]] = await Promise.all([
+        findStation(ctx, 'AFR', args.from),
+        findStation(ctx, 'AFR', args.to),
+      ]);
+      if (from.id === to.id) {
+        throw new ToolInputError(`"${args.from}" and "${args.to}" are the same AFR station.`);
+      }
+      const [fares, types] = await Promise.all([
+        ctx.tdx.afr.odFare(from.id, to.id),
+        ctx.tdx.afr.trainTypes().catch(() => undefined),
+      ]);
+      const typeName = new Map(
+        arrayOf(types?.TrainTypes).map((t) => [String(t.TrainTypeCode), name(t.TrainTypeName)]),
+      );
+      const items = arrayOf(fares.ODFares).map((f) => ({
+        trainType: typeName.get(String(f.TrainType)) ?? `type ${f.TrainType}`,
+        distanceKm: f.TravelDistance ?? undefined,
+        // One cabin per train type: the cabin codes would read as TRA's.
+        prices: fareTable(f.Fares.map((fare) => ({ ...fare, CabinClass: undefined }))),
+      }));
+      return list(items, ctx.maxItems, {
+        from: name(from.name),
+        to: name(to.name),
+        note: items.length ? undefined : 'TDX has no fare between these stations.',
+      });
+    },
+  });
+
   defineTool(server, 'afr_timetable', {
     title: 'Alishan Forest Railway timetable',
     description:

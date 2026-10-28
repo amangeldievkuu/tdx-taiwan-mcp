@@ -1,0 +1,36 @@
+{
+  "UpdateTime": "2026-10-21T06:22:49+08:00",
+  "UpdateInterval": 14400,
+  "SrcUpdateTime": "2026-10-21T04:00:00+08:00",
+  "SrcUpdateInterval": -1,
+  "AuthorityCode": "TRA",
+  "StationFacilities": [
+    {
+      "StationID": "7250",
+      "StationName": {
+        "Zh_tw": "龜山",
+        "En": "Guishan",
+        "Ja": "亀山",
+        "Kr": "궤이산"
+      },
+      "FacilityMapURLs": [
+        {
+          "MapName": {
+            "Zh_tw": "",
+            "En": ""
+          },
+          "MapURL": "https://www.trc.com.tw/tra-tip-web/tip/img/c9b656b4-2252-4284-8aa6-3161cad038fc",
+          "FloorLevel": ""
+        }
+      ],
+      "Elevators": [
+        {
+          "Description": ""
+        }
+      ],
+      "InformationSpots": [],
+      "DrinkingFountains": [],
+      "Toilets": []
+    }
+  ]
+}

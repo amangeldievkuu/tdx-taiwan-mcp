@@ -1,6 +1,6 @@
 {
   "name": "tdx-taiwan-mcp",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "MCP server for Taiwan's TDX (Transport Data eXchange) API, built on the tdx-taiwan SDK — lets Claude and other MCP clients look up YouBike, bus ETAs, THSR/TRA/metro timetables and seats, flights, ferries, road traffic, parking and EV chargers, and query any TDX endpoint",
   "keywords": [
     "mcp",

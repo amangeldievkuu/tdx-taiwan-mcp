@@ -6,6 +6,20 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+
+- `metro_travel_time`: how long a metro journey takes between two stations over the fastest
+  route, with each leg's line, direction and stops, the walking time at each change, how often
+  trains run now and the expected wait. Taipei covers the New Taipei lines too (環狀線, 三鶯線)
+  and branch shuttles (小碧潭, 新北投); also Kaohsiung, Taichung and the Taoyuan airport line
+  (express and local). Stretches TDX's run times do not cover yet (the 廣慈/奉天宮 extension) are
+  estimated from the line and flagged.
+
+### Changed
+
+- The freeway and metro routes share one shortest-path search (`src/core/graph.ts`).
+- The live check allows each call five minutes, for cold starts under TDX's rate limit.
+
 ## [0.4.0] - 2026-10-28
 
 ### Added

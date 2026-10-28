@@ -29,6 +29,7 @@ const CALLS = [
   ['tra_live_board', { station: '臺北' }],
   ['metro_first_last_train', { system: 'TRTC', station: '台北車站' }],
   ['rail_station_departures', { system: 'TRTC', station: '台北車站' }],
+  ['metro_travel_time', { system: 'TRTC', from: '台北車站', to: '台北101/世貿' }],
   ['rail_station_info', { system: 'TRA', station: '高雄' }],
   ['rail_alerts', { system: 'TRA' }],
   ['afr_timetable', {}],
@@ -54,7 +55,10 @@ await Promise.all([createServer({ tdx }).connect(serverSide), client.connect(cli
 const failures = [];
 for (const [tool, args] of CALLS) {
   const started = Date.now();
-  const result = await client.callTool({ name: tool, arguments: args });
+  // TDX's per-minute limit can hold a cold call well past the client's 60 s default.
+  const result = await client.callTool({ name: tool, arguments: args }, undefined, {
+    timeout: 300_000,
+  });
   const text = result.content[0]?.text ?? '';
   const seconds = ((Date.now() - started) / 1000).toFixed(1);
   if (result.isError) failures.push(tool);

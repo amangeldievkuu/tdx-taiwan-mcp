@@ -65,6 +65,7 @@ describe('server', () => {
       'metro_first_last_train',
       'metro_frequency',
       'metro_live_board',
+      'metro_travel_time',
       'parking_nearby',
       'parking_search',
       'rail_alerts',

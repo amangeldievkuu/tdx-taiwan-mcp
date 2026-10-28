@@ -71,3 +71,12 @@ export function minutesBetween(
   const ms = Date.parse(`${b}:00+08:00`) - Date.parse(`${a}:00+08:00`);
   return Number.isNaN(ms) ? undefined : Math.round(ms / 60_000);
 }
+
+/** `1h 05m`, `28m`, or `45s` under a minute. */
+export function clockText(seconds: number): string {
+  const minutes = Math.round(seconds / 60);
+  if (minutes === 0) return `${Math.round(seconds)}s`;
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return h ? `${h}h ${String(m).padStart(2, '0')}m` : `${m}m`;
+}

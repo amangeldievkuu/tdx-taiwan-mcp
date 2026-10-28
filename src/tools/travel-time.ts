@@ -4,8 +4,10 @@ import { z } from 'zod';
 import type { ToolContext } from '../core/context.js';
 import { ToolInputError } from '../core/errors.js';
 import { arrayOf } from '../core/format.js';
+import { shortestPath } from '../core/graph.js';
 import { resolve } from '../core/names.js';
 import { ok } from '../core/respond.js';
+import { clockText } from '../core/time.js';
 import { defineTool } from '../core/tool.js';
 
 /** eTag vehicle classes, best first, for a car's travel time: 小客車, 小貨車, then the rest. */
@@ -53,12 +55,28 @@ export function registerTravelTimeTools(server: McpServer, ctx: ToolContext): vo
       if ([...origin].some((p) => destination.has(p))) {
         throw new ToolInputError(`"${args.from}" and "${args.to}" are the same interchange.`);
       }
-      const path = fastestPath(
-        segments,
-        (s) => s.from.some((p) => origin.has(p)),
-        (s) => s.to.some((p) => destination.has(p)),
+      // Gantries are the nodes, segments the steps: from a gantry at the origin interchange to
+      // one at the destination.
+      const steps = shortestPath(
+        segments.map((s) => ({
+          from: s.pair.StartETagGantryID,
+          to: s.pair.EndETagGantryID,
+          cost: s.seconds,
+          data: s,
+        })),
+        new Set(
+          segments
+            .filter((s) => s.from.some((p) => origin.has(p)))
+            .map((s) => s.pair.StartETagGantryID),
+        ),
+        new Set(
+          segments
+            .filter((s) => s.to.some((p) => destination.has(p)))
+            .map((s) => s.pair.EndETagGantryID),
+        ),
       );
-      if (!path) {
+      const path = steps?.map((step) => step.data);
+      if (!path?.length) {
         throw new ToolInputError(
           `No freeway route from ${[...origin].join('、')} to ${[...destination].join('、')} in ` +
             "TDX's eTag data.",
@@ -136,51 +154,6 @@ function findPlaces(places: readonly string[], input: string): Set<string> {
   );
 }
 
-/**
- * Dijkstra over segments, a segment leading to every segment starting at its end gantry:
- * the quickest chain from a segment that `starts` to one that `ends`.
- */
-function fastestPath(
-  segments: readonly Segment[],
-  starts: (s: Segment) => boolean,
-  ends: (s: Segment) => boolean,
-): Segment[] | undefined {
-  const next = new Map<string, Segment[]>();
-  for (const s of segments) {
-    const list = next.get(s.pair.StartETagGantryID) ?? [];
-    next.set(s.pair.StartETagGantryID, [...list, s]);
-  }
-  const best = new Map<Segment, number>();
-  const previous = new Map<Segment, Segment>();
-  const open = new Set<Segment>();
-  for (const s of segments.filter(starts)) {
-    best.set(s, s.seconds);
-    open.add(s);
-  }
-  while (open.size) {
-    let current: Segment | undefined;
-    for (const s of open) {
-      if (!current || (best.get(s) ?? Infinity) < (best.get(current) ?? Infinity)) current = s;
-    }
-    if (!current) break;
-    open.delete(current);
-    if (ends(current)) {
-      const path = [current];
-      for (let s = previous.get(current); s; s = previous.get(s)) path.unshift(s);
-      return path;
-    }
-    const time = best.get(current) ?? Infinity;
-    for (const s of next.get(current.pair.EndETagGantryID) ?? []) {
-      if (time + s.seconds < (best.get(s) ?? Infinity)) {
-        best.set(s, time + s.seconds);
-        previous.set(s, current);
-        open.add(s);
-      }
-    }
-  }
-  return undefined;
-}
-
 /** `國道1號` for gantry `01F0005S`; `01H` is the 五楊 viaduct, `03A` the 3A spur. */
 function roadName(gantryId: string): string {
   const code = gantryId.slice(0, 3);
@@ -189,13 +162,4 @@ function roadName(gantryId: string): string {
   if (code.endsWith('H')) return `國道${number}號高架`;
   if (code.endsWith('A')) return `國道${number}甲`;
   return code;
-}
-
-/** `1h 05m`, `28m`, or `45s` under a minute. */
-function clockText(seconds: number): string {
-  const minutes = Math.round(seconds / 60);
-  if (minutes === 0) return `${Math.round(seconds)}s`;
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  return h ? `${h}h ${String(m).padStart(2, '0')}m` : `${m}m`;
 }

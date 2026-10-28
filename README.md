@@ -86,26 +86,27 @@ coaches.
 
 ### Rail
 
-| Tool                      | What it answers                                                              |
-| ------------------------- | ---------------------------------------------------------------------------- |
-| `thsr_timetable`          | High speed rail (高鐵) trains between two stations on a day                  |
-| `thsr_seats`              | Standard and business seat availability for those trains                     |
-| `thsr_fare`               | THSR fares per car and passenger type                                        |
-| `thsr_train`              | Every stop of one THSR train, with its non-reserved (自由座) cars            |
-| `tra_timetable`           | Taiwan Railway (臺鐵) trains between two stations, with train type           |
-| `tra_live_board`          | Trains about to arrive at or leave a TRA station, with delays                |
-| `tra_train`               | One TRA train today: stops, current position and delay                       |
-| `tra_fare`                | TRA fares per train type and passenger type                                  |
-| `metro_live_board`        | Minutes to the next metro trains (Kaohsiung, Taoyuan; Taipei arrivals only)  |
-| `metro_fare`              | Metro fares between two stations                                             |
-| `metro_first_last_train`  | First and last trains at a metro station                                     |
-| `metro_frequency`         | Minutes between metro trains through the day, per line (incl. 文湖線)        |
-| `rail_station_departures` | A TRA, THSR or metro station's departures on a day, toward every destination |
-| `rail_station_info`       | Station exits (nearest to your destination first), lifts and toilets         |
-| `afr_timetable`           | Alishan Forest Railway (阿里山林業鐵路) regular timetable                    |
-| `afr_fare`                | Alishan Forest Railway fares per train type                                  |
-| `rail_station_search`     | Stations of any rail system by name, or nearest to a coordinate              |
-| `rail_alerts`             | Service status and disruptions of THSR, TRA or a metro                       |
+| Tool                      | What it answers                                                               |
+| ------------------------- | ----------------------------------------------------------------------------- |
+| `thsr_timetable`          | High speed rail (高鐵) trains between two stations on a day                   |
+| `thsr_seats`              | Standard and business seat availability for those trains                      |
+| `thsr_fare`               | THSR fares per car and passenger type                                         |
+| `thsr_train`              | Every stop of one THSR train, with its non-reserved (自由座) cars             |
+| `tra_timetable`           | Taiwan Railway (臺鐵) trains between two stations, with train type            |
+| `tra_live_board`          | Trains about to arrive at or leave a TRA station, with delays                 |
+| `tra_train`               | One TRA train today: stops, current position and delay                        |
+| `tra_fare`                | TRA fares per train type and passenger type                                   |
+| `metro_live_board`        | Minutes to the next metro trains (Kaohsiung, Taoyuan; Taipei arrivals only)   |
+| `metro_fare`              | Metro fares between two stations                                              |
+| `metro_first_last_train`  | First and last trains at a metro station                                      |
+| `metro_travel_time`       | Metro journey time between two stations, with line changes and expected waits |
+| `metro_frequency`         | Minutes between metro trains through the day, per line (incl. 文湖線)         |
+| `rail_station_departures` | A TRA, THSR or metro station's departures on a day, toward every destination  |
+| `rail_station_info`       | Station exits (nearest to your destination first), lifts and toilets          |
+| `afr_timetable`           | Alishan Forest Railway (阿里山林業鐵路) regular timetable                     |
+| `afr_fare`                | Alishan Forest Railway fares per train type                                   |
+| `rail_station_search`     | Stations of any rail system by name, or nearest to a coordinate               |
+| `rail_alerts`             | Service status and disruptions of THSR, TRA or a metro                        |
 
 Rail tools take station names in Chinese or English (`台北`, `Taipei`, `台北車站`) or station
 IDs. For today, timetables start from the current time in Taiwan.

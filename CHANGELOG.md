@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-10-28
+
 ### Added
 
 - A disk cache for static data (stations, routes, timetables, fares), kept for a day so a new
@@ -13,7 +15,6 @@ All notable changes to this project are documented here. The format is based on
   about 110 s to under a second. It lives in `~/.cache/tdx-taiwan-mcp` (`%LOCALAPPDATA%` on
   Windows); `TDX_CACHE_DIR` moves it, and `TDX_CACHE_DIR=off` turns it off. Live data is never
   stored. Needs `tdx-taiwan` 0.18.1.
-
 - `TDX_TOOLS` (and `tools` in `createServer`): load only some groups of tools, e.g. `bus,rail`,
   or leave groups out with `-road,-raw`. The server instructions describe only the loaded
   groups. `TOOL_GROUPS`, `parseToolGroups()` and `instructionsFor()` are exported.
@@ -132,7 +133,8 @@ All notable changes to this project are documented here. The format is based on
   `TDX_MAX_ITEMS` items and 40,000 characters, and TDX errors (unsupported city, 404, 429,
   bad keys) reported as readable tool errors.
 
-[Unreleased]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.3.0...v0.4.0

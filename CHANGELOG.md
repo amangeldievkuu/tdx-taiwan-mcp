@@ -13,6 +13,11 @@ All notable changes to this project are documented here. The format is based on
   `npm run build:mcpb`, which takes the tool list from the server and validates the manifest;
   CI builds it and runs the unpacked server.
 
+### Changed
+
+- The README has a Traditional Chinese section (繁體中文): install, keys, settings and tips.
+- `glama.json` names the maintainer for the Glama MCP directory.
+
 ## [0.7.0] - 2026-10-28
 
 ### Added

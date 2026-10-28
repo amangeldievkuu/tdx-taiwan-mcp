@@ -4,6 +4,8 @@
 [![CI](https://github.com/amangeldievkuu/tdx-taiwan-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/amangeldievkuu/tdx-taiwan-mcp/actions/workflows/ci.yml)
 [![license](https://img.shields.io/github/license/amangeldievkuu/tdx-taiwan-mcp)](https://github.com/amangeldievkuu/tdx-taiwan-mcp/blob/main/LICENSE)
 
+[繁體中文說明](#繁體中文)
+
 An unofficial [MCP](https://modelcontextprotocol.io) server for Taiwan's
 [TDX (Transport Data eXchange)](https://tdx.transportdata.tw) API, built on the
 [`tdx-taiwan`](https://www.npmjs.com/package/tdx-taiwan) SDK. It lets Claude and other MCP
@@ -14,7 +16,7 @@ delayed?" or "where can I charge a CCS2 car near Taipei Main Station?".
 - Task-shaped tools: search by name (Chinese or English, 台/臺 folded) or by location, with
   readable output ("4 min", "last bus has passed") instead of raw status codes
 - City names as TDX codes or in Chinese (`Taipei`, `臺北市`, `台北`)
-- Results capped in size; static lists cached, live data cached for 15 s
+- Results capped in size; static lists kept on disk for a day, live data cached for 15 s
 - `tdx_get` for any TDX endpoint the tools do not cover yet
 - Runs over stdio; Node.js 20+
 
@@ -214,6 +216,33 @@ caches static lists (stations, routes) for an hour and live data for 15 seconds,
 requests at `TDX_REQUESTS_PER_SECOND`. When TDX still answers 429 (the basic plan also limits
 calls per minute), the server waits as TDX asks and retries, so a tool call can take up to a
 minute during a burst of questions.
+
+## 繁體中文
+
+`tdx-taiwan-mcp` 是交通部 [TDX 運輸資料流通服務](https://tdx.transportdata.tw)的**非官方** MCP 伺服器（與交通部無隸屬或合作關係），讓 Claude 等 MCP 用戶端以即時資料回答「最近哪個 YouBike 站有車？」「307 公車幾分鐘到西門？」「今晚往左營的高鐵還有座位嗎？」「CI100 有沒有誤點？」等問題，涵蓋 YouBike、市區公車與公路客運、高鐵、臺鐵、捷運、阿里山林業鐵路、國內外航班、船運、即時路況與路況影像、停車場及充電樁。
+
+**取得金鑰**：註冊 TDX 會員後，至「會員中心 → 資料服務 → API金鑰」取得 Client Id 與 Client Secret。
+
+**安裝**
+
+- Claude Desktop：從[最新版本](https://github.com/amangeldievkuu/tdx-taiwan-mcp/releases/latest)下載 `tdx-taiwan-mcp-<版本>.mcpb` 並開啟，依提示填入 Client Id 與 Client Secret（密鑰存於系統鑰匙圈）。
+- Claude Code：
+
+  ```sh
+  claude mcp add tdx \
+    -e TDX_CLIENT_ID=你的-client-id -e TDX_CLIENT_SECRET=你的-client-secret \
+    -- npx -y tdx-taiwan-mcp
+  ```
+
+- 其他用戶端：以 `npx -y tdx-taiwan-mcp` 啟動，並設定上述兩個環境變數（需要 Node.js 20 以上版本）。
+
+**設定**（環境變數）
+
+- `TDX_TOOLS`：只載入部分工具群組，例如 `bus,rail`；加上減號可排除，例如 `-road,-raw`。群組有 `bike`、`bus`、`rail`（高鐵、臺鐵、捷運、阿里山）、`flight`、`ferry`、`road`、`parking`、`ev` 與 `raw`（`tdx_get`）。工具愈少，模型愈容易選對工具。
+- `TDX_CACHE_DIR`：站點、路線、時刻表等靜態資料會在磁碟保存一天（預設 `~/.cache/tdx-taiwan-mcp`），新的工作階段不必再向 TDX 下載；設為 `off` 可關閉。即時資料不會存檔。
+- `TDX_REQUESTS_PER_SECOND`：用戶端限流，預設每秒 5 次，請依您的 TDX 方案調整。`TDX_MAX_ITEMS`：每個工具最多回傳的筆數，預設 200。
+
+**使用提示**：站名、港口與機場可用中文或英文（台北、Taipei、松山、TSA）；城市可用 TDX 代碼或中文（`Taipei`、`臺北市`）；時間皆為臺灣時間（UTC+8）。公車工具需要完整路線名稱，可先用 `bus_route_search` 查詢。
 
 ## Data source
 

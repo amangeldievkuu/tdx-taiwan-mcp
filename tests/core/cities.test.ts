@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { normalizeCity } from '../../src/core/cities.js';
+import { authorityCode, normalizeCity } from '../../src/core/cities.js';
 
 describe('normalizeCity', () => {
   it.each([
@@ -20,5 +20,14 @@ describe('normalizeCity', () => {
 
   it('passes unknown values through, trimmed', () => {
     expect(normalizeCity(' Atlantis ')).toBe('Atlantis');
+  });
+});
+
+describe('authorityCode', () => {
+  it('gives the stop-data code of a city as written, or undefined', () => {
+    expect(authorityCode('高雄')).toBe('KHH');
+    expect(authorityCode('台中市')).toBe('TXG');
+    expect(authorityCode('New Taipei')).toBe('NWT');
+    expect(authorityCode('Atlantis')).toBeUndefined();
   });
 });

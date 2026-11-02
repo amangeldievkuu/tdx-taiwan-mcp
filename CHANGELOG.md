@@ -6,6 +6,14 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Fixed
+
+- `bus_fare` finds coach fares for stops that are not fare stages and for city names: "1610
+  from 臺北 to 高雄" now lists the fares to the Kaohsiung stages (岡山站, 楠梓站, 建國客運站, ...)
+  instead of failing. A stop between stages is charged from the stage before boarding to the
+  stage after alighting, flagged `estimated`. Tickets TDX lists as not sold (-1) are left out,
+  and a trip with none on sale says so.
+
 ## [0.8.0] - 2026-11-02
 
 ### Added

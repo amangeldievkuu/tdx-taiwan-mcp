@@ -6,8 +6,11 @@ import {
   type BusRouteFare,
   type BusRouteFareStop,
   type BusSchedule,
+  type BusStop,
+  type BusStopOfRoute,
 } from 'tdx-taiwan';
 import { z } from 'zod';
+import { authorityCode } from '../core/cities.js';
 import type { ToolContext } from '../core/context.js';
 import { ToolInputError } from '../core/errors.js';
 import { FARE_CLASS } from '../core/fares.js';
@@ -55,7 +58,9 @@ const stopInput = (end: string) =>
     .trim()
     .min(1)
     .optional()
-    .describe(`Part of the stop name to travel ${end}, e.g. "臺北" or "岡山".`);
+    .describe(
+      `Where to travel ${end}: part of a stop name, or a city, e.g. "臺北轉運站", "岡山", "高雄".`,
+    );
 
 export function registerBusInfoTools(server: McpServer, ctx: ToolContext): void {
   defineTool(server, 'bus_fare', {
@@ -64,7 +69,7 @@ export function registerBusInfoTools(server: McpServer, ctx: ToolContext): void 
       'What a bus route costs, per passenger type and ticket (cash single ticket, smart card ' +
       'such as EasyCard): the fare between two stops for coaches and routes priced by ' +
       'distance, or the fare per section for city routes. Example: city "InterCity", ' +
-      'routeName "1610", from "臺北", to "岡山"; or city "Taipei", routeName "307".',
+      'routeName "1610", from "臺北", to "高雄"; or city "Taipei", routeName "307".',
     input: {
       city: busCity,
       routeName,
@@ -82,25 +87,43 @@ export function registerBusInfoTools(server: McpServer, ctx: ToolContext): void 
       if (!fares.length) throw noRoute(args.routeName, where);
 
       const pairs = fares.flatMap((f) => farePairs(f).filter(inDirection(args.direction)));
-      const wanted = pairs.filter((p) => matches(p.from, args.from) && matches(p.to, args.to));
+      let wanted: FareMatch[] = pairs.filter(
+        (p) => matches(p.from, args.from) && matches(p.to, args.to),
+      );
       if ((args.from || args.to) && pairs.length && !wanted.length) {
-        const stops = [...new Set(pairs.flatMap((p) => [p.from.StopName, p.to.StopName]))];
+        // No fare stage has that name: find the stops on the route, then their stages.
+        const routes = await stopLists(ctx, where, args.routeName);
+        wanted = pairsViaStops(pairs, routes, args.from, args.to);
+        if (!wanted.length) {
+          const stops = [...new Set(pairs.flatMap((p) => [p.from.StopName, p.to.StopName]))];
+          throw new ToolInputError(
+            `No fare on route ${args.routeName} matches` +
+              `${args.from ? ` from "${args.from}"` : ''}${args.to ? ` to "${args.to}"` : ''}` +
+              `${args.direction ? ` (${args.direction})` : ''}. Give a stop on the route or a ` +
+              `city; fares are listed between these stops: ${stops.slice(0, 40).join('、')}.`,
+          );
+        }
+      }
+      const sold = wanted.filter((p) => Object.keys(fareTable(p.Fares)).length);
+      if (wanted.length && !sold.length && (args.from || args.to)) {
         throw new ToolInputError(
-          `No fare on route ${args.routeName} matches` +
-            `${args.from ? ` from "${args.from}"` : ''}${args.to ? ` to "${args.to}"` : ''}` +
-            `${args.direction ? ` (${args.direction})` : ''}. Fares are listed between these ` +
-            `stops: ${stops.slice(0, 40).join('、')}.`,
+          `TDX lists no ticket on sale on route ${args.routeName} for this trip ` +
+            `(${[...new Set(wanted.map((p) => `${p.from.StopName} → ${p.to.StopName}`))].join('、')}): ` +
+            'the coach may not carry passengers between these stops.',
         );
       }
 
       const items = [
         ...fares.flatMap((f) => sectionItems(f, args.direction)),
-        ...wanted.map((p) => ({
+        ...sold.map((p) => ({
           subRoute: p.subRoute,
           pricing: p.pricing,
           direction: DIRECTION[p.Direction],
           from: p.from.StopName,
           to: p.to.StopName,
+          boarding: p.boarding,
+          alighting: p.alighting,
+          estimated: p.boarding || p.alighting ? true : undefined,
           fares: fareTable(p.Fares),
         })),
       ];
@@ -114,9 +137,11 @@ export function registerBusInfoTools(server: McpServer, ctx: ToolContext): void 
             ? 'Section fares: pay once per section ridden; a trip across a buffer zone ' +
               '(緩衝區) between two sections pays one more section.'
             : undefined,
-          pricing.has(2)
-            ? 'Coach fares are set between fare stages (計費站); for other stops the fare of ' +
-              'the stages around them applies.'
+          pricing.has(2) ? 'Coach fares are set between fare stages (計費站).' : undefined,
+          merged.some((i) => i.estimated)
+            ? 'estimated: boarding or alighting is not a fare stage, so the fare shown is ' +
+              'from the stage before boarding to the stage after alighting; the operator may ' +
+              'charge less.'
             : undefined,
           merged.some((i) => 'smartCard' in (i.fares as object))
             ? 'smartCard is the price with an e-ticket card (EasyCard, iPASS); single is cash.'
@@ -189,6 +214,22 @@ export function registerBusInfoTools(server: McpServer, ctx: ToolContext): void 
   });
 }
 
+/** The stop lists of a route, or `[]` if TDX has none: the fares are still worth showing. */
+async function stopLists(
+  ctx: ToolContext,
+  where: string,
+  route: string,
+): Promise<BusStopOfRoute[]> {
+  try {
+    return where === INTERCITY
+      ? await ctx.tdx.bus.interCity.stopsOfRoute(route)
+      : await ctx.tdx.bus.stopsOfRoute(where, route);
+  } catch (error) {
+    if (error instanceof TdxApiError && error.status < 500) return [];
+    throw error;
+  }
+}
+
 /** First/last trips of a route; `[]` where TDX does not publish them (Taipei answers 400). */
 async function firstLastTrips(
   ctx: ToolContext,
@@ -228,6 +269,7 @@ function scheduleSpan(s: BusSchedule, day: string): { first: string; last: strin
 
 interface FarePair {
   subRoute: string | undefined;
+  subRouteID: string | null | undefined;
   pricing: string;
   Direction: number;
   from: BusRouteFareStop;
@@ -235,13 +277,109 @@ interface FarePair {
   Fares: BusFare[];
 }
 
+/** A fare pair, with the stops asked for when they are not the fare stages themselves. */
+interface FareMatch extends FarePair {
+  boarding?: string;
+  alighting?: string;
+}
+
+/**
+ * Fares for stops that are not named in the fare list: each keyword picks stops on the
+ * sub-route by name, or else every stop in the city it names (`高雄`). Boarding is charged
+ * from the stage at or before the stop, alighting to the stage at or after it.
+ */
+export function pairsViaStops(
+  pairs: readonly FarePair[],
+  routes: readonly BusStopOfRoute[],
+  from: string | undefined,
+  to: string | undefined,
+): FareMatch[] {
+  const groups = new Map<string, FarePair[]>();
+  for (const p of pairs) {
+    const key = `${p.subRouteID ?? ''}|${p.Direction}`;
+    groups.set(key, [...(groups.get(key) ?? []), p]);
+  }
+  const found = new Map<string, FareMatch>();
+  for (const group of groups.values()) {
+    const first = group[0];
+    if (!first) continue;
+    const { subRouteID, Direction } = first;
+    const route =
+      routes.find((r) => r.Direction === Direction && r.SubRouteID === subRouteID) ??
+      (subRouteID ? undefined : routes.find((r) => r.Direction === Direction));
+    if (!route) continue;
+    const stops = route.Stops;
+    const seqOf = (stage: BusRouteFareStop) =>
+      stage.Sequence ?? stops.find((s) => s.StopID === stage.StopID)?.StopSequence;
+    const stages = [
+      ...new Map(
+        group
+          .flatMap((p) => [p.from, p.to])
+          .map((stage) => [seqOf(stage), stage] as const)
+          .filter((e): e is readonly [number, BusRouteFareStop] => e[0] !== undefined),
+      ).entries(),
+    ].sort((a, b) => a[0] - b[0]);
+    const isStage = (stop: BusStop) => stages.some(([seq]) => seq === stop.StopSequence);
+    const origins = pickStops(stops, from, isStage);
+    const destinations = pickStops(stops, to, isStage);
+    for (const o of origins) {
+      for (const d of destinations) {
+        if (o.StopSequence >= d.StopSequence) continue;
+        const board = stages.filter(([seq]) => seq <= o.StopSequence).at(-1);
+        const alight = stages.find(([seq]) => seq >= d.StopSequence);
+        if (!board || !alight || board[0] >= alight[0]) continue;
+        const pair = group.find((p) => seqOf(p.from) === board[0] && seqOf(p.to) === alight[0]);
+        if (!pair) continue;
+        const match: FareMatch = {
+          ...pair,
+          boarding: board[0] === o.StopSequence ? undefined : (name(o.StopName) ?? undefined),
+          alighting: alight[0] === d.StopSequence ? undefined : (name(d.StopName) ?? undefined),
+        };
+        const key = JSON.stringify([
+          match.subRoute,
+          match.Direction,
+          board[0],
+          alight[0],
+          match.boarding,
+          match.alighting,
+        ]);
+        found.set(key, match);
+      }
+    }
+  }
+  return [...found.values()];
+}
+
+/**
+ * Stops whose name matches the keyword, else the stops in the city it names (`高雄`); of
+ * those, only the fare stages when there are any, as a rider means the main stations. No
+ * keyword: every stop.
+ */
+function pickStops(
+  stops: readonly BusStop[],
+  keyword: string | undefined,
+  isStage: (stop: BusStop) => boolean,
+): readonly BusStop[] {
+  if (!keyword) return stops;
+  const preferStages = (found: readonly BusStop[]) => {
+    const stages = found.filter(isStage);
+    return stages.length ? stages : found;
+  };
+  const byName = search(stops, (s) => [s.StopName.Zh_tw, s.StopName.En], keyword);
+  if (byName.length) return preferStages(byName);
+  const city = authorityCode(keyword);
+  return city ? preferStages(stops.filter((s) => s.LocationCityCode === city)) : [];
+}
+
 /** The stop-to-stop (OD) or stage-to-stage fares of a sub-route. */
 function farePairs(f: BusRouteFare): FarePair[] {
   const subRoute = subRouteOf(f);
+  const subRouteID = f.IsForAllSubRoutes === 1 ? undefined : f.SubRouteID;
   const pricing = PRICING[f.FarePricingType] ?? `type ${f.FarePricingType}`;
   return [
     ...arrayOf(f.ODFares).map((o) => ({
       subRoute,
+      subRouteID,
       pricing,
       Direction: o.Direction,
       from: o.OriginStop,
@@ -250,6 +388,7 @@ function farePairs(f: BusRouteFare): FarePair[] {
     })),
     ...arrayOf(f.StageFares).map((s) => ({
       subRoute,
+      subRouteID,
       pricing,
       Direction: s.Direction,
       from: s.OriginStage,

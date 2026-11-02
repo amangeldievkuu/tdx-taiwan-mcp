@@ -45,3 +45,35 @@ export function normalizeCity(input: string): string {
   }
   return value;
 }
+
+/** The authority code TDX uses for each city in stop and route data (`LocationCityCode`). */
+const AUTHORITY_CODES: Record<CityCode, string> = {
+  Taipei: 'TPE',
+  NewTaipei: 'NWT',
+  Taoyuan: 'TAO',
+  Taichung: 'TXG',
+  Tainan: 'TNN',
+  Kaohsiung: 'KHH',
+  Keelung: 'KEE',
+  Hsinchu: 'HSZ',
+  HsinchuCounty: 'HSQ',
+  MiaoliCounty: 'MIA',
+  ChanghuaCounty: 'CHA',
+  NantouCounty: 'NAN',
+  YunlinCounty: 'YUN',
+  Chiayi: 'CYI',
+  ChiayiCounty: 'CYQ',
+  PingtungCounty: 'PIF',
+  YilanCounty: 'ILA',
+  HualienCounty: 'HUA',
+  TaitungCounty: 'TTT',
+  KinmenCounty: 'KIN',
+  PenghuCounty: 'PEN',
+  LienchiangCounty: 'LIE',
+};
+
+/** The authority code (`KHH`) of a city as written (`高雄`, `Kaohsiung`), or `undefined`. */
+export function authorityCode(input: string): string | undefined {
+  const code = normalizeCity(input);
+  return code in AUTHORITY_CODES ? AUTHORITY_CODES[code as CityCode] : undefined;
+}

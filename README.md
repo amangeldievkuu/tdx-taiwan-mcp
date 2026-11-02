@@ -102,15 +102,18 @@ loaded groups.
 | `bus_stop_arrivals` | Every bus due at one stop, all routes at once, soonest first                           |
 | `bus_route_search`  | Bus routes by name or terminal stop, with endpoints, operators and fare                |
 | `bus_route_stops`   | The stops of a route in order, per direction and sub-route                             |
-| `bus_eta`           | Live arrival estimates at the stops of a route, optionally at one stop                 |
+| `bus_eta`           | Live arrival estimates at the stops of a route, and whether the coming bus has a ramp  |
 | `bus_timetable`     | Scheduled departures of a route on a day, or how often it runs                         |
 | `bus_first_last`    | When the first and last bus of a route leave on a day                                  |
 | `bus_fare`          | A route's fares per passenger and ticket: between two stops, or per section            |
 | `bus_alerts`        | Current and upcoming detours, suspensions and moved stops, with the latest news        |
-| `bus_positions`     | Where the buses on a route are now, with speed, status and the last stop reached       |
+| `bus_positions`     | Where the buses on a route are now: speed, last stop, low-floor and ramp               |
 
 Bus tools take a city (`Taipei`, `NewTaipei`, ...) or `InterCity` for 公路客運 / 國道客運
-coaches.
+coaches. Whether a bus is low-floor with a wheelchair ramp comes from the fleet lists that
+Taipei, New Taipei, Taoyuan, Taichung, Tainan and Kaohsiung publish; Taipei and New Taipei do
+not say which bus an arrival estimate is for, so `bus_eta` estimates it from where each bus
+last stopped.
 
 ### Rail
 
@@ -245,7 +248,7 @@ minute during a burst of questions.
 - `TDX_CACHE_DIR`：站點、路線、時刻表等靜態資料會在磁碟保存一天（預設 `~/.cache/tdx-taiwan-mcp`），新的工作階段不必再向 TDX 下載；設為 `off` 可關閉。即時資料不會存檔。
 - `TDX_REQUESTS_PER_SECOND`：用戶端限流，預設每秒 5 次，請依您的 TDX 方案調整。`TDX_MAX_ITEMS`：每個工具最多回傳的筆數，預設 200。
 
-**使用提示**：站名、港口與機場可用中文或英文（台北、Taipei、松山、TSA）；城市可用 TDX 代碼或中文（`Taipei`、`臺北市`）；時間皆為臺灣時間（UTC+8）。公車工具需要完整路線名稱，可先用 `bus_route_search` 查詢。
+**使用提示**：站名、港口與機場可用中文或英文（台北、Taipei、松山、TSA）；城市可用 TDX 代碼或中文（`Taipei`、`臺北市`）；時間皆為臺灣時間（UTC+8）。公車工具需要完整路線名稱，可先用 `bus_route_search` 查詢；`bus_eta` 與 `bus_positions` 會標示公車是否為低地板、有無輪椅斜坡（依各縣市公布的車輛資料）。
 
 ## Data source
 

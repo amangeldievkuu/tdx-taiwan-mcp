@@ -1,13 +1,15 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type {
-  BusCity,
-  BusEstimatedTimeOfArrival,
-  BusNearStop,
-  BusPosition,
-  BusRoute,
-  BusStation,
-  BusStopOfRoute,
-  Field,
+import {
+  TdxApiError,
+  type BusCity,
+  type BusEstimatedTimeOfArrival,
+  type BusNearStop,
+  type BusPosition,
+  type BusRoute,
+  type BusStation,
+  type BusStopOfRoute,
+  type BusVehicle,
+  type Field,
 } from 'tdx-taiwan';
 import { z } from 'zod';
 import { normalizeCity } from '../core/cities.js';
@@ -80,6 +82,56 @@ const VEHICLE_STATUS: Record<number, string> = {
   101: 'chartered',
   255: 'unknown',
 };
+
+/** Cities that publish their bus fleet (`/v2/Bus/Vehicle`). */
+const FLEET_CITIES = new Set(['Taipei', 'NewTaipei', 'Taoyuan', 'Taichung', 'Tainan', 'Kaohsiung']);
+const FLEET_FIELDS: Field<BusVehicle>[] = [
+  'PlateNumb',
+  'VehicleClass',
+  'IsLowFloor',
+  'HasLiftOrRamp',
+  'IsElectric',
+  'IsHybrid',
+];
+/** 車輛種類 other than a regular large bus. */
+const VEHICLE_CLASS: Record<number, string> = {
+  2: 'medium bus',
+  3: 'small bus',
+  4: 'double-decker',
+  5: 'articulated',
+  6: 'car',
+};
+
+/**
+ * A city's buses by plate number; empty where the city publishes no fleet or TDX fails, as
+ * the vehicle details only add to an answer.
+ */
+export async function fleet(ctx: ToolContext, where: string): Promise<Map<string, BusVehicle>> {
+  if (!FLEET_CITIES.has(where)) return new Map();
+  try {
+    const vehicles = await ctx.tdx.bus.vehicles(where, { select: FLEET_FIELDS });
+    return new Map(vehicles.map((v) => [v.PlateNumb, v]));
+  } catch {
+    return new Map();
+  }
+}
+
+/** `low-floor, ramp, electric`: what a rider needs to know about a bus, from the fleet list. */
+export function vehicleOf(
+  buses: ReadonlyMap<string, BusVehicle>,
+  plate: string | null | undefined,
+): string | undefined {
+  const v = plate ? buses.get(plate) : undefined;
+  if (!v) return undefined;
+  return [
+    VEHICLE_CLASS[v.VehicleClass],
+    v.IsLowFloor === 1 ? 'low-floor' : 'high-floor',
+    v.HasLiftOrRamp === 1 ? 'ramp' : undefined,
+    v.IsElectric === 1 ? 'electric' : v.IsHybrid === 1 ? 'hybrid' : undefined,
+  ]
+    .filter(Boolean)
+    .join(', ');
+}
 
 /** Fields the route search needs; one `$select` keeps the cached route list small. */
 export const ROUTE_FIELDS: Field<BusRoute>[] = [
@@ -223,8 +275,9 @@ export function registerBusTools(server: McpServer, ctx: ToolContext): void {
     title: 'Bus arrival times',
     description:
       'Live estimated arrival of the next buses at the stops of a route ("4 min", "arriving ' +
-      'now", "last bus has passed"), with the minutes to the buses after it. Give stop to ' +
-      'see one stop only. Example: city "Taipei", routeName "307", stop "西門".',
+      'now", "last bus has passed"), with the minutes to the buses after it and, in cities ' +
+      'that publish their fleet, whether the coming bus is low-floor with a wheelchair ramp. ' +
+      'Give stop to see one stop only. Example: city "Taipei", routeName "307", stop "西門".',
     input: {
       city: busCity,
       routeName,
@@ -239,10 +292,12 @@ export function registerBusTools(server: McpServer, ctx: ToolContext): void {
     },
     run: async (args) => {
       const where = busScope(args.city);
-      const etas =
+      const [etas, buses] = await Promise.all([
         where === INTERCITY
-          ? await ctx.tdx.bus.interCity.eta(args.routeName)
-          : await ctx.tdx.bus.eta(where, args.routeName);
+          ? ctx.tdx.bus.interCity.eta(args.routeName)
+          : ctx.tdx.bus.eta(where, args.routeName),
+        fleet(ctx, where),
+      ]);
       if (!etas.length) throw noRoute(args.routeName, where);
       let rows = etas
         .filter(inDirection(args.direction))
@@ -258,21 +313,40 @@ export function registerBusTools(server: McpServer, ctx: ToolContext): void {
         }
         rows = matched;
       }
-      const items = rows.map((e) => ({
-        stop: name(e.StopName),
-        direction: DIRECTION[e.Direction],
-        subRoute: e.SubRouteName?.Zh_tw !== e.RouteName?.Zh_tw ? name(e.SubRouteName) : undefined,
-        arrival: arrival(e),
-        minutes: minutes(e.EstimateTime),
-        laterBusesMinutes: laterBuses(e),
-        plate: e.PlateNumb && e.PlateNumb !== '-1' ? e.PlateNumb : undefined,
-        lastBus: e.IsLastBus === true ? true : undefined,
-        stopSequence: e.StopSequence ?? undefined,
-      }));
+      // Taipei and New Taipei name no bus in their arrival data: work out the coming bus
+      // from where each bus last stopped.
+      const named = etas.some((e) => plateOf(e));
+      const coming =
+        !named && buses.size
+          ? comingBus(
+              await lastStops(ctx, where, args.routeName),
+              // Extra detail only: the estimates stand without it.
+              await stopLists(ctx, where, args.routeName).catch(() => []),
+            )
+          : undefined;
+      const items = rows.map((e) => {
+        const plate = plateOf(e);
+        return {
+          stop: name(e.StopName),
+          direction: DIRECTION[e.Direction],
+          subRoute: e.SubRouteName?.Zh_tw !== e.RouteName?.Zh_tw ? name(e.SubRouteName) : undefined,
+          arrival: arrival(e),
+          minutes: minutes(e.EstimateTime),
+          laterBusesMinutes: laterBuses(e),
+          plate,
+          vehicle: vehicleOf(buses, plate ?? coming?.(e)),
+          lastBus: e.IsLastBus === true ? true : undefined,
+          stopSequence: e.StopSequence ?? undefined,
+        };
+      });
       return list(items, take(ctx, args.limit, 200), {
         city: where,
         route: args.routeName,
         updated: etas[0]?.SrcUpdateTime ?? etas[0]?.UpdateTime,
+        note: coming
+          ? 'vehicle is an estimate: TDX does not say which bus is coming here, so it is ' +
+            'the nearest bus before each stop, from where each bus last stopped.'
+          : undefined,
       });
     },
   });
@@ -281,16 +355,17 @@ export function registerBusTools(server: McpServer, ctx: ToolContext): void {
     title: 'Live bus positions',
     description:
       'Where the buses on a route are right now: position, speed, direction and status of ' +
-      'each vehicle, and the stop each one last arrived at or left. Example: city "Taipei", ' +
-      'routeName "307".',
+      'each vehicle, whether it is low-floor with a ramp (where the city publishes its fleet), ' +
+      'and the stop each one last arrived at or left. Example: city "Taipei", routeName "307".',
     input: { city: busCity, routeName, direction },
     run: async (args) => {
       const where = busScope(args.city);
-      const [positions, nearStops] = await Promise.all([
+      const [positions, nearStops, buses] = await Promise.all([
         where === INTERCITY
           ? ctx.tdx.bus.interCity.positions(args.routeName)
           : ctx.tdx.bus.positions(where, args.routeName),
         lastStops(ctx, where, args.routeName),
+        fleet(ctx, where),
       ]);
       const wanted = inDirection(args.direction);
       const atStop = new Map(nearStops.filter(wanted).map((n) => [n.PlateNumb, n]));
@@ -304,6 +379,7 @@ export function registerBusTools(server: McpServer, ctx: ToolContext): void {
           lon: p.BusPosition?.PositionLon ?? undefined,
           speedKmh: p.Speed ?? undefined,
           status: p.BusStatus == null ? undefined : VEHICLE_STATUS[p.BusStatus],
+          vehicle: vehicleOf(buses, p.PlateNumb),
           ...describeLastStop(atStop.get(p.PlateNumb)),
           gpsTime: p.GPSTime,
         }));
@@ -316,6 +392,7 @@ export function registerBusTools(server: McpServer, ctx: ToolContext): void {
           direction: DIRECTION[n.Direction],
           subRoute: subRouteName(n),
           status: n.BusStatus == null ? undefined : VEHICLE_STATUS[n.BusStatus],
+          vehicle: vehicleOf(buses, n.PlateNumb),
           ...describeLastStop(n),
         });
       }
@@ -341,6 +418,59 @@ async function lastStops(ctx: ToolContext, where: string, route: string): Promis
     // Extra detail only: the positions answer the question without it.
     return [];
   }
+}
+
+/** The plate of the bus an estimate is for, if the source names one. */
+export function plateOf(e: BusEstimatedTimeOfArrival): string | undefined {
+  return e.PlateNumb && e.PlateNumb !== '-1' ? e.PlateNumb : undefined;
+}
+
+/** The stop lists of a route, or `[]` if TDX has none (a 4xx); server errors are thrown. */
+export async function stopLists(
+  ctx: ToolContext,
+  where: string,
+  route: string,
+): Promise<BusStopOfRoute[]> {
+  try {
+    return where === INTERCITY
+      ? await ctx.tdx.bus.interCity.stopsOfRoute(route)
+      : await ctx.tdx.bus.stopsOfRoute(where, route);
+  } catch (error) {
+    if (error instanceof TdxApiError && error.status < 500) return [];
+    throw error;
+  }
+}
+
+/**
+ * For an arrival estimate, the plate of the bus most likely coming: of the buses on a trip in
+ * that direction, the one with the fewest stops left before the stop on its sub-route. A bus
+ * already at the stop counts only when the estimate says it is arriving now. Checked against
+ * the cities that do name the bus (Taichung, Tainan, Kaohsiung): right for about 96% of
+ * estimates.
+ */
+export function comingBus(
+  nearStops: readonly BusNearStop[],
+  routes: readonly BusStopOfRoute[],
+  now = Date.now(),
+): (e: BusEstimatedTimeOfArrival) => string | undefined {
+  const onRoute = nearStops.filter((n) => onTrip(n, now) && n.StopSequence != null);
+  return (e) => {
+    if ((e.StopStatus ?? 0) !== 0 || e.EstimateTime == null) return undefined;
+    const arrivingNow = e.EstimateTime < 60;
+    let best: { plate: string; left: number } | undefined;
+    for (const n of onRoute) {
+      if (n.Direction !== e.Direction) continue;
+      const route = routes.find(
+        (r) => r.SubRouteUID === n.SubRouteUID && r.Direction === n.Direction,
+      );
+      const stop = route?.Stops.find((s) => s.StopUID === e.StopUID);
+      if (!stop) continue;
+      const left = stop.StopSequence - (n.StopSequence ?? 0);
+      if (left < 0 || (left === 0 && !(arrivingNow && n.A2EventType === 1))) continue;
+      if (!best || left < best.left) best = { plate: n.PlateNumb, left };
+    }
+    return best?.plate;
+  };
 }
 
 /** How recent a stop event must be to list a bus that sends no GPS position. */

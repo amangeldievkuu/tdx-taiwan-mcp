@@ -29,6 +29,7 @@ import {
   INTERCITY,
   noRoute,
   routeName,
+  stopLists,
 } from './bus.js';
 import { runsOn, WEEKDAYS } from './bus-service.js';
 
@@ -212,22 +213,6 @@ export function registerBusInfoTools(server: McpServer, ctx: ToolContext): void 
       });
     },
   });
-}
-
-/** The stop lists of a route, or `[]` if TDX has none: the fares are still worth showing. */
-async function stopLists(
-  ctx: ToolContext,
-  where: string,
-  route: string,
-): Promise<BusStopOfRoute[]> {
-  try {
-    return where === INTERCITY
-      ? await ctx.tdx.bus.interCity.stopsOfRoute(route)
-      : await ctx.tdx.bus.stopsOfRoute(where, route);
-  } catch (error) {
-    if (error instanceof TdxApiError && error.status < 500) return [];
-    throw error;
-  }
 }
 
 /** First/last trips of a route; `[]` where TDX does not publish them (Taipei answers 400). */

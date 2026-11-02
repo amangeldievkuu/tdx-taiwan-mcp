@@ -43,6 +43,23 @@ async function setup(routes = ROUTES) {
 }
 
 describe('bus_stop_arrivals', () => {
+  it('says whether each coming bus is low-floor with a ramp', async () => {
+    const etas = loadFixture('bus-eta-stop-taipei.json') as Array<Record<string, unknown>>;
+    const [first] = etas;
+    const plate = { ...first, PlateNumb: 'EAL-0123' };
+    const [bus] = loadFixture('bus-vehicle-taipei.json') as Array<Record<string, unknown>>;
+    const t = await setup([
+      ['/v2/Bus/EstimatedTimeOfArrival/City/Taipei', [plate, ...etas.slice(1)]],
+      ['/v2/Bus/Vehicle/City/Taipei', [{ ...bus, PlateNumb: 'EAL-0123' }]],
+      ...ROUTES,
+    ]);
+    const result = await t.call('bus_stop_arrivals', { city: 'Taipei', stationUID: 'TPE1000082' });
+    const withBus = result.json.items.filter((i) => i.plate);
+    expect(withBus).toEqual([
+      expect.objectContaining({ plate: 'EAL-0123', vehicle: 'low-floor, ramp' }),
+    ]);
+  });
+
   it('lists every route due at a station, soonest first, with where each is heading', async () => {
     const t = await setup();
     const result = await t.call('bus_stop_arrivals', { city: 'Taipei', stationUID: 'tpe1000082' });

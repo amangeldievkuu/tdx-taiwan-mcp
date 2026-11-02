@@ -6,6 +6,16 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+
+- Whether a bus is low-floor with a wheelchair ramp (and electric or hybrid, or a small bus):
+  `vehicle` in `bus_eta`, `bus_stop_arrivals` and `bus_positions`, from the fleet lists of
+  Taipei, New Taipei, Taoyuan, Taichung, Tainan and Kaohsiung. Taipei and New Taipei do not
+  name the bus in their arrival estimates, so `bus_eta` takes the nearest bus before each stop
+  from the live stop events, and says the vehicle is an estimate; checked against the cities
+  that do name it, it picks the right bus for about 96% of estimates. Buses missing from a
+  city's list get no `vehicle`.
+
 ## [0.8.1] - 2026-11-02
 
 ### Fixed

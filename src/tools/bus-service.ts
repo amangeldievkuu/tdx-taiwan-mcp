@@ -25,12 +25,15 @@ import {
   busScope,
   direction,
   DIRECTION,
+  fleet,
   inDirection,
   INTERCITY,
   laterBuses,
   minutes,
+  plateOf,
   ROUTE_FIELDS,
   routeName,
+  vehicleOf,
 } from './bus.js';
 
 const ALERT_STATUS: Record<number, string> = { 0: 'suspended', 1: 'normal', 2: 'disrupted' };
@@ -120,13 +123,14 @@ export function registerBusServiceTools(server: McpServer, ctx: ToolContext): vo
       } else {
         filter = stopNameFilter(args.stop ?? '');
       }
-      const [etas, routes] = await Promise.all([
+      const [etas, routes, buses] = await Promise.all([
         where === INTERCITY
           ? ctx.tdx.bus.interCity.eta({ filter })
           : ctx.tdx.bus.eta(where, { filter }),
         where === INTERCITY
           ? ctx.tdx.bus.interCity.routes({ select: ROUTE_FIELDS })
           : ctx.tdx.bus.routes(where, { select: ROUTE_FIELDS }),
+        fleet(ctx, where),
       ]);
       if (!etas.length && !station) {
         throw new ToolInputError(
@@ -148,7 +152,8 @@ export function registerBusServiceTools(server: McpServer, ctx: ToolContext): vo
           arrival: arrival(e),
           minutes: minutes(e.EstimateTime),
           laterBusesMinutes: laterBuses(e),
-          plate: e.PlateNumb && e.PlateNumb !== '-1' ? e.PlateNumb : undefined,
+          plate: plateOf(e),
+          vehicle: vehicleOf(buses, plateOf(e)),
           lastBus: e.IsLastBus === true ? true : undefined,
         }));
       return list(items, take(ctx, args.limit, 30), {

@@ -4,7 +4,8 @@
 > `metro-*.json`, `thsr-*.json`, `tra-*.json`, `afr-*.json`, `bus-position-taipei-307.json`,
 > `bus-intercity-*.json`, `bus-station-*.json`, `bus-eta-stop-taipei.json`, `bus-schedule-*.json`,
 > `bus-alert-*.json`, `bus-news-taipei.json`, `bus-route-fare-taipei-307.json`,
-> `bus-first-last-*.json`, `bus-near-stop-taipei-307.json`, `bike-cycling-shape-taipei.json`,
+> `bus-first-last-*.json`, `bus-near-stop-taipei-307.json`, `bus-vehicle-taipei.json`,
+> `bike-cycling-shape-taipei.json`,
 > `air-*.json`, `ship-*.json`, `traffic-*.json`,
 > `parking-*.json` and `ev-*.json` files contain TDX data and are used under the
 > [TDX 資料授權利用條款](https://tdx.transportdata.tw/term), not this repository's MIT license.
@@ -15,7 +16,7 @@ files are schema-derived samples with illustrative values (a suspended station w
 availability, a not-yet-departed bus, a "last bus has passed" stop); the files named above are
 trimmed live responses from 2026-10-20 (the air, ship, traffic, parking and EV files:
 2026-10-21; `bus-station-*.json` and the bus schedule, alert, news and stop ETA files:
-2026-10-27; the bus fare, first/last-trip and near-stop files and the cycle paths:
+2026-10-27; the bus fare, first/last-trip, near-stop and vehicle files and the cycle paths:
 2026-11-02). Where the SDK has no fixture, the tests build small wrappers inline (ferry stop
 lists and timetables, freeway live traffic, Taipei live events, a city without parking data,
 freeway EV connectors, a small freeway eTag network).

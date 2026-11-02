@@ -1,0 +1,34 @@
+[
+  {
+    "PlateNumb": "002-U3",
+    "OperatorID": "800",
+    "OperatorCode": "MetropolitanBus",
+    "OperatorNo": "0303",
+    "VehicleClass": 1,
+    "VehicleType": 1,
+    "CardReaderLayout": 2,
+    "IsElectric": 0,
+    "IsHybrid": 0,
+    "IsLowFloor": 1,
+    "HasLiftOrRamp": 1,
+    "HasWifi": 0,
+    "InBoxID": "104017791",
+    "UpdateTime": "2026-11-02T10:15:48+08:00"
+  },
+  {
+    "PlateNumb": "003-U3",
+    "OperatorID": "800",
+    "OperatorCode": "MetropolitanBus",
+    "OperatorNo": "0303",
+    "VehicleClass": 1,
+    "VehicleType": 1,
+    "CardReaderLayout": 2,
+    "IsElectric": 0,
+    "IsHybrid": 0,
+    "IsLowFloor": 1,
+    "HasLiftOrRamp": 1,
+    "HasWifi": 0,
+    "InBoxID": "104023568",
+    "UpdateTime": "2026-11-02T10:15:48+08:00"
+  }
+]

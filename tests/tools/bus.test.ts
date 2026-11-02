@@ -1,7 +1,15 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { comingBus } from '../../src/tools/bus.js';
 import { API, connect, loadFixture, type Route } from '../helpers.js';
 
 const EXACT_307 = "$filter=RouteName/Zh_tw eq '307'";
+const FLEET_SELECT = '$select=PlateNumb,VehicleClass,IsLowFloor,HasLiftOrRamp,IsElectric,IsHybrid';
+
+/** The two fleet fixture buses, renamed to plates in the ETA and position fixtures. */
+function fleetWith(...plates: Array<[plate: string, changes: Record<string, unknown>]>) {
+  const [base] = loadFixture('bus-vehicle-taipei.json') as Array<Record<string, unknown>>;
+  return plates.map(([plate, changes]) => ({ ...base, PlateNumb: plate, ...changes }));
+}
 
 const ROUTES: Route[] = [
   ['/v2/Bus/Route/City/Taipei', loadFixture('bus-route-taipei-307.json')],
@@ -136,8 +144,9 @@ describe('bus_eta', () => {
   it('describes each stop, ordered by direction and sequence', async () => {
     const t = await setup();
     const result = await t.call('bus_eta', { city: 'Taipei', routeName: '307' });
-    expect(t.apiUrls).toEqual([
+    expect(t.apiUrls.sort()).toEqual([
       `${API}/v2/Bus/EstimatedTimeOfArrival/City/Taipei/307?${EXACT_307}&$format=JSON`,
+      `${API}/v2/Bus/Vehicle/City/Taipei?${FLEET_SELECT}&$format=JSON`,
     ]);
     expect(result.json).toMatchObject({ city: 'Taipei', route: '307', total: 3 });
     expect(result.json.items).toEqual([
@@ -194,6 +203,57 @@ describe('bus_eta', () => {
       'last bus has passed',
     ]);
   });
+
+  it('says whether the coming bus is low-floor with a ramp, where the fleet is known', async () => {
+    const t = await setup([
+      ['/v2/Bus/Vehicle/City/Taipei', fleetWith(['EAL-0123', { IsElectric: 1 }])],
+      ...ROUTES,
+    ]);
+    const result = await t.call('bus_eta', { city: 'Taipei', routeName: '307' });
+    const ximen = result.json.items.find((i) => i.plate === 'EAL-0123');
+    expect(ximen?.vehicle).toBe('low-floor, ramp, electric');
+    expect(result.json.items.filter((i) => i.vehicle)).toHaveLength(1);
+  });
+
+  it('estimates the coming bus where the arrival data names none', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-11-02T11:12:00+08:00'));
+    const etas = (loadFixture('bus-eta-taipei-307.json') as Array<Record<string, unknown>>).map(
+      (e) => ({ ...e, PlateNumb: undefined }),
+    );
+    const [nearStop] = loadFixture('bus-near-stop-taipei-307.json') as Array<
+      Record<string, unknown>
+    >;
+    const t = await setup([
+      ['/v2/Bus/EstimatedTimeOfArrival/City/Taipei/307', etas],
+      [
+        '/v2/Bus/RealTimeNearStop/City/Taipei/307',
+        // On sub-route TPE157462 outbound, just left 板橋前站 (stop 1).
+        [{ ...nearStop, SubRouteUID: 'TPE157462', Direction: 0, StopSequence: 1 }],
+      ],
+      ['/v2/Bus/Vehicle/City/Taipei', fleetWith(['EAA-150', {}])],
+      ...ROUTES,
+    ]);
+    const result = await t.call('bus_eta', { city: 'Taipei', routeName: '307' });
+    const ximen = result.json.items.find((i) => i.stop === '捷運西門站 / MRT Ximen Sta.');
+    expect(ximen).toMatchObject({ arrival: '4 min', vehicle: 'low-floor, ramp' });
+    expect(ximen?.plate).toBeUndefined();
+    expect(result.json.items.filter((i) => i.vehicle)).toHaveLength(1);
+    expect(result.json.note).toMatch(/vehicle is an estimate/);
+  });
+
+  it('leaves the vehicle out when the fleet list fails or the city has none', async () => {
+    const t = await setup([
+      ['/v2/Bus/Vehicle/', () => new Response('{}', { status: 500 })],
+      ...ROUTES,
+    ]);
+    const result = await t.call('bus_eta', { city: 'Taipei', routeName: '307' });
+    expect(result.isError).toBe(false);
+    expect(result.json.items.some((i) => i.vehicle)).toBe(false);
+
+    await t.call('bus_eta', { city: 'InterCity', routeName: '1610' });
+    expect(t.apiUrls.filter((u) => u.includes('/Vehicle/'))).toHaveLength(1);
+  });
 });
 
 describe('bus_positions', () => {
@@ -203,6 +263,7 @@ describe('bus_positions', () => {
     expect(t.apiUrls.sort()).toEqual([
       `${API}/v2/Bus/RealTimeByFrequency/City/Taipei/307?${EXACT_307}&$format=JSON`,
       `${API}/v2/Bus/RealTimeNearStop/City/Taipei/307?${EXACT_307}&$format=JSON`,
+      `${API}/v2/Bus/Vehicle/City/Taipei?${FLEET_SELECT}&$format=JSON`,
     ]);
     expect(result.json.items[1]).toEqual({
       plate: '266-U5',
@@ -277,10 +338,83 @@ describe('bus_positions', () => {
     expect(result.json.items.map((i) => i.plate)).not.toContain('EAA-153');
   });
 
+  it('describes each bus from the fleet list', async () => {
+    const t = await setup([
+      [
+        '/v2/Bus/Vehicle/City/Taipei',
+        fleetWith(
+          ['208-U5', {}],
+          ['266-U5', { VehicleClass: 3, IsLowFloor: 0, HasLiftOrRamp: 0, IsHybrid: 1 }],
+        ),
+      ],
+      ...ROUTES,
+    ]);
+    const result = await t.call('bus_positions', { city: 'Taipei', routeName: '307' });
+    expect(result.json.items.map((i) => [i.plate, i.vehicle])).toEqual([
+      ['208-U5', 'low-floor, ramp'],
+      ['266-U5', 'small bus, high-floor, hybrid'],
+    ]);
+  });
+
   it('explains an empty result', async () => {
     const t = await setup([['/v2/Bus/RealTimeByFrequency/', []]]);
     const result = await t.call('bus_positions', { city: 'Taipei', routeName: '307' });
     expect(result.isError).toBe(false);
     expect(result.json.note).toMatch(/No vehicle is reporting/);
+  });
+});
+
+describe('comingBus', () => {
+  const NOW = Date.parse('2026-11-02T11:20:00+08:00');
+  const route = {
+    SubRouteUID: 'S1',
+    Direction: 0,
+    Stops: [1, 2, 3, 4, 5].map((n) => ({ StopUID: `P${n}`, StopSequence: n })),
+  };
+  const bus = (plate: string, seq: number, extra: Record<string, unknown> = {}) => ({
+    PlateNumb: plate,
+    SubRouteUID: 'S1',
+    Direction: 0,
+    StopSequence: seq,
+    A2EventType: 0,
+    DutyStatus: 1,
+    GPSTime: '2026-11-02T11:18:00+08:00',
+    ...extra,
+  });
+  const eta = (stop: number, seconds: number, extra: Record<string, unknown> = {}) =>
+    ({
+      StopUID: `P${stop}`,
+      Direction: 0,
+      EstimateTime: seconds,
+      StopStatus: 0,
+      ...extra,
+    }) as never;
+  const coming = (buses: object[]) => comingBus(buses as never, [route] as never, NOW);
+
+  it('picks the bus with the fewest stops left before the stop', () => {
+    const find = coming([bus('A', 1), bus('B', 3)]);
+    expect(find(eta(4, 120))).toBe('B');
+    expect(find(eta(3, 300))).toBe('A'); // B has left stop 3.
+    expect(find(eta(2, 300))).toBe('A');
+    expect(find(eta(1, 300))).toBeUndefined();
+  });
+
+  it('counts a bus at the stop only when it is arriving now', () => {
+    const find = coming([bus('A', 1), bus('B', 3, { A2EventType: 1 })]);
+    expect(find(eta(3, 30))).toBe('B');
+    expect(find(eta(3, 300))).toBe('A');
+  });
+
+  it('ignores stale buses, ended duties, other directions and stops without an estimate', () => {
+    const find = coming([
+      bus('OLD', 3, { GPSTime: '2026-11-02T10:00:00+08:00' }),
+      bus('DONE', 3, { DutyStatus: 2 }),
+      bus('BACK', 3, { Direction: 1 }),
+      bus('OTHER', 3, { SubRouteUID: 'S2' }),
+    ]);
+    expect(find(eta(4, 120))).toBeUndefined();
+    const live = coming([bus('A', 1)]);
+    expect(live(eta(4, 120, { StopStatus: 1 }))).toBeUndefined();
+    expect(live(eta(4, 120, { EstimateTime: null }))).toBeUndefined();
   });
 });

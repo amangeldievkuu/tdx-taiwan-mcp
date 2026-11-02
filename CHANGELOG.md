@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+## [0.8.1] - 2026-11-02
+
 ### Fixed
 
 - `bus_fare` finds coach fares for stops that are not fare stages and for city names: "1610
@@ -173,7 +175,8 @@ All notable changes to this project are documented here. The format is based on
   `TDX_MAX_ITEMS` items and 40,000 characters, and TDX errors (unsupported city, 404, 429,
   bad keys) reported as readable tool errors.
 
-[Unreleased]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.8.1...HEAD
+[0.8.1]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.7.1...v0.8.0
 [0.7.1]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/amangeldievkuu/tdx-taiwan-mcp/compare/v0.6.0...v0.7.0

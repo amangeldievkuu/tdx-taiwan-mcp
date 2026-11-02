@@ -61,8 +61,8 @@ export function realTime(value: string | null | undefined): string | undefined {
 
 /**
  * The array of a TDX wrapper object. The types require it, but TDX leaves it out for a city
- * without data (`{"UpdateInterval": -1, ...}`).
+ * without data (`{"UpdateInterval": -1, ...}`), and sends `null` for some optional lists.
  */
-export function arrayOf<T>(items: readonly T[] | undefined): readonly T[] {
+export function arrayOf<T>(items: readonly T[] | null | undefined): readonly T[] {
   return items ?? [];
 }

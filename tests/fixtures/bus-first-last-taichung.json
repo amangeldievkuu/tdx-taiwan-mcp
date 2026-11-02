@@ -1,0 +1,49 @@
+[
+  {
+    "RouteUID": "TXG1",
+    "RouteID": "1",
+    "RouteName": {
+      "Zh_tw": "1",
+      "En": "1"
+    },
+    "OperatorID": "3",
+    "OperatorNo": "1201",
+    "SubRouteUID": "TXG1",
+    "SubRouteID": "1",
+    "SubRouteName": {
+      "Zh_tw": "1",
+      "En": "1"
+    },
+    "Direction": 0,
+    "FirstLastTrips": [
+      {
+        "ServiceDay": {
+          "Sunday": 0,
+          "Monday": 1,
+          "Tuesday": 1,
+          "Wednesday": 1,
+          "Thursday": 1,
+          "Friday": 1,
+          "Saturday": 0
+        },
+        "FirstTripDepTime": "06:30",
+        "LastTripDepTime": "22:00"
+      },
+      {
+        "ServiceDay": {
+          "Sunday": 1,
+          "Monday": 0,
+          "Tuesday": 0,
+          "Wednesday": 0,
+          "Thursday": 0,
+          "Friday": 0,
+          "Saturday": 1
+        },
+        "FirstTripDepTime": "06:30",
+        "LastTripDepTime": "22:00"
+      }
+    ],
+    "UpdateTime": "2026-11-02T09:45:54+08:00",
+    "VersionID": 13292
+  }
+]

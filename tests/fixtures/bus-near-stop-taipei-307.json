@@ -1,0 +1,68 @@
+[
+  {
+    "PlateNumb": "EAA-150",
+    "OperatorID": "200",
+    "OperatorNo": "0913",
+    "RouteUID": "TPE16111",
+    "RouteID": "16111",
+    "RouteName": {
+      "Zh_tw": "307",
+      "En": "307"
+    },
+    "SubRouteUID": "TPE157462",
+    "SubRouteID": "157462",
+    "SubRouteName": {
+      "Zh_tw": "307莒光往板橋前站",
+      "En": "307"
+    },
+    "Direction": 1,
+    "StopUID": "TPE59444",
+    "StopID": "59444",
+    "StopName": {
+      "Zh_tw": "萬坪公園",
+      "En": "Zhuifeng Square"
+    },
+    "StopSequence": 53,
+    "DutyStatus": 1,
+    "BusStatus": 0,
+    "A2EventType": 0,
+    "GPSTime": "2026-11-02T11:10:02+08:00",
+    "TripStartTimeType": 0,
+    "TripStartTime": "2026-11-02T09:44:43+08:00",
+    "SrcUpdateTime": "2026-11-02T11:11:05+08:00",
+    "UpdateTime": "2026-11-02T11:11:10+08:00"
+  },
+  {
+    "PlateNumb": "EAA-153",
+    "OperatorID": "200",
+    "OperatorNo": "0913",
+    "RouteUID": "TPE16111",
+    "RouteID": "16111",
+    "RouteName": {
+      "Zh_tw": "307",
+      "En": "307"
+    },
+    "SubRouteUID": "TPE157462",
+    "SubRouteID": "157462",
+    "SubRouteName": {
+      "Zh_tw": "307莒光往板橋前站",
+      "En": "307"
+    },
+    "Direction": 1,
+    "StopUID": "TPE15325",
+    "StopID": "15325",
+    "StopName": {
+      "Zh_tw": "萬大國小",
+      "En": "Wanda Elementary School"
+    },
+    "StopSequence": 30,
+    "DutyStatus": 1,
+    "BusStatus": 0,
+    "A2EventType": 0,
+    "GPSTime": "2026-11-02T11:10:01+08:00",
+    "TripStartTimeType": 0,
+    "TripStartTime": "2026-11-02T10:20:32+08:00",
+    "SrcUpdateTime": "2026-11-02T11:11:05+08:00",
+    "UpdateTime": "2026-11-02T11:11:10+08:00"
+  }
+]

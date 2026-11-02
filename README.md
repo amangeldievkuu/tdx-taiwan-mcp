@@ -91,20 +91,23 @@ loaded groups.
 
 ## Tools
 
-### YouBike and buses
+### YouBike, cycling and buses
 
 | Tool                | What it answers                                                                        |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `youbike_nearby`    | Nearest YouBike / Moovo stations to a coordinate with bikes (or empty docks) right now |
 | `youbike_station`   | YouBike stations by name or address, with live bikes, e-bikes and empty docks          |
+| `cycling_routes`    | Cycle paths near a coordinate or by name, road or district, with length and end points |
 | `bus_stops_nearby`  | Bus stops near a coordinate, with their heading and the city and coach routes there    |
 | `bus_stop_arrivals` | Every bus due at one stop, all routes at once, soonest first                           |
 | `bus_route_search`  | Bus routes by name or terminal stop, with endpoints, operators and fare                |
 | `bus_route_stops`   | The stops of a route in order, per direction and sub-route                             |
 | `bus_eta`           | Live arrival estimates at the stops of a route, optionally at one stop                 |
 | `bus_timetable`     | Scheduled departures of a route on a day, or how often it runs                         |
+| `bus_first_last`    | When the first and last bus of a route leave on a day                                  |
+| `bus_fare`          | A route's fares per passenger and ticket: between two stops, or per section            |
 | `bus_alerts`        | Current and upcoming detours, suspensions and moved stops, with the latest news        |
-| `bus_positions`     | Where the buses on a route are now, with speed and status                              |
+| `bus_positions`     | Where the buses on a route are now, with speed, status and the last stop reached       |
 
 Bus tools take a city (`Taipei`, `NewTaipei`, ...) or `InterCity` for 公路客運 / 國道客運
 coaches.
@@ -219,7 +222,7 @@ minute during a burst of questions.
 
 ## 繁體中文
 
-`tdx-taiwan-mcp` 是交通部 [TDX 運輸資料流通服務](https://tdx.transportdata.tw)的**非官方** MCP 伺服器（與交通部無隸屬或合作關係），讓 Claude 等 MCP 用戶端以即時資料回答「最近哪個 YouBike 站有車？」「307 公車幾分鐘到西門？」「今晚往左營的高鐵還有座位嗎？」「CI100 有沒有誤點？」等問題，涵蓋 YouBike、市區公車與公路客運、高鐵、臺鐵、捷運、阿里山林業鐵路、國內外航班、船運、即時路況與路況影像、停車場及充電樁。
+`tdx-taiwan-mcp` 是交通部 [TDX 運輸資料流通服務](https://tdx.transportdata.tw)的**非官方** MCP 伺服器（與交通部無隸屬或合作關係），讓 Claude 等 MCP 用戶端以即時資料回答「最近哪個 YouBike 站有車？」「307 公車幾分鐘到西門？」「今晚往左營的高鐵還有座位嗎？」「CI100 有沒有誤點？」等問題，涵蓋 YouBike 與自行車道、市區公車與公路客運（含票價與首末班車）、高鐵、臺鐵、捷運、阿里山林業鐵路、國內外航班、船運、即時路況與路況影像、停車場及充電樁。
 
 **取得金鑰**：註冊 TDX 會員後，至「會員中心 → 資料服務 → API金鑰」取得 Client Id 與 Client Secret。
 

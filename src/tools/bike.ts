@@ -1,10 +1,17 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { BikeAvailability, BikeCity, BikeStation } from 'tdx-taiwan';
+import type {
+  BikeAvailability,
+  BikeCity,
+  BikeStation,
+  CyclingCity,
+  CyclingShape,
+} from 'tdx-taiwan';
 import { z } from 'zod';
 import { normalizeCity } from '../core/cities.js';
+import { ToolInputError } from '../core/errors.js';
 import type { ToolContext } from '../core/context.js';
 import { type AnyName, name } from '../core/format.js';
-import { nearest, pointOf } from '../core/geo.js';
+import { haversine, type LatLon, nearest, pointOf } from '../core/geo.js';
 import { search } from '../core/names.js';
 import { list } from '../core/respond.js';
 import { city, lat, limit, lon, radius, take } from '../core/schemas.js';
@@ -27,6 +34,29 @@ const BIKE_CITIES = [
   'PingtungCounty',
   'TaitungCounty',
 ] as const satisfies readonly BikeCity[];
+
+const CYCLING_CITIES = [
+  'Taipei',
+  'NewTaipei',
+  'Taoyuan',
+  'Taichung',
+  'Tainan',
+  'Kaohsiung',
+  'Keelung',
+  'HsinchuCounty',
+  'MiaoliCounty',
+  'ChanghuaCounty',
+  'NantouCounty',
+  'YunlinCounty',
+  'Chiayi',
+  'ChiayiCounty',
+  'PingtungCounty',
+  'YilanCounty',
+  'HualienCounty',
+  'TaitungCounty',
+  'KinmenCounty',
+  'PenghuCounty',
+] as const satisfies readonly CyclingCity[];
 
 const SERVICE_TYPE: Record<number, string> = { 1: 'YouBike1.0', 2: 'YouBike2.0', 3: 'Moovo' };
 const SERVICE_STATUS: Record<number, string> = {
@@ -109,6 +139,61 @@ export function registerBikeTools(server: McpServer, ctx: ToolContext): void {
       return list(found.map(describeRow), take(ctx, args.limit, 10), { city: cityCode });
     },
   });
+
+  defineTool(server, 'cycling_routes', {
+    title: 'Cycle paths',
+    description:
+      'Cycle paths (自行車道) of a city: name, district, the roads where each starts and ends, ' +
+      'length and its end points; near a coordinate (nearest first) or by a keyword in the ' +
+      'name, road or district. Example: city "Taipei", keyword "河濱"; or lat 25.0478, ' +
+      'lon 121.517, city "Taipei".',
+    input: {
+      city: city(CYCLING_CITIES),
+      keyword: z
+        .string()
+        .trim()
+        .min(1)
+        .optional()
+        .describe('Part of the path name, a road or a district, e.g. "河濱", "信義區".'),
+      lat: lat.optional(),
+      lon: lon.optional(),
+      radiusMeters: radius(1000, 10000),
+      limit: limit(10, 'cycle paths'),
+    },
+    run: async (args) => {
+      if ((args.lat === undefined) !== (args.lon === undefined)) {
+        throw new ToolInputError('Give both lat and lon, or neither.');
+      }
+      const cityCode = normalizeCity(args.city);
+      let paths: Array<{ path: CyclingShape; distance?: number }> = (
+        await ctx.tdx.bike.cyclingRoutes(cityCode)
+      ).map((path) => ({ path }));
+      if (args.keyword) {
+        paths = search(
+          paths,
+          ({ path: p }) => [p.RouteName, p.Town, p.RoadSectionStart, p.RoadSectionEnd],
+          args.keyword,
+        );
+      }
+      if (args.lat !== undefined && args.lon !== undefined) {
+        const origin = { lat: args.lat, lon: args.lon };
+        const maxMeters = args.radiusMeters ?? 1000;
+        paths = paths
+          .map(({ path }) => ({ path, distance: distanceTo(origin, wktPoints(path.Geometry)) }))
+          .filter((p) => p.distance <= maxMeters)
+          .sort((a, b) => a.distance - b.distance);
+      } else if (!args.keyword) {
+        paths.sort((a, b) => (b.path.CyclingLength ?? 0) - (a.path.CyclingLength ?? 0));
+      }
+      const items = paths.map(({ path, distance }) => describePath(path, distance));
+      const meters = paths.reduce((sum, { path }) => sum + (path.CyclingLength ?? 0), 0);
+      return list(items, take(ctx, args.limit, 10), {
+        city: cityCode,
+        totalLengthKm: Math.round(meters / 100) / 10,
+        note: items.length ? undefined : 'No cycle path matches.',
+      });
+    },
+  });
 }
 
 /** Stations joined with their live availability (both lists are cached by the client). */
@@ -158,4 +243,51 @@ function stationName(value: string | null | undefined): string | undefined {
 function cleanName(value: AnyName | null | undefined): AnyName | undefined {
   if (!value) return undefined;
   return { Zh_tw: stationName(value.Zh_tw), En: stationName(value.En) };
+}
+
+function describePath(path: CyclingShape, distance: number | undefined) {
+  const points = wktPoints(path.Geometry);
+  const round = (p: LatLon | undefined) =>
+    p && { lat: Math.round(p.lat * 1e5) / 1e5, lon: Math.round(p.lon * 1e5) / 1e5 };
+  return {
+    distanceMeters: distance === undefined ? undefined : Math.round(distance),
+    name: path.RouteName,
+    town: path.Town || undefined,
+    from: path.RoadSectionStart || undefined,
+    to: path.RoadSectionEnd || undefined,
+    lengthMeters: path.CyclingLength ?? undefined,
+    direction: path.Direction || undefined,
+    type: path.CyclingType || undefined,
+    authority: path.AuthorityName || undefined,
+    finished: rocDate(path.FinishedTime),
+    start: round(points[0]),
+    end: round(points.at(-1)),
+  };
+}
+
+/** The coordinates of a WKT `LINESTRING` or `MULTILINESTRING`, in order. */
+export function wktPoints(wkt: string | null | undefined): LatLon[] {
+  const points: LatLon[] = [];
+  for (const m of (wkt ?? '').matchAll(/(-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)/g)) {
+    points.push({ lon: Number(m[1]), lat: Number(m[2]) });
+  }
+  return points;
+}
+
+/** Distance from `origin` to the closest vertex of a path; Infinity without one. */
+function distanceTo(origin: LatLon, points: readonly LatLon[]): number {
+  return points.reduce((min, p) => Math.min(min, haversine(origin, p)), Infinity);
+}
+
+/** A ROC date as TDX sends it (`1021231`, `102/12/31`) as `2013-12-31`; else unchanged. */
+export function rocDate(value: string | null | undefined): string | undefined {
+  const text = value?.trim();
+  if (!text) return undefined;
+  const m = text.includes('/')
+    ? /^(\d{2,3})\/(\d{1,2})\/(\d{1,2})$/.exec(text)
+    : /^(\d{2,3})(\d{2})(\d{2})$/.exec(text);
+  if (!m) return text;
+  const [year, month, day] = [Number(m[1]) + 1911, Number(m[2]), Number(m[3])];
+  if (month < 1 || month > 12 || day < 1 || day > 31) return text;
+  return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 }

@@ -1,0 +1,104 @@
+[
+  {
+    "RouteID": "16111",
+    "RouteName": "307",
+    "OperatorID": "100",
+    "OperatorNo": "1407",
+    "SubRouteID": "157462",
+    "SubRouteName": "307莒光往板橋前站",
+    "FarePricingType": 0,
+    "IsFreeBus": 0,
+    "IsForAllSubRoutes": 0,
+    "SectionFares": [
+      {
+        "BufferZones": [
+          {
+            "SectionSequence": 1,
+            "Direction": 1,
+            "FareBufferZoneOrigin": {
+              "StopID": "15325",
+              "StopName": "萬大國小"
+            },
+            "FareBufferZoneDestination": {
+              "StopID": "15329",
+              "StopName": "中和國稅局"
+            }
+          }
+        ],
+        "Fares": [
+          {
+            "TicketType": 1,
+            "FareClass": 1,
+            "Price": 15
+          },
+          {
+            "TicketType": 1,
+            "FareClass": 2,
+            "Price": 15
+          },
+          {
+            "TicketType": 1,
+            "FareClass": 3,
+            "Price": 8
+          },
+          {
+            "TicketType": 1,
+            "FareClass": 4,
+            "Price": 8
+          },
+          {
+            "TicketType": 1,
+            "FareClass": 5,
+            "Price": 8
+          },
+          {
+            "TicketType": 1,
+            "FareClass": 7,
+            "Price": 8
+          },
+          {
+            "TicketType": 1,
+            "FareClass": 9,
+            "Price": 15
+          },
+          {
+            "TicketType": 3,
+            "FareClass": 1,
+            "Price": 15
+          },
+          {
+            "TicketType": 3,
+            "FareClass": 2,
+            "Price": 12
+          },
+          {
+            "TicketType": 3,
+            "FareClass": 3,
+            "Price": 8
+          },
+          {
+            "TicketType": 3,
+            "FareClass": 4,
+            "Price": 8
+          },
+          {
+            "TicketType": 3,
+            "FareClass": 5,
+            "Price": 8
+          },
+          {
+            "TicketType": 3,
+            "FareClass": 7,
+            "Price": 8
+          },
+          {
+            "TicketType": 3,
+            "FareClass": 9,
+            "Price": 12
+          }
+        ]
+      }
+    ],
+    "UpdateTime": "2026-11-02T09:36:22+08:00"
+  }
+]

@@ -56,7 +56,7 @@ const ALERT_EFFECT: Record<number, string> = {
   6: 'stop moved',
   7: 'significant delays',
 };
-const WEEKDAYS = [
+export const WEEKDAYS = [
   'Sunday',
   'Monday',
   'Tuesday',
@@ -388,7 +388,7 @@ function toward(route: BusRoute | undefined, dir: number): string | undefined {
 }
 
 /** Whether a trip or headway band runs on `day`: special days first, then the week pattern. */
-function runsOn(
+export function runsOn(
   item: { ServiceDay?: BusServiceDay; SpecialDays?: BusSpecialDay[] },
   day: string,
 ): boolean {

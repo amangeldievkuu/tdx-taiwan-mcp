@@ -6,6 +6,22 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Added
+
+- `bus_fare`: a bus route's fares per passenger type and ticket (cash, smart card): between
+  two stops or fare stages for coaches, or per section with the buffer zones for city routes.
+- `bus_first_last`: the first and last bus of a route on a day, per direction and sub-route.
+  Taipei, New Taipei and Tainan publish no list, so there it comes from the timetable.
+- `cycling_routes`: a city's cycle paths near a coordinate or by name, road or district, with
+  length, end points and completion date.
+
+### Changed
+
+- `bus_positions` adds the stop each bus last arrived at or left, and lists buses seen at a
+  stop in the last 15 minutes that send no GPS position; new vehicle statuses (full,
+  chartered).
+- Requires `tdx-taiwan` 0.19.
+
 ## [0.7.1] - 2026-10-28
 
 ### Added

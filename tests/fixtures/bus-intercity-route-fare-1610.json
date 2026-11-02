@@ -1,0 +1,118 @@
+[
+  {
+    "RouteID": "1610",
+    "RouteName": "1610",
+    "OperatorID": "34",
+    "OperatorNo": "1201",
+    "SubRouteID": "161001",
+    "SubRouteName": "1610",
+    "FarePricingType": 2,
+    "IsFreeBus": 0,
+    "IsForAllSubRoutes": 0,
+    "StageFares": [
+      {
+        "Direction": 0,
+        "OriginStage": {
+          "StopID": "266076",
+          "StopName": "中港轉運站",
+          "Sequence": 4
+        },
+        "DestinationStage": {
+          "StopID": "266161",
+          "StopName": "岡山站",
+          "Sequence": 5
+        },
+        "Fares": [
+          {
+            "FareName": "全票_原價_四排座",
+            "TicketType": 1,
+            "FareClass": 1,
+            "Price": 259
+          },
+          {
+            "FareName": "全票_優惠_四排座",
+            "TicketType": 1,
+            "FareClass": 1,
+            "Price": 259
+          },
+          {
+            "FareName": "全票_優惠_三排座",
+            "TicketType": 1,
+            "FareClass": 1,
+            "Price": 300
+          },
+          {
+            "FareName": "全票_原價_三排座",
+            "TicketType": 1,
+            "FareClass": 1,
+            "Price": 322
+          },
+          {
+            "FareName": "半票_不分時段_四排座",
+            "TicketType": 1,
+            "FareClass": 10,
+            "Price": 130
+          },
+          {
+            "FareName": "半票_不分時段_三排座",
+            "TicketType": 1,
+            "FareClass": 10,
+            "Price": 161
+          }
+        ]
+      },
+      {
+        "Direction": 0,
+        "OriginStage": {
+          "StopID": "266076",
+          "StopName": "中港轉運站",
+          "Sequence": 4
+        },
+        "DestinationStage": {
+          "StopID": "308696",
+          "StopName": "建國客運站",
+          "Sequence": 9
+        },
+        "Fares": [
+          {
+            "FareName": "全票_優惠_四排座",
+            "TicketType": 1,
+            "FareClass": 1,
+            "Price": 280
+          },
+          {
+            "FareName": "全票_原價_三排座",
+            "TicketType": 1,
+            "FareClass": 1,
+            "Price": 364
+          },
+          {
+            "FareName": "全票_優惠_三排座",
+            "TicketType": 1,
+            "FareClass": 1,
+            "Price": 300
+          },
+          {
+            "FareName": "全票_原價_四排座",
+            "TicketType": 1,
+            "FareClass": 1,
+            "Price": 290
+          },
+          {
+            "FareName": "半票_不分時段_三排座",
+            "TicketType": 1,
+            "FareClass": 10,
+            "Price": 182
+          },
+          {
+            "FareName": "半票_不分時段_四排座",
+            "TicketType": 1,
+            "FareClass": 10,
+            "Price": 146
+          }
+        ]
+      }
+    ],
+    "UpdateTime": "2026-11-02T09:37:40+08:00"
+  }
+]

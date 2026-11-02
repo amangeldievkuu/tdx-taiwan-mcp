@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { API, connect, loadFixture, type Route } from '../helpers.js';
 
 const EXACT_307 = "$filter=RouteName/Zh_tw eq '307'";
@@ -16,6 +16,7 @@ const ROUTES: Route[] = [
 
 let close: (() => Promise<void>) | undefined;
 afterEach(async () => {
+  vi.useRealTimers();
   await close?.();
 });
 
@@ -199,8 +200,9 @@ describe('bus_positions', () => {
   it('lists each vehicle with position and speed', async () => {
     const t = await setup();
     const result = await t.call('bus_positions', { city: 'Taipei', routeName: '307' });
-    expect(t.apiUrls).toEqual([
+    expect(t.apiUrls.sort()).toEqual([
       `${API}/v2/Bus/RealTimeByFrequency/City/Taipei/307?${EXACT_307}&$format=JSON`,
+      `${API}/v2/Bus/RealTimeNearStop/City/Taipei/307?${EXACT_307}&$format=JSON`,
     ]);
     expect(result.json.items[1]).toEqual({
       plate: '266-U5',
@@ -213,6 +215,66 @@ describe('bus_positions', () => {
       gpsTime: '2026-10-20T17:52:51+08:00',
     });
     expect(result.json.note).toBeUndefined();
+  });
+
+  it('adds the stop each bus last reached, and buses seen only at a stop', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-11-02T11:20:00+08:00'));
+    const [first, second] = loadFixture('bus-near-stop-taipei-307.json') as Array<
+      Record<string, unknown>
+    >;
+    const t = await setup([
+      ...ROUTES,
+      [
+        '/v2/Bus/RealTimeNearStop/City/Taipei/307',
+        [{ ...first, PlateNumb: '266-U5', Direction: 0, A2EventType: 1 }, second],
+      ],
+    ]);
+    const result = await t.call('bus_positions', { city: 'Taipei', routeName: '307' });
+    expect(result.json.items[1]).toMatchObject({
+      plate: '266-U5',
+      lat: 25.011048,
+      lastStop: '萬坪公園 / Zhuifeng Square',
+      lastStopEvent: 'arrived',
+      lastStopSequence: 53,
+      lastStopTime: '2026-11-02T11:10:02+08:00',
+    });
+    expect(result.json.items.at(-1)).toEqual({
+      plate: 'EAA-153',
+      direction: 'inbound',
+      subRoute: '307莒光往板橋前站 / 307',
+      status: 'normal',
+      lastStop: '萬大國小 / Wanda Elementary School',
+      lastStopEvent: 'left',
+      lastStopSequence: 30,
+      lastStopTime: '2026-11-02T11:10:01+08:00',
+    });
+
+    const outbound = await t.call('bus_positions', {
+      city: 'Taipei',
+      routeName: '307',
+      direction: 'outbound',
+    });
+    expect(outbound.json.items.map((i) => i.plate)).not.toContain('EAA-153');
+
+    // A bus last seen long ago, or one whose duty has ended, is not on the route now.
+    vi.setSystemTime(new Date('2026-11-02T12:00:00+08:00'));
+    const later = await t.call('bus_positions', { city: 'Taipei', routeName: '307' });
+    expect(later.json.items.map((i) => i.plate)).not.toContain('EAA-153');
+  });
+
+  it('leaves out a bus seen only at a stop after its duty ended', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-11-02T11:12:00+08:00'));
+    const [, second] = loadFixture('bus-near-stop-taipei-307.json') as Array<
+      Record<string, unknown>
+    >;
+    const t = await setup([
+      ...ROUTES,
+      ['/v2/Bus/RealTimeNearStop/City/Taipei/307', [{ ...second, DutyStatus: 2 }]],
+    ]);
+    const result = await t.call('bus_positions', { city: 'Taipei', routeName: '307' });
+    expect(result.json.items.map((i) => i.plate)).not.toContain('EAA-153');
   });
 
   it('explains an empty result', async () => {

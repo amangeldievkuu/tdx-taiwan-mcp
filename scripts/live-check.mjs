@@ -20,10 +20,13 @@ const TAIPEI_MAIN = { lat: 25.0478, lon: 121.517 };
 /** [tool, arguments]: places and routes chosen to have data at any time of day. */
 const CALLS = [
   ['youbike_nearby', { ...TAIPEI_MAIN, city: 'Taipei', want: 'any' }],
+  ['cycling_routes', { ...TAIPEI_MAIN, city: 'Taipei', radiusMeters: 3000 }],
   ['bus_stops_nearby', { ...TAIPEI_MAIN, city: 'Taipei' }],
   ['bus_stop_arrivals', { city: 'Taipei', stop: '臺北車站(鄭州)' }],
   ['bus_eta', { city: 'Taipei', routeName: '307' }],
   ['bus_timetable', { city: 'InterCity', routeName: '1610' }],
+  ['bus_first_last', { city: 'Taipei', routeName: '307' }],
+  ['bus_fare', { city: 'InterCity', routeName: '1610' }],
   ['bus_alerts', { city: 'Taipei' }],
   ['thsr_timetable', { from: '台北', to: '左營' }],
   ['tra_live_board', { station: '臺北' }],

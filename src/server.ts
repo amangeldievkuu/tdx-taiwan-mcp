@@ -5,6 +5,7 @@ import { TOOL_GROUPS, type ToolGroup } from './core/groups.js';
 import { registerAfrTools } from './tools/afr.js';
 import { registerAirTools } from './tools/air.js';
 import { registerBikeTools } from './tools/bike.js';
+import { registerBusInfoTools } from './tools/bus-info.js';
 import { registerBusServiceTools } from './tools/bus-service.js';
 import { registerBusTools } from './tools/bus.js';
 import { registerEvTools } from './tools/ev.js';
@@ -37,10 +38,10 @@ export interface ServerOptions {
 
 /** What each group covers, for the opening line of the instructions. */
 const COVERS: Record<ToolGroup, string> = {
-  bike: 'YouBike stations and live availability',
+  bike: 'YouBike stations and live availability, and cycle paths',
   bus:
-    'city and intercity bus routes, stops, live arrival times, timetables, alerts and bus ' +
-    'positions',
+    'city and intercity bus routes, stops, live arrival times, timetables, first and last ' +
+    'buses, fares, alerts and bus positions',
   rail:
     'high speed rail (THSR), Taiwan Railway (TRA), metro and Alishan railway timetables, ' +
     'journey times, station departures, exits, live boards, seats, fares and alerts',
@@ -98,7 +99,7 @@ export function instructionsFor(groups: readonly ToolGroup[]): string {
 
 const REGISTER: Record<ToolGroup, Array<(server: McpServer, ctx: ToolContext) => void>> = {
   bike: [registerBikeTools],
-  bus: [registerBusTools, registerBusServiceTools],
+  bus: [registerBusTools, registerBusServiceTools, registerBusInfoTools],
   rail: [
     registerThsrTools,
     registerTraTools,

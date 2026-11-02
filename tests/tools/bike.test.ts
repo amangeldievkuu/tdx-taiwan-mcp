@@ -1,9 +1,11 @@
 import { afterEach, describe, expect, it } from 'vitest';
+import { rocDate, wktPoints } from '../../src/tools/bike.js';
 import { API, connect, loadFixture, type Route } from '../helpers.js';
 
 const ROUTES: Route[] = [
   ['/v2/Bike/Station/City/Taipei', loadFixture('bike-station-taipei.json')],
   ['/v2/Bike/Availability/City/Taipei', loadFixture('bike-availability-taipei.json')],
+  ['/v2/Cycling/Shape/City/Taipei', loadFixture('bike-cycling-shape-taipei.json')],
 ];
 
 // Near 捷運科技大樓站 (TPE500101001) and 復興南路二段273號前 (TPE500101002); 臺北車站 is ~3 km away.
@@ -109,5 +111,58 @@ describe('youbike_station', () => {
     const result = await t.call('youbike_station', { city: 'Atlantis', keyword: 'x' });
     expect(result.isError).toBe(true);
     expect(result.text).toMatch(/HTTP 400 for \/v2\/Bike\/.*\/City\/Atlantis: City: 'Atlantis'/);
+  });
+});
+
+describe('cycling_routes', () => {
+  it("lists a city's paths, longest first, with their ends and a readable date", async () => {
+    const t = await setup();
+    const result = await t.call('cycling_routes', { city: '臺北市' });
+    expect(t.apiUrls).toEqual([`${API}/v2/Cycling/Shape/City/Taipei?$format=JSON`]);
+    expect(result.json.totalLengthKm).toBe(0.9);
+    expect(result.json.items[0]).toEqual({
+      name: '三元街(西南側)',
+      town: '中正區',
+      from: '南海路',
+      to: '泉州街',
+      lengthMeters: 640,
+      finished: '2013-12-31',
+      start: { lat: 25.02762, lon: 121.51424 },
+      end: { lat: 25.02955, lon: 121.50903 },
+    });
+  });
+
+  it('finds paths near a point, nearest first, within the radius', async () => {
+    const t = await setup();
+    const near = { city: 'Taipei', lat: 25.03, lon: 121.508 };
+    const result = await t.call('cycling_routes', near);
+    expect(result.json.items.map((i) => [i.name, i.distanceMeters])).toEqual([
+      ['三元街(東北側2)', 41],
+      ['三元街(西南側)', 115],
+    ]);
+    const close = await t.call('cycling_routes', { ...near, radiusMeters: 100 });
+    expect(close.json.total).toBe(1);
+  });
+
+  it('searches by road or district, and wants both coordinates', async () => {
+    const t = await setup();
+    const result = await t.call('cycling_routes', { city: 'Taipei', keyword: '泉州街' });
+    expect(result.json.items.map((i) => i.name)).toEqual(['三元街(西南側)']);
+    const half = await t.call('cycling_routes', { city: 'Taipei', lat: 25.03 });
+    expect(half.isError).toBe(true);
+    expect(half.text).toMatch(/both lat and lon/);
+  });
+
+  it('reads ROC dates and WKT paths', () => {
+    expect(rocDate('1021231')).toBe('2013-12-31');
+    expect(rocDate('991231')).toBe('2010-12-31');
+    expect(rocDate('102/1/5')).toBe('2013-01-05');
+    expect(rocDate('unknown')).toBe('unknown');
+    expect(rocDate('')).toBeUndefined();
+    expect(wktPoints('MULTILINESTRING ((121.5 25.1,121.6 25.2),(121.7 25.3))')).toEqual([
+      { lon: 121.5, lat: 25.1 },
+      { lon: 121.6, lat: 25.2 },
+      { lon: 121.7, lat: 25.3 },
+    ]);
   });
 });

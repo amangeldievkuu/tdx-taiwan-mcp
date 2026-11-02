@@ -1,0 +1,36 @@
+[
+  {
+    "RouteUID": "THB0968",
+    "RouteID": "0968",
+    "RouteName": {
+      "Zh_tw": "0968",
+      "En": "0968"
+    },
+    "OperatorID": "16",
+    "OperatorNo": "0702",
+    "SubRouteUID": "THB096801",
+    "SubRouteID": "096801",
+    "SubRouteName": {
+      "Zh_tw": "0968",
+      "En": "0968"
+    },
+    "Direction": 0,
+    "FirstLastTrips": [
+      {
+        "ServiceDay": {
+          "Sunday": 0,
+          "Monday": 1,
+          "Tuesday": 1,
+          "Wednesday": 1,
+          "Thursday": 1,
+          "Friday": 1,
+          "Saturday": 0
+        },
+        "FirstTripDepTime": "06:30",
+        "LastTripDepTime": "08:50"
+      }
+    ],
+    "UpdateTime": "2026-11-02T09:37:40+08:00",
+    "VersionID": 7778
+  }
+]

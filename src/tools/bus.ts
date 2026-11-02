@@ -2,6 +2,7 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type {
   BusCity,
   BusEstimatedTimeOfArrival,
+  BusNearStop,
   BusPosition,
   BusRoute,
   BusStation,
@@ -12,7 +13,7 @@ import { z } from 'zod';
 import { normalizeCity } from '../core/cities.js';
 import type { ToolContext } from '../core/context.js';
 import { ToolInputError } from '../core/errors.js';
-import { arrayOf, HEADING, name } from '../core/format.js';
+import { type AnyName, arrayOf, HEADING, name } from '../core/format.js';
 import { haversine, pointOf } from '../core/geo.js';
 import { search } from '../core/names.js';
 import { list } from '../core/respond.js';
@@ -75,6 +76,9 @@ const VEHICLE_STATUS: Record<number, string> = {
   91: 'direction unknown',
   98: 'off route',
   99: 'not in service',
+  100: 'full',
+  101: 'chartered',
+  255: 'unknown',
 };
 
 /** Fields the route search needs; one `$select` keeps the cached route list small. */
@@ -277,25 +281,44 @@ export function registerBusTools(server: McpServer, ctx: ToolContext): void {
     title: 'Live bus positions',
     description:
       'Where the buses on a route are right now: position, speed, direction and status of ' +
-      'each vehicle. Example: city "Taipei", routeName "307".',
+      'each vehicle, and the stop each one last arrived at or left. Example: city "Taipei", ' +
+      'routeName "307".',
     input: { city: busCity, routeName, direction },
     run: async (args) => {
       const where = busScope(args.city);
-      const positions = (
+      const [positions, nearStops] = await Promise.all([
         where === INTERCITY
-          ? await ctx.tdx.bus.interCity.positions(args.routeName)
-          : await ctx.tdx.bus.positions(where, args.routeName)
-      ).filter(inDirection(args.direction));
-      const items = positions.map((p: BusPosition) => ({
-        plate: p.PlateNumb,
-        direction: DIRECTION[p.Direction ?? 255],
-        subRoute: p.SubRouteName?.Zh_tw !== p.RouteName?.Zh_tw ? name(p.SubRouteName) : undefined,
-        lat: p.BusPosition?.PositionLat ?? undefined,
-        lon: p.BusPosition?.PositionLon ?? undefined,
-        speedKmh: p.Speed ?? undefined,
-        status: p.BusStatus == null ? undefined : VEHICLE_STATUS[p.BusStatus],
-        gpsTime: p.GPSTime,
-      }));
+          ? ctx.tdx.bus.interCity.positions(args.routeName)
+          : ctx.tdx.bus.positions(where, args.routeName),
+        lastStops(ctx, where, args.routeName),
+      ]);
+      const wanted = inDirection(args.direction);
+      const atStop = new Map(nearStops.filter(wanted).map((n) => [n.PlateNumb, n]));
+      const items: Array<Record<string, unknown>> = positions
+        .filter(wanted)
+        .map((p: BusPosition) => ({
+          plate: p.PlateNumb,
+          direction: DIRECTION[p.Direction ?? 255],
+          subRoute: subRouteName(p),
+          lat: p.BusPosition?.PositionLat ?? undefined,
+          lon: p.BusPosition?.PositionLon ?? undefined,
+          speedKmh: p.Speed ?? undefined,
+          status: p.BusStatus == null ? undefined : VEHICLE_STATUS[p.BusStatus],
+          ...describeLastStop(atStop.get(p.PlateNumb)),
+          gpsTime: p.GPSTime,
+        }));
+      // Buses seen at a stop in the last minutes but not reporting a GPS position.
+      const placed = new Set(positions.map((p) => p.PlateNumb));
+      for (const n of atStop.values()) {
+        if (placed.has(n.PlateNumb) || !onTrip(n)) continue;
+        items.push({
+          plate: n.PlateNumb,
+          direction: DIRECTION[n.Direction],
+          subRoute: subRouteName(n),
+          status: n.BusStatus == null ? undefined : VEHICLE_STATUS[n.BusStatus],
+          ...describeLastStop(n),
+        });
+      }
       return list(items, ctx.maxItems, {
         city: where,
         route: args.routeName,
@@ -306,6 +329,40 @@ export function registerBusTools(server: McpServer, ctx: ToolContext): void {
       });
     },
   });
+}
+
+/** The stop each bus last reached (A2); `[]` when the city does not publish it. */
+async function lastStops(ctx: ToolContext, where: string, route: string): Promise<BusNearStop[]> {
+  try {
+    return where === INTERCITY
+      ? await ctx.tdx.bus.interCity.nearStop(route)
+      : await ctx.tdx.bus.nearStop(where, route);
+  } catch {
+    // Extra detail only: the positions answer the question without it.
+    return [];
+  }
+}
+
+/** How recent a stop event must be to list a bus that sends no GPS position. */
+const RECENT_MS = 15 * 60_000;
+
+/** Whether a bus seen only at a stop is still out on a trip: seen lately, duty not ended. */
+function onTrip(n: BusNearStop, now = Date.now()): boolean {
+  return n.DutyStatus !== 2 && now - Date.parse(n.GPSTime) <= RECENT_MS;
+}
+
+function describeLastStop(n: BusNearStop | undefined) {
+  if (!n) return {};
+  return {
+    lastStop: name(n.StopName),
+    lastStopEvent: n.A2EventType === 1 ? 'arrived' : n.A2EventType === 0 ? 'left' : undefined,
+    lastStopSequence: n.StopSequence ?? undefined,
+    lastStopTime: n.GPSTime,
+  };
+}
+
+function subRouteName(v: { RouteName?: AnyName | null; SubRouteName?: AnyName | null }) {
+  return v.SubRouteName?.Zh_tw !== v.RouteName?.Zh_tw ? name(v.SubRouteName) : undefined;
 }
 
 /** A station as a stop to walk to: where it is, which way buses go and which routes stop. */

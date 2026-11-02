@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { API, connect, loadFixture, type Route } from '../helpers.js';
 
 /** The two routes of the ETA fixture, with the terminals the tool shows as `toward`. */
@@ -99,6 +99,12 @@ describe('bus_stop_arrivals', () => {
 });
 
 describe('bus_timetable', () => {
+  // The dates below are never "today" on this clock, so no departure is cut at the current time.
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2026-10-28T12:00:00+08:00'));
+  });
+
   it('lists the scheduled departures from a stop, never from a trip’s last stop', async () => {
     const t = await setup();
     const fromStop = await t.call('bus_timetable', {
